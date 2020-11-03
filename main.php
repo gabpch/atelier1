@@ -1,5 +1,10 @@
 <?php
 
+/* USE */
+use galleryapp\model\User;
+use galleryapp\model\Gallery;
+use galleryapp\model\Image;
+
 /* AUTOLOADER ELOQUENT */
 require_once('vendor/autoload.php');
 
@@ -21,4 +26,12 @@ $db->addConnection($config_ini); /* configuration avec nos paramètres */
 $db->setAsGlobal();              /* rendre la connexion visible dans tout le projet */
 $db->bootEloquent();             /* établir la connexion */
 
-echo "test";
+
+/* ========== MAIN ========== */
+
+
+$usersReq = User::select()->get();
+
+foreach ($usersReq as $user) {
+    echo $user;
+}
