@@ -17,7 +17,7 @@ class GalleryController extends \mf\control\AbstractController {
         foreach ($gal as $v) {
             if ($v->access_mod === 0) {
                 $img = Image::inRandomOrder()->where('id_gal', '=', $v->id)->first();
-                echo "<img src='" . $img->path . "' alt='" . $img->path . "'>";
+                echo "<img src=" . "../../" . $img->path . " alt=" . "../../" . $img->path . ">";
             }
         }
     }
@@ -25,7 +25,7 @@ class GalleryController extends \mf\control\AbstractController {
     public function viewGallery() {
         $img = Image::select()->where('id_gal', '=', $_GET['id_gal'])->get();
         foreach ($img as $v) {
-            echo "<img src=" . $v->path . " alt='test'></img>";
+            echo "<img src=" . "../../" . $v->path . " alt=" . "../../" . $v->path . ">";
         }
     }
 

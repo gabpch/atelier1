@@ -38,8 +38,3 @@ $router->setDefaultRoute('/home/');
 $router->run();
 
 /* ========== MAIN ========== */
-
-var_dump($_SERVER);
-
-$test = new GalleryController;
-$test->viewHome();
