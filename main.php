@@ -4,6 +4,7 @@
 use galleryapp\model\User;
 use galleryapp\model\Gallery;
 use galleryapp\model\Image;
+use galleryapp\control\GalleryController;
 
 /* AUTOLOADER ELOQUENT */
 require_once('vendor/autoload.php');
@@ -26,12 +27,19 @@ $db->addConnection($config_ini); /* configuration avec nos paramètres */
 $db->setAsGlobal();              /* rendre la connexion visible dans tout le projet */
 $db->bootEloquent();             /* établir la connexion */
 
+/* ROUTER */
+$router = new \mf\router\Router();
+
+$router->addRoute('home', '/home/', '\galleryapp\control\GalleryController', 'viewHome');
+$router->addRoute('viewGallery', '/viewGallery/', '\galleryapp\control\GalleryController', 'viewGallery');
+
+$router->setDefaultRoute('/home/');
+
+$router->run();
 
 /* ========== MAIN ========== */
 
+var_dump($_SERVER);
 
-$usersReq = User::select()->get();
-
-foreach ($usersReq as $user) {
-    echo $user;
-}
+$test = new GalleryController;
+$test->viewHome();
