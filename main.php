@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /* USE */
 
 use galleryapp\model\User;
@@ -33,8 +33,8 @@ $db->bootEloquent();             /* établir la connexion */
 /* ROUTER */
 $router = new \mf\router\Router();
 
-$router->addRoute('home', '/home/', '\galleryapp\control\GalleryController', 'viewHome', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_VISITOR);
-$router->addRoute('viewGallery', '/viewGallery/', '\galleryapp\control\GalleryController', 'viewGallery', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_VISITOR);
+$router->addRoute('home', '/home/', '\galleryapp\control\GalleryController', 'viewHome', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+$router->addRoute('viewGallery', '/viewGallery/', '\galleryapp\control\GalleryController', 'viewGallery', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 
 $router->setDefaultRoute('/home/');
 
@@ -49,4 +49,19 @@ $newUser->createUser('BEN', 'M', 'BEN@gmail.com', 'PWD', 'BM8');
 
 $login = new GalleryAuthentification();
 
-$login->loginUser('BM8', 'okok');
+$login->loginUser('BM8', 'kkk');
+
+
+/* ========== SESSION ========== */
+
+$user = User::select()->where('user_name', '=', 'BM8')->first();
+
+$_SESSION['user_login'] = $user->user_name;
+$_SESSION['access_level'] = \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER;
+print_r($_SESSION);
+
+
+echo "<br><br>";
+print_r($router::$routes);
+echo "<br><br>";
+print_r($router::$aliases);
