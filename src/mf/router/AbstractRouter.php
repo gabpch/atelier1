@@ -119,5 +119,5 @@ abstract class AbstractRouter
      *
      */
 
-    abstract public function addRoute($name, $url, $ctrl, $mth, $access_level);
+    abstract public function addRoute($name, $url, $ctrl, $mth, $level);
 }
