@@ -1,12 +1,15 @@
 <?php
 
 /* USE */
+
 use galleryapp\model\User;
 use galleryapp\model\Gallery;
 use galleryapp\model\Image;
 use galleryapp\control\GalleryController;
+use galleryapp\auth\GalleryAuthentification;
 
 /* AUTOLOADER ELOQUENT */
+
 require_once('vendor/autoload.php');
 
 
@@ -30,11 +33,16 @@ $db->bootEloquent();             /* établir la connexion */
 /* ROUTER */
 $router = new \mf\router\Router();
 
-$router->addRoute('home', '/home/', '\galleryapp\control\GalleryController', 'viewHome');
-$router->addRoute('viewGallery', '/viewGallery/', '\galleryapp\control\GalleryController', 'viewGallery');
+$router->addRoute('home', '/home/', '\galleryapp\control\GalleryController', 'viewHome', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_VISITOR);
+$router->addRoute('viewGallery', '/viewGallery/', '\galleryapp\control\GalleryController', 'viewGallery', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_VISITOR);
 
 $router->setDefaultRoute('/home/');
 
 $router->run();
 
 /* ========== MAIN ========== */
+
+$newUser = new GalleryAuthentification();
+
+$newUser->createUser('DE SOUZA', 'Alex', 'alexdu88rpz@gmail.com', 'coucou', 'Spaaace');
+$newUser->createUser('BEN', 'M', 'BEN@gmail.com', 'PWD', 'BM8');
