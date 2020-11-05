@@ -32,5 +32,12 @@ class GalleryAuthentification extends \mf\auth\Authentification
 
     public function loginUser($username, $password)
     {
+        $loggedUser = User::select()->where('user_name', '=', $username)->first();
+
+        if ($loggedUser->user_name !== $username) {
+            echo ('Erreur');
+        } else {
+            $this->login($username, $loggedUser->password, $password, $level = self::ACCESS_LEVEL_USER);
+        }
     }
 }
