@@ -49,16 +49,19 @@ $newUser->createUser('BEN', 'M', 'BEN@gmail.com', 'PWD', 'BM8');
 
 $login = new GalleryAuthentification();
 
-$login->loginUser('BM8', 'kkk');
+$login->loginUser('BM8', 'PWD');
 
 
 /* ========== SESSION ========== */
 
-$user = User::select()->where('user_name', '=', 'BM8')->first();
+$all_user = User::all();
 
-$_SESSION['user_login'] = $user->user_name;
-$_SESSION['access_level'] = \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER;
-print_r($_SESSION);
+foreach ($all_user as $user) {
+    $_SESSION['user_login'] = $user->user_name;
+    $_SESSION['access_level'] = $user->level;
+    print_r($_SESSION);
+}
+
 
 
 echo "<br><br>";

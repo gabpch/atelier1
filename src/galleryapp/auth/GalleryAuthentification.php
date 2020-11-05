@@ -24,6 +24,7 @@ class GalleryAuthentification extends \mf\auth\Authentification
             $addUser->mail = $mail;
             $addUser->password = password_hash($pass, PASSWORD_DEFAULT);
             $addUser->user_name = $username;
+            $addUser->level = self::ACCESS_LEVEL_USER;
             $addUser->save();
         }
     }
