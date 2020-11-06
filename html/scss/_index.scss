@@ -1,0 +1,120 @@
+@import '_grid';
+
+
+section.main{
+    margin-top: 1%;
+    @include row();
+
+    .img{
+
+        width: 100%;
+    
+    
+          img{
+            width: 100%;
+            margin-bottom: 1%;
+          }
+    
+        .Info-gal:hover{
+            opacity: 1; 
+        
+        }
+    
+    }
+
+    div:nth-child(1){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+        
+    }
+
+    div:nth-child(2){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+
+    }
+
+    div:nth-child(3){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+
+    }
+
+    div:nth-child(4){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+
+    }
+
+    div:nth-child(5){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+
+    }
+
+    div:nth-child(6){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+
+    }
+
+    div:nth-child(7){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+
+    }
+
+    div:nth-child(8){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+
+    }
+
+    div:nth-child(9){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+
+    }
+
+    div:nth-child(10){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+
+    }
+
+    div:nth-child(11){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+
+    }
+
+    div:nth-child(12){
+
+        $wi : 100%/4;
+
+        flex-basis: $wi;
+
+    }
+}

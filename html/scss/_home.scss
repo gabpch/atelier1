@@ -1,46 +1,4 @@
-.img{
 
-    width: 100%;
-
-   
-
-    .Info-gal{
-        position: absolute;
-
-        width: 100%;
-
-        height: auto;
-        
-    
-        opacity: 0;
-
-        padding-left: 0%;
-
-        margin-left: 0;
-    
-        p{
-            text-align: center;
-            color: white;
-            text-shadow: 0 0 2px #000000;
-            font-size: 50PX;
-            position: relative;
-
-            height: 100%;
-    
-        }
-      }
-
-      img{
-        width: 100%;
-        margin-bottom: 1%;
-      }
-
-    .Info-gal:hover{
-        opacity: 1; 
-    
-    }
-
-}
 
 h1.ingoUti{
     text-align: center;
@@ -51,6 +9,50 @@ h1.ingoUti{
 section.row{
     margin-top: 1%;
     @include row();
+
+    .img{
+
+        width: 100%;
+    
+       
+    
+        .Info-gal{
+            position: absolute;
+    
+            width: 100%;
+    
+            height: auto;
+            
+        
+            opacity: 0;
+    
+            padding-left: 0%;
+    
+            margin-left: 0;
+        
+            p{
+                text-align: center;
+                color: white;
+                text-shadow: 0 0 2px #000000;
+                font-size: 50PX;
+                position: relative;
+    
+                height: 100%;
+        
+            }
+          }
+    
+          img{
+            width: 100%;
+            margin-bottom: 1%;
+          }
+    
+        .Info-gal:hover{
+            opacity: 1; 
+        
+        }
+    
+    }
 
 
 
