@@ -22,8 +22,6 @@ class GalleryController extends \mf\control\AbstractController
             $Img = $v->Images()->inRandomOrder()->first();
             $galImg[$Img->path] = $v;
         }
-        print_r($galImg);
-        echo count($galImg);
         $vue = new \galleryapp\view\Galleryview($galImg);
         $vue->render('home');
     }
@@ -64,7 +62,19 @@ class GalleryController extends \mf\control\AbstractController
 
     public function viewNewImg()
     {
-        $vue = new \galleryapp\view\Galleryview(null);
+        $data = '';
+        $vue = new \galleryapp\view\GalleryView($data);
         $vue->render('newImg');
+    }
+
+    public function sendNewImg()
+    {
+        print_r($this->request->post);
+        $i = new Image;
+        $i->title = $this->request->post['title'];
+        $i->keyword = $this->request->post['keyword'];
+        $i->path = 'un_path'; // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
+        $i->id_gal = '1'; // AJOUTER L'ID DE LA GALLERIE A L'IMAGE
+        $i->save();
     }
 }

@@ -4,7 +4,7 @@ namespace mf\router;
 
 class Router extends AbstractRouter
 {
-    public function __construct()
+    public function construct()
     {
         parent::__construct();
     }

@@ -1,32 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap%27");
 @import url("https://meyerweb.com/eric/tools/css/reset/reset200802.css%27");
-.img {
-  width: 100%;
-}
-.img .Info-gal {
-  position: absolute;
-  width: 100%;
-  height: auto;
-  opacity: 0;
-  padding-left: 0%;
-  margin-left: 0;
-}
-.img .Info-gal p {
-  text-align: center;
-  color: white;
-  text-shadow: 0 0 2px #000000;
-  font-size: 50PX;
-  position: relative;
-  height: 100%;
-}
-.img img {
-  width: 100%;
-  margin-bottom: 1%;
-}
-.img .Info-gal:hover {
-  opacity: 1;
-}
-
 h1.ingoUti {
   text-align: center;
 }
@@ -36,6 +9,32 @@ section.row {
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
+}
+section.row .img {
+  width: 100%;
+}
+section.row .img .Info-gal {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  padding-left: 0%;
+  margin-left: 0;
+}
+section.row .img .Info-gal p {
+  text-align: center;
+  color: white;
+  text-shadow: 0 0 2px #000000;
+  font-size: 50PX;
+  position: relative;
+  height: 100%;
+}
+section.row .img img {
+  width: 100%;
+  margin-bottom: 1%;
+}
+section.row .img .Info-gal:hover {
+  opacity: 1;
 }
 section.row div:nth-child(1) {
   width: 24.375%;
@@ -86,6 +85,59 @@ section.row div:nth-child(5) input {
 section.row div:nth-child(5) input:hover {
   background-color: #0b8b8d;
   cursor: pointer;
+}
+
+section.main {
+  margin-top: 1%;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+section.main .img {
+  width: 100%;
+}
+section.main .img img {
+  width: 100%;
+  margin-bottom: 1%;
+}
+section.main .img .Info-gal:hover {
+  opacity: 1;
+}
+section.main div:nth-child(1) {
+  flex-basis: 25%;
+}
+section.main div:nth-child(2) {
+  flex-basis: 25%;
+}
+section.main div:nth-child(3) {
+  flex-basis: 25%;
+}
+section.main div:nth-child(4) {
+  flex-basis: 25%;
+}
+section.main div:nth-child(5) {
+  flex-basis: 25%;
+}
+section.main div:nth-child(6) {
+  flex-basis: 25%;
+}
+section.main div:nth-child(7) {
+  flex-basis: 25%;
+}
+section.main div:nth-child(8) {
+  flex-basis: 25%;
+}
+section.main div:nth-child(9) {
+  flex-basis: 25%;
+}
+section.main div:nth-child(10) {
+  flex-basis: 25%;
+}
+section.main div:nth-child(11) {
+  flex-basis: 25%;
+}
+section.main div:nth-child(12) {
+  flex-basis: 25%;
 }
 
 .forms {
