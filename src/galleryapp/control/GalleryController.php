@@ -29,5 +29,38 @@ class GalleryController extends \mf\control\AbstractController {
         }
     }
 
+    public function viewNewGal() {
+        $data = '';
+        $vue = new \galleryapp\view\GalleryView($data);
+        $vue->render('newGal');
+    }
+
+    public function sendNewGal() {
+        print_r($this->request->post);
+        $g = new Gallery;
+        $g->name = $this->request->post['name'];
+        $g->description = $this->request->post['desc'];
+        $g->keyword = $this->request->post['keyword'];
+        $g->access_mod = $this->request->post['access'];
+        $g->save();
+    }
+
+    public function viewAuth() {
+        $data = '';
+        $vue = new \galleryapp\view\GalleryView($data);
+        $vue->render('auth');
+    }
+
+    public function sendNewUser() {
+        print_r($this->request->post);
+        $u = new User;
+        $u->first_name = $this->request->post['first_name'];
+        $u->name = $this->request->post['name'];
+        $u->mail = $this->request->post['email'];
+        $u->user_name = $this->request->post['user_name'];
+        $u->password = $this->request->post['password'];
+        $u->save();
+    }
+
 }
 

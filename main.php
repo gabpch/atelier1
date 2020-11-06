@@ -32,8 +32,15 @@ $router = new \mf\router\Router();
 
 $router->addRoute('home', '/home/', '\galleryapp\control\GalleryController', 'viewHome');
 $router->addRoute('viewGallery', '/viewGallery/', '\galleryapp\control\GalleryController', 'viewGallery');
+$router->addRoute('viewNewGal', '/viewNewGal/', '\galleryapp\control\GalleryController', 'viewNewGal');
+$router->addRoute('sendNewGal', '/sendNewGal/', '\galleryapp\control\GalleryController', 'sendNewGal');
+$router->addRoute('viewAuth', '/viewAuth/', '\galleryapp\control\GalleryController', 'viewAuth');
+$router->addRoute('sendNewUser', '/sendNewUser/', '\galleryapp\control\GalleryController', 'sendNewUser');
 
 $router->setDefaultRoute('/home/');
+
+/* STYLE */
+galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');
 
 $router->run();
 

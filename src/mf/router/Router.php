@@ -50,7 +50,14 @@ class Router extends \mf\router\AbstractRouter
         return $href;
     }
 
-    public function executeRoute()
+    public static function executeRoute($alias)
     {
+        $url = self::$aliases[$alias];
+
+        $ctrl = self::$routes[$url][0];
+        $mth = self::$routes[$url][1];
+
+        $c = new $ctrl();
+        $c->$mth();
     }
 }

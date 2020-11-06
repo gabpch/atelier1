@@ -1,0 +1,28 @@
+@mixin row(){
+
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    
+  
+  }
+  
+  @mixin grid($nbcols, $largGout, $widCol, $offset){
+  
+    $nbGout : $nbcols + 1;
+    $largTotGout : $nbGout * $largGout;
+    $largCol : (100% - $largTotGout)/$nbcols;
+  
+    width: ($widCol * $largCol)+($widCol - 1) * $largGout;
+    
+  
+    @if $offset == 0{
+      margin-left: $largGout;
+    } @else{
+  
+      margin-left: $offset*$largGout+($offset+1)*$largGout;
+    
+    }
+  
+  }
+  
