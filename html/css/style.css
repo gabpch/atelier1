@@ -1,0 +1,266 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap%27");
+@import url("https://meyerweb.com/eric/tools/css/reset/reset200802.css%27");
+.img {
+  width: 100%;
+}
+.img .Info-gal {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  padding-left: 0%;
+  margin-left: 0;
+}
+.img .Info-gal p {
+  text-align: center;
+  color: white;
+  text-shadow: 0 0 2px #000000;
+  font-size: 50PX;
+  position: relative;
+  height: 100%;
+}
+.img img {
+  width: 100%;
+  margin-bottom: 1%;
+}
+.img .Info-gal:hover {
+  opacity: 1;
+}
+
+h1.ingoUti {
+  text-align: center;
+}
+
+section.row {
+  margin-top: 1%;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+section.row div:nth-child(1) {
+  width: 24.375%;
+  margin-left: 0.5%;
+}
+section.row div:nth-child(1) .img {
+  width: 99%;
+  margin-left: 0.5%;
+}
+section.row div:nth-child(2) {
+  width: 24.375%;
+  margin-left: 0.5%;
+}
+section.row div:nth-child(2) .img {
+  width: 99%;
+  margin-left: 0.5%;
+}
+section.row div:nth-child(3) {
+  width: 24.375%;
+  margin-left: 0.5%;
+}
+section.row div:nth-child(3) .img {
+  width: 99%;
+  margin-left: 0.5%;
+}
+section.row div:nth-child(4) {
+  width: 24.375%;
+  margin-left: 0.5%;
+}
+section.row div:nth-child(4) .img {
+  width: 99%;
+  margin-left: 0.5%;
+}
+section.row div:nth-child(5) {
+  width: 99%;
+  margin-left: 0.5%;
+}
+section.row div:nth-child(5) input {
+  border-radius: 7px;
+  background-color: #0CA3A5;
+  color: white;
+  border: none;
+  padding: 1em 2em;
+  width: 20%;
+  margin-bottom: 1%;
+  margin-left: 40%;
+}
+section.row div:nth-child(5) input:hover {
+  background-color: #0b8b8d;
+  cursor: pointer;
+}
+
+.forms {
+  margin: 0 30%;
+  margin-top: 1em;
+  padding: 1.5em;
+  border: solid black 1px;
+  border-radius: 7px;
+  background-color: #0CA3A5;
+}
+.forms .log-in {
+  margin-bottom: 1.5em;
+}
+.forms div h1 {
+  margin-bottom: 1em;
+  font-size: 2em;
+  color: white;
+}
+.forms div form {
+  margin: 0 auto;
+  width: 100%;
+}
+.forms div form input {
+  border: solid black 1px;
+  border-radius: 7px;
+  margin-bottom: 1em;
+  padding: 1em 2em;
+  width: 100%;
+  box-sizing: border-box;
+}
+.forms div form .submit-btn {
+  border-radius: 7px;
+  background-color: #64c564;
+  color: white;
+  border: none;
+  padding: 1em 2em;
+  width: 100%;
+}
+.forms div form .submit-btn:hover {
+  background-color: #359c35;
+  cursor: pointer;
+}
+.forms .bar {
+  border: solid white 1px;
+  margin-bottom: 1em;
+}
+
+.form {
+  margin: 0 10%;
+  margin-top: 1em;
+  padding: 1.5em;
+  border: solid black 1px;
+  border-radius: 7px;
+  background-color: #0CA3A5;
+}
+.form h1 {
+  margin-bottom: 1em;
+  font-size: 2em;
+  color: white;
+}
+.form form input {
+  display: block;
+  border: solid black 1px;
+  border-radius: 7px;
+  margin-bottom: 1em;
+  padding: 1em 2em;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
+}
+.form form .keyword {
+  width: 90%;
+  float: right;
+}
+.form form .submit-btn {
+  border-radius: 7px;
+  background-color: #64c564;
+  color: white;
+  border: none;
+  padding: 1em 2em;
+  width: 100%;
+}
+.form form .submit-btn:hover {
+  background-color: #359c35;
+  cursor: pointer;
+}
+
+.form {
+  margin: 0 10%;
+  margin-top: 1em;
+  padding: 1.5em;
+  border: solid black 1px;
+  border-radius: 7px;
+  background-color: #0CA3A5;
+}
+.form h1 {
+  margin-bottom: 1em;
+  font-size: 2em;
+  color: white;
+}
+.form form input {
+  display: block;
+  border: solid black 1px;
+  border-radius: 7px;
+  margin-bottom: 1em;
+  padding: 1em 2em;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
+}
+.form form .keyword {
+  width: 90%;
+  float: right;
+}
+.form form textarea {
+  border: solid black 1px;
+  border-radius: 7px;
+  margin-bottom: 1em;
+  padding: 1em 2em;
+  width: 100%;
+  box-sizing: border-box;
+}
+.form form select {
+  border: solid black 1px;
+  margin-bottom: 1em;
+  padding: 0.5em 1em;
+}
+.form form .submit-btn {
+  border-radius: 7px;
+  background-color: #64c564;
+  color: white;
+  border: none;
+  padding: 1em 2em;
+  width: 100%;
+}
+.form form .submit-btn:hover {
+  background-color: #359c35;
+  cursor: pointer;
+}
+
+body {
+  background-color: #f4f2ed;
+  font-family: "Lobster Two", cursive;
+}
+
+header nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #0CA3A5;
+}
+header nav li {
+  float: left;
+}
+header nav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+header nav li a:hover:not(.active) {
+  background-color: #0b8b8d;
+}
+header nav li:last-of-type {
+  float: right;
+}
+header nav .active {
+  background-color: #296c6d;
+}
+
+footer {
+  background-color: #0CA3A5;
+  font-size: 30px;
+}
+
+/*# sourceMappingURL=style.css.map */
