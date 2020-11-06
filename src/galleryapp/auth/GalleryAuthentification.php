@@ -17,7 +17,7 @@ class GalleryAuthentification extends \mf\auth\Authentification
     {
         $user = User::select()->where('user_name', '=', $username)->first();
 
-        if ((!isset($user->user_name, $user->first_name, $user->mail, $user->pass, $user->username)) || $user->user_name !== $username) {
+        if ((!isset($user->user_name)) || $user->user_name !== $username) {
             $addUser = new User();
             $addUser->name = $name;
             $addUser->first_name = $first_name;
