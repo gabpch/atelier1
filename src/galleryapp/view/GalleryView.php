@@ -2,29 +2,34 @@
 
 namespace galleryapp\view;
 
-class GalleryView extends \mf\view\AbstractView {
+class GalleryView extends \mf\view\AbstractView
+{
 
-    public function __construct($data) {
+    public function __construct($data)
+    {
         parent::__construct($data);
     }
 
-    private function renderHeader() {
+    private function renderHeader()
+    {
         return '<h1>Media Photo</h1>';
     }
 
-    private function renderFooter() {
+    private function renderFooter()
+    {
         return '<h1>Media Photo 2020</h1>';
     }
 
-    private function renderHome() {
-
+    private function renderHome()
+    {
     }
 
-    private function renderGallery() {
-
+    private function renderGallery()
+    {
     }
 
-    private function renderNewGal() {
+    private function renderNewGal()
+    {
         $result = <<<EOT
         <div class="form">
             <h1>Ajouter une galerie</h1>
@@ -44,11 +49,12 @@ EOT;
         return $result;
     }
 
-    private function renderNewImg() {
-
+    private function renderNewImg()
+    {
     }
 
-    private function renderAuth() {
+    private function renderAuth()
+    {
         $result = <<<EOT
         <div class="forms">
 
@@ -80,7 +86,8 @@ EOT;
         return $result;
     }
 
-    protected function renderBody($selector) {
+    protected function renderBody($selector)
+    {
 
         $header = $this->renderHeader();
         $footer = $this->renderFooter();
@@ -112,7 +119,5 @@ EOT;
 EOT;
 
         return $body;
-
     }
-
 }
