@@ -2,6 +2,8 @@
 
 namespace galleryapp\view;
 
+use mf\router\Router;
+
 class GalleryView extends \mf\view\AbstractView
 {
 
@@ -87,12 +89,16 @@ EOT;
 
     private function renderAuth()
     {
+        $rooter = new Router();
+        $urlForConnect = $rooter->urlFor('login', null);
+        $urlForCreate = $rooter->urlFor('addUser', null);
+
         $result = <<<EOT
         <div class="forms">
 
             <div class="log-in">
                 <h1>Se connecter</h1>
-                <form action="" method="post">
+                <form action="${urlForConnect}" method="post">
                     <input type="text" id="user_name1" name="user_name" placeholder="Nom d'utilisateur" required>
                     <input type="password" id="password1" name="password" placeholder="Mot de passe" required>
                     <button class="submit-btn" type="submit">Connexion</button>
@@ -103,7 +109,7 @@ EOT;
 
             <div class="sign-in">
                 <h1>S'inscrire</h1>
-                <form action="../sendNewUser/" method="post">
+                <form action="${urlForCreate}" method="post">
                     <input type="text" name="first_name" placeholder="Prénom" required>
                     <input type="text" name="name" placeholder="Nom" required>
                     <input type="email" name="email" placeholder="Email" required>
