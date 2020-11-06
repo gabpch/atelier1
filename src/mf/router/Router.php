@@ -6,7 +6,7 @@ class Router extends AbstractRouter
 {
     public function construct()
     {
-        parent::construct();
+        parent::__construct();
     }
 
     public function run()

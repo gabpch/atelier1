@@ -1,12 +1,15 @@
 <?php
-
+session_start();
 /* USE */
+
 use galleryapp\model\User;
 use galleryapp\model\Gallery;
 use galleryapp\model\Image;
 use galleryapp\control\GalleryController;
+use galleryapp\auth\GalleryAuthentification;
 
 /* AUTOLOADER ELOQUENT */
+
 require_once('vendor/autoload.php');
 
 
@@ -29,12 +32,27 @@ $db->bootEloquent();             /* établir la connexion */
 
 /* ROUTER */
 $router = new \mf\router\Router();
-
-$router->addRoute('home', '/home/', '\galleryapp\control\GalleryController', 'viewHome');
-$router->addRoute('viewGallery', '/viewGallery/', '\galleryapp\control\GalleryController', 'viewGallery');
-
 $router->setDefaultRoute('/home/');
+$router->addRoute('home', '/home/', '\galleryapp\control\GalleryController', 'viewHome', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+$router->addRoute('viewGallery', '/viewGallery/', '\galleryapp\control\GalleryController', 'viewGallery', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+$router->addRoute('viewNewGal', '/viewNewGal/', '\galleryapp\control\GalleryController', 'viewNewGal', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+$router->addRoute('sendNewGal', '/sendNewGal/', '\galleryapp\control\GalleryController', 'viewNewGal', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+$router->addRoute('viewAuth', '/viewAuth/', '\galleryapp\control\GalleryController', 'viewAuth', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+
+/* STYLE */
+galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');
 
 $router->run();
 
 /* ========== MAIN ========== */
+
+$newUser = new GalleryAuthentification();
+
+$newUser->createUser('DE SOUZA', 'Alex', 'alexdu88rpz@gmail.com', 'coucou', 'Spaaace');
+$newUser->createUser('BEN', 'M', 'BEN@gmail.com', 'PWD', 'BM8');
+
+$login = new GalleryAuthentification();
+
+$login->loginUser('BM8', 'eee');
+
+print_r($router::$routes);
