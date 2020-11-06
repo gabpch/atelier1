@@ -46,13 +46,13 @@ $router->run();
 
 /* ========== MAIN ========== */
 
-$newUser = new GalleryAuthentification();
+// $newUser = new GalleryAuthentification();
 
-$newUser->createUser('DE SOUZA', 'Alex', 'alexdu88rpz@gmail.com', 'coucou', 'Spaaace');
-$newUser->createUser('BEN', 'M', 'BEN@gmail.com', 'PWD', 'BM8');
+// $newUser->createUser('DE SOUZA', 'Alex', 'alexdu88rpz@gmail.com', 'coucou', 'Spaaace');
+// $newUser->createUser('BEN', 'M', 'BEN@gmail.com', 'PWD', 'BM8');
 
-$login = new GalleryAuthentification();
+// $login = new GalleryAuthentification();
 
-$login->loginUser('BM8', 'eee');
+// $login->loginUser('BM8', 'eee');
 
-print_r($router::$routes);
+// print_r($router::$routes);
