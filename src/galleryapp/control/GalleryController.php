@@ -22,8 +22,6 @@ class GalleryController extends \mf\control\AbstractController
             $Img = $v->Images()->inRandomOrder()->first();
             $galImg[$Img->path] = $v;
         }
-        print_r($galImg);
-        echo count($galImg);
         $vue = new \galleryapp\view\Galleryview($galImg);
         $vue->render('home');
     }

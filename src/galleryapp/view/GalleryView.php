@@ -22,6 +22,26 @@ class GalleryView extends \mf\view\AbstractView
 
     private function renderHome()
     {
+        $chaine = "";
+
+        foreach ($this->data as $key => $value) {
+
+            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <img src='$key' alt='Image introuvable'> </div>";
+        }
+
+        $chaine;
+
+        $result = <<< EOT
+
+         <section class='main'>
+
+            ${chaine}
+
+         </section>
+
+EOT;
+
+        return $result;
     }
 
     private function renderGallery()
@@ -51,6 +71,18 @@ EOT;
 
     private function renderNewImg()
     {
+        $result = <<<EOT
+        <div class="form">
+            <h1>Ajouter une photo</h1>
+            <form action="../sendNewImg/" method="post">
+                <input type="text" name="title" placeholder="Titre de la photo" required>
+                <input class="keyword" type="text" name="keyword" placeholder="Mot clé" required>
+                <input type="file" name="img">
+                <button class="submit-btn" type="submit">Ajouter</button>
+            </form>
+        </div>
+EOT;
+        return $result;
     }
 
     private function renderAuth()
