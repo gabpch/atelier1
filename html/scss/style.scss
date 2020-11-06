@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap%27');
+@import url('https://meyerweb.com/eric/tools/css/reset/reset200802.css%27');
+@import '_grid';
+@import '_home';
+
+@import '_connection';
+@import '_add_photo';
+@import '_add_gallery';
+
+
+body{
+  background-color: #f4f2ed;
+  font-family: 'Lobster Two', cursive;
+}
+
+header{
+
+  nav{
+
+    ul {
+      
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #0CA3A5;
+    }
+    
+    li {
+      float: left;
+    }
+    
+    li a {
+      display: block;
+      color: rgb(255, 255, 255);
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    
+    li a:hover:not(.active) {
+      background-color: #0b8b8d;
+    }
+  
+    li:last-of-type{
+      float:right;
+    }
+    
+    .active {
+      background-color: #296c6d;
+    }
+  
+  }
+
+}
+
+
+
+footer{
+  background-color: #0CA3A5;
+  font-size: 30px;
+}
+
+
+
