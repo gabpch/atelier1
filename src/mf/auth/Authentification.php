@@ -34,10 +34,10 @@ class Authentification extends AbstractAuthentification
     }
     public function checkAccessRight($requested)
     {
-        if ($requested >= $this->access_level)
-            return true;
-        else
+        if ($requested > $this->access_level)
             return false;
+        else
+            return true;
     }
     public function login($username, $db_pass, $given_pass, $level)
     {
