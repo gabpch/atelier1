@@ -3,6 +3,7 @@
 namespace galleryapp\view;
 
 use mf\router\Router;
+use galleryapp\auth\GalleryAuthentification;
 
 class GalleryView extends \mf\view\AbstractView
 {
@@ -14,7 +15,39 @@ class GalleryView extends \mf\view\AbstractView
 
     private function renderHeader()
     {
-        return '<h1>Media Photo</h1>';
+        $auth = new GalleryAuthentification;
+        $rooter = new Router;
+        $urlForHome = $rooter->urlFor('home', null);
+        $urlForLogout = $rooter->urlFor('logout', null);
+        $urlForAuth = $rooter->urlFor('viewAuth', null);
+        $header = "";
+        echo $auth->logged_in;
+
+        // Header utilisateur connecté;
+        if ($auth->logged_in) {
+            $header .=  <<<EOT
+                    <nav>
+                        <ul>
+                            <li><a class='active' href="${urlForHome}">MEDIA PHOTO</a></li>
+                             <li><a class='active' href="${urlForLogout}">Déconnexion</a></li>
+                        </ul>
+                    </nav>
+                    
+EOT;
+        } else {
+            $header .= <<<EOT
+            <nav>
+            <ul>
+                <li><a class='active' href="${urlForHome}">MEDIA PHOTO</a></li>
+                <li><a href="${urlForAuth}">Connexion</a></li>
+            </ul>
+        
+        </nav>
+EOT;
+        }
+
+
+        return $header;
     }
 
     private function renderFooter()
@@ -28,7 +61,7 @@ class GalleryView extends \mf\view\AbstractView
 
         foreach ($this->data as $key => $value) {
 
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <img src='$key' alt='Image introuvable'> </div>";
+            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <img src='$key' alt='Image introuvable'></div>";
         }
 
         $chaine;
@@ -36,7 +69,7 @@ class GalleryView extends \mf\view\AbstractView
         $result = <<< EOT
 
          <section class='main'>
-
+         
             ${chaine}
 
          </section>
