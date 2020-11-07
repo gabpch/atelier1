@@ -63,19 +63,3 @@ $router->addRoute('logout', '/logout/', '\galleryapp\control\GalleryAdminControl
 galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');
 
 $router->run();
-
-/* ========== MAIN ========== */
-
-// $newUser = new GalleryAuthentification();
-
-// $newUser->createUser('DE SOUZA', 'Alex', 'alexdu88rpz@gmail.com', 'coucou', 'Spaaace');
-// $newUser->createUser('BEN', 'M', 'BEN@gmail.com', 'PWD', 'BM8');
-
-// $login = new GalleryAuthentification();
-
-// $login->loginUser('BM8', 'eee');
-
-if (isset($_SESSION['user_login'], $_SESSION['access_level'])) {
-    echo $_SESSION['user_login'];
-    echo $_SESSION['access_level'];
-}

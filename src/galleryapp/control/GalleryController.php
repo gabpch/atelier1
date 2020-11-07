@@ -30,7 +30,7 @@ class GalleryController extends \mf\control\AbstractController
     {
         $id = $this->request->get;
         $gal = Gallery::where('id', '=', $id)->first();
-        $$imgs = $gal->Images()->get();
+        $imgs = $gal->Images()->get();
         $vue = new \galleryapp\view\GalleryView($imgs);
         $vue->render('gallery');
     }
