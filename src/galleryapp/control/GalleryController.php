@@ -29,9 +29,8 @@ class GalleryController extends \mf\control\AbstractController
     public function viewGallery()
     {
         $id = $this->request->get;
-        echo $gal = Gallery::where('id', '=', $id)->first();
-        $imgs = $gal->Images()->get();
-        echo "<br>" . $imgs;
+        $gal = Gallery::where('id', '=', $id)->first();
+        $$imgs = $gal->Images()->get();
         $vue = new \galleryapp\view\GalleryView($imgs);
         $vue->render('gallery');
     }

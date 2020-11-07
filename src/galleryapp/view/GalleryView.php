@@ -81,6 +81,26 @@ EOT;
 
     private function renderGallery()
     {
+        $chaine = "";
+
+        foreach ($this->data as $key => $value) {
+
+            $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <img src='../../$value->path' alt='Image introuvable'> </div>";
+        }
+
+        $chaine;
+
+        $result = <<< EOT
+        <h1 class='ingoUti'>Nom de la galerie</h1>
+        <h1 class='ingoUti'>Nom de l'auteur</h1>
+
+         <section class='main'>
+            ${chaine}
+         </section>
+
+EOT;
+
+        return $result;
     }
 
     private function renderNewGal()
