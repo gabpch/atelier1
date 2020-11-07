@@ -21,7 +21,6 @@ class GalleryView extends \mf\view\AbstractView
         $urlForLogout = $rooter->urlFor('logout', null);
         $urlForAuth = $rooter->urlFor('viewAuth', null);
         $header = "";
-        echo $auth->logged_in;
 
         // Header utilisateur connecté;
         if ($auth->logged_in) {
@@ -58,6 +57,8 @@ EOT;
 
     private function renderHome()
     {
+
+        //echo $_SESSION['user_login'];
         $chaine = "";
 
         $router = new Router;
@@ -86,21 +87,50 @@ EOT;
     private function renderGallery()
     {
         $chaine = "";
+        $btn ="";
 
-        foreach ($this->data as $key => $value) {
+        $nom_gal = $this->data['gallery']['name'];
+        $desc_gal = $this->data['gallery']['description'];
+        $keyword_gal = $this->data['gallery']['keyword'];
+        $creator = $this->data['user']['user_name'];
+
+        //penser à ajouter la date de création de la galerie
+
+        $nb_img = count($this->data['image']);
+
+        $router = new Router;
+
+        foreach ($this->data['image'] as $key => $value) {
 
             $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <img src='../../$value->path' alt='Image introuvable'> </div>";
+
         }
 
         $chaine;
 
+        if($this->data['user']['user_name'] === $_SESSION['user_login']){
+
+            $btn .= "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Ajouter une nouvelle image </a></div>";
+            
+        }
+
+        
+
         $result = <<< EOT
-        <h1 class='ingoUti'>Nom de la galerie</h1>
-        <h1 class='ingoUti'>Nom de l'auteur</h1>
+
+        <h1 class='ingoUti'>Nom de la galerie : ${nom_gal}</h1>
+        <h1 class='ingoUti'>Nom de l'auteur : ${creator}</h1>
+
+        <p>Description : ${desc_gal}</p>
 
          <section class='main'>
             ${chaine}
          </section>
+
+         ${btn}
+
+         <p>Mots clés : ${keyword_gal}</p>
+         <p>nombre d'image dans la galerie : ${nb_img} images</p>
 
 EOT;
 
