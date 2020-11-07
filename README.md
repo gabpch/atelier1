@@ -8,6 +8,7 @@ Download **composer** if not already installed: [here](https://getcomposer.org/d
 | `composer install`| Install project dependencies|
 
 ### Team
+
 1. MATHIEU Benjamin
 2. PICHLY Gabriel
 3. GIRARDIN Bastien
