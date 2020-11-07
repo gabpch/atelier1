@@ -30,8 +30,15 @@ class GalleryController extends \mf\control\AbstractController
     {
         $id = $this->request->get;
         $gal = Gallery::where('id', '=', $id)->first();
+        $user = User::Where('id', '=', $gal->id_user)->first();
         $imgs = $gal->Images()->get();
-        $vue = new \galleryapp\view\GalleryView($imgs);
+
+        $data = array(
+            'gallery' => $gal,
+            'user' => $user,
+            'image' => $imgs
+        );
+        $vue = new \galleryapp\view\GalleryView($data);
         $vue->render('gallery');
     }
 

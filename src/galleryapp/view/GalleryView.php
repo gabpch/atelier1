@@ -112,12 +112,15 @@ EOT;
 
         $chaine;
 
-        if($this->data['user']['user_name'] === $_SESSION['user_login']){
+        if(isset($_SESSION['user_login'])){
 
-            $btn .= "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Ajouter une nouvelle image </a></div>";
-            
+            if($this->data['user']['user_name'] === $_SESSION['user_login']){
+
+                $btn .= "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Ajouter une nouvelle image </a></div>";
+                
+            }
+
         }
-
         
 
         $result = <<< EOT
