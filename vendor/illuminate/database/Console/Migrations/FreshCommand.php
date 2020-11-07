@@ -4,8 +4,6 @@ namespace Illuminate\Database\Console\Migrations;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Database\Events\DatabaseRefreshed;
 use Symfony\Component\Console\Input\InputOption;
 
 class FreshCommand extends Command
@@ -57,12 +55,6 @@ class FreshCommand extends Command
 
         if ($this->needsSeeding()) {
             $this->runSeeder($database);
-        }
-
-        if ($this->laravel->bound(Dispatcher::class)) {
-            $this->laravel[Dispatcher::class]->dispatch(
-                new DatabaseRefreshed
-            );
         }
 
         return 0;

@@ -12,7 +12,7 @@ class MySqlGrammar extends Grammar
     /**
      * The possible column modifiers.
      *
-     * @var string[]
+     * @var array
      */
     protected $modifiers = [
         'Unsigned', 'Charset', 'Collate', 'VirtualAs', 'StoredAs', 'Nullable',
@@ -22,7 +22,7 @@ class MySqlGrammar extends Grammar
     /**
      * The possible column serials.
      *
-     * @var string[]
+     * @var array
      */
     protected $serials = ['bigInteger', 'integer', 'mediumInteger', 'smallInteger', 'tinyInteger'];
 

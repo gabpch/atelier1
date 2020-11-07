@@ -18,8 +18,11 @@ class Router extends AbstractRouter
                 $cname = self::$routes[$path][0];
                 $cmth = self::$routes[$path][1];
             }
-            $cname = self::$routes[self::$aliases['default']][0];
-            $cmth = self::$routes[self::$aliases['default']][1];
+            else
+            {
+                $cname = self::$routes[self::$aliases['default']][0];
+                $cmth = self::$routes[self::$aliases['default']][1];
+            }
         } else {
             $cname = self::$routes[self::$aliases['default']][0];
             $cmth = self::$routes[self::$aliases['default']][1];

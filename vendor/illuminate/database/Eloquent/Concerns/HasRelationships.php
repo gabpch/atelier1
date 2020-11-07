@@ -39,7 +39,7 @@ trait HasRelationships
     /**
      * The many to many relationship methods.
      *
-     * @var string[]
+     * @var array
      */
     public static $manyMethods = [
         'belongsToMany', 'morphToMany', 'morphedByMany',

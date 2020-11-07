@@ -5,7 +5,7 @@ namespace mf\auth;
 abstract class AbstractAuthentification {
 
     /* une constante pour le niveau le plus bas */
-    const ACCESS_LEVEL_NONE = -9999; 
+    const ACCESS_LEVEL_NONE = 0; 
   
     /* l'identifiant de l'utilisateur connecté */ 
     protected $user_login   = null;

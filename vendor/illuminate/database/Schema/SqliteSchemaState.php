@@ -2,18 +2,16 @@
 
 namespace Illuminate\Database\Schema;
 
-use Illuminate\Database\Connection;
-
 class SqliteSchemaState extends SchemaState
 {
     /**
      * Dump the database's schema into a file.
      *
-     * @param  \Illuminate\Database\Connection
-     * @param  string  $path
+     * @param string $path
+     *
      * @return void
      */
-    public function dump(Connection $connection, $path)
+    public function dump($path)
     {
         with($process = $this->makeProcess(
             $this->baseCommand().' .schema'
@@ -55,7 +53,8 @@ class SqliteSchemaState extends SchemaState
     /**
      * Load the given schema file into the database.
      *
-     * @param  string  $path
+     * @param string $path
+     *
      * @return void
      */
     public function load($path)
