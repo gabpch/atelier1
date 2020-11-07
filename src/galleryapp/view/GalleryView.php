@@ -2,6 +2,9 @@
 
 namespace galleryapp\view;
 
+use mf\router\Router;
+use galleryapp\auth\GalleryAuthentification;
+
 class GalleryView extends \mf\view\AbstractView
 {
 
@@ -12,7 +15,39 @@ class GalleryView extends \mf\view\AbstractView
 
     private function renderHeader()
     {
-        return '<h1>Media Photo</h1>';
+        $auth = new GalleryAuthentification;
+        $rooter = new Router;
+        $urlForHome = $rooter->urlFor('home', null);
+        $urlForLogout = $rooter->urlFor('logout', null);
+        $urlForAuth = $rooter->urlFor('viewAuth', null);
+        $header = "";
+
+        // Header utilisateur connecté;
+        if ($auth->logged_in) {
+            $header .=  <<<EOT
+                    <nav>
+                        <ul>
+                            <li><a class='active' href="${urlForHome}">MEDIA PHOTO</a></li>
+                            <li><a  href="">MES GALLERIES</a></li>
+                            <li><a href="${urlForLogout}">Déconnexion</a></li>
+                        </ul>
+                    </nav>
+                    
+EOT;
+        } else {
+            $header .= <<<EOT
+            <nav>
+            <ul>
+                <li><a class='active' href="${urlForHome}">MEDIA PHOTO</a></li>
+                <li><a href="${urlForAuth}">Connexion</a></li>
+            </ul>
+        
+        </nav>
+EOT;
+        }
+
+
+        return $header;
     }
 
     private function renderFooter()
@@ -22,6 +57,8 @@ class GalleryView extends \mf\view\AbstractView
 
     private function renderHome()
     {
+
+        //echo $_SESSION['user_login'];
         $chaine = "";
 
         $router = new \mf\router\Router();
@@ -29,7 +66,6 @@ class GalleryView extends \mf\view\AbstractView
         foreach ($this->data as $key => $value) {
 
             $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-
         }
 
         $chaine;
@@ -54,38 +90,55 @@ EOT;
 
     private function renderGallery()
     {
-
         $chaine = "";
+        $btn ="";
 
-        foreach ($this->data as $key => $value) {
+        $nom_gal = $this->data['gallery']['name'];
+        $desc_gal = $this->data['gallery']['description'];
+        $keyword_gal = $this->data['gallery']['keyword'];
+        $creator = $this->data['user']['user_name'];
 
-            $chaine = $chaine . "<div class='img'><div class='Info-gal'><p></p> <p>$value->title</p> </div> <img src='../../$value->path' alt='Image introuvable'> </div>";
+        //penser à ajouter la date de création de la galerie
+
+        $nb_img = count($this->data['image']);
+
+        $router = new Router;
+
+        foreach ($this->data['image'] as $key => $value) {
+
+            $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <img src='../../$value->path' alt='Image introuvable'> </div>";
 
         }
 
         $chaine;
 
-        $router = new \mf\router\Router();
+        if($this->data['user']['user_name'] === $_SESSION['user_login']){
 
-        $urlForCon = $router->urlFor('viewAuth');
-        $urlForHome = $router->urlFor('test');
+            $btn .= "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Ajouter une nouvelle image </a></div>";
+            
+        }
+
+        
 
         $result = <<< EOT
 
-        <h1 class='ingoUti'>Nom de la galerie</h1>
-        <h1 class='ingoUti'>Nom de l'auteur</h1>
+        <h1 class='ingoUti'>Nom de la galerie : ${nom_gal}</h1>
+        <h1 class='ingoUti'>Nom de l'auteur : ${creator}</h1>
+
+        <p>Description : ${desc_gal}</p>
 
          <section class='main'>
-
-
             ${chaine}
-
          </section>
+
+         ${btn}
+
+         <p>Mots clés : ${keyword_gal}</p>
+         <p>nombre d'image dans la galerie : ${nb_img} images</p>
 
 EOT;
 
         return $result;
-
     }
 
     private function renderNewGal()
@@ -127,12 +180,16 @@ EOT;
 
     private function renderAuth()
     {
+        $rooter = new Router();
+        $urlForConnect = $rooter->urlFor('login', null);
+        $urlForCreate = $rooter->urlFor('addUser', null);
+
         $result = <<<EOT
         <div class="forms">
 
             <div class="log-in">
                 <h1>Se connecter</h1>
-                <form action="" method="post">
+                <form action="${urlForConnect}" method="post">
                     <input type="text" id="user_name1" name="user_name" placeholder="Nom d'utilisateur" required>
                     <input type="password" id="password1" name="password" placeholder="Mot de passe" required>
                     <button class="submit-btn" type="submit">Connexion</button>
@@ -143,7 +200,7 @@ EOT;
 
             <div class="sign-in">
                 <h1>S'inscrire</h1>
-                <form action="../sendNewUser/" method="post">
+                <form action="${urlForCreate}" method="post">
                     <input type="text" name="first_name" placeholder="Prénom" required>
                     <input type="text" name="name" placeholder="Nom" required>
                     <input type="email" name="email" placeholder="Email" required>

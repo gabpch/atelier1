@@ -35,15 +35,32 @@ $router = new \mf\router\Router();
 $router->setDefaultRoute('test');
 $router->addRoute('test', '', '\galleryapp\control\GalleryController', 'viewHome', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 $router->addRoute('home', '/home/', '\galleryapp\control\GalleryController', 'viewHome', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+
+// AFFICHE LA GALLERIE
 $router->addRoute('viewGallery', '/viewGallery/', '\galleryapp\control\GalleryController', 'viewGallery', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
-$router->addRoute('viewNewGal', '/viewNewGal/', '\galleryapp\control\GalleryController', 'viewNewGal', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
-$router->addRoute('sendNewGal', '/sendNewGal/', '\galleryapp\control\GalleryController', 'sendNewGal',  \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+
+// AFFICHE LE FORMULAIRE POUR CREE UNE GALLERIE
+$router->addRoute('viewNewGal', '/viewNewGal/', '\galleryapp\control\GalleryController', 'viewNewGal', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// ENVOIE LES DONNEES DU FORMULAIRE POUR LA CREATION D'UNE GALLERIE
+$router->addRoute('sendNewGal', '/sendNewGal/', '\galleryapp\control\GalleryController', 'sendNewGal',  \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// AFFICHE UNE IMAGE
 $router->addRoute('viewNewImg', '/viewNewImg/', '\galleryapp\control\GalleryController', 'viewNewImg',  \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+
+// AFFICHE LE FORMULAIRE POUR L'AUTHENTIFICATION (LOG OR CREATE ACCOUNT)
 $router->addRoute('viewAuth', '/viewAuth/', '\galleryapp\control\GalleryController', 'viewAuth', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+
+// ENVOIE LES DONNEES DU FORMULAIRE POUR SE CONNECTER
+$router->addRoute('login', '/login/', '\galleryapp\control\GalleryAdminController', 'checkLogin', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+
+// ENVOIE LES DONNEES DU FORMULAIRE POUR LA CREATION D'UN UTILISATEUR
+$router->addRoute('addUser', '/check_signup/', '\galleryapp\control\GalleryAdminController', 'checkSignup', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+
+// DECONNEXION DE L'UTILISATEUR
+$router->addRoute('logout', '/logout/', '\galleryapp\control\GalleryAdminController', 'logout', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
 /* STYLE */
 galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');
 
 $router->run();
-
-/* ========== MAIN ========== */
