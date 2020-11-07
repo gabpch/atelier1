@@ -51,10 +51,13 @@ $router->addRoute('viewNewImg', '/viewNewImg/', '\galleryapp\control\GalleryCont
 $router->addRoute('viewAuth', '/viewAuth/', '\galleryapp\control\GalleryController', 'viewAuth', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 
 // ENVOIE LES DONNEES DU FORMULAIRE POUR SE CONNECTER
-$router->addRoute('login', '/login/', '\galleryapp\control\GalleryAdminController', 'checkLogin', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+$router->addRoute('login', '/login/', '\galleryapp\control\GalleryAdminController', 'checkLogin', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 
 // ENVOIE LES DONNEES DU FORMULAIRE POUR LA CREATION D'UN UTILISATEUR
-$router->addRoute('addUser', '/check_signup/', '\galleryapp\control\GalleryAdminController', 'checkSignup', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+$router->addRoute('addUser', '/check_signup/', '\galleryapp\control\GalleryAdminController', 'checkSignup', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+
+// DECONNEXION DE L'UTILISATEUR
+$router->addRoute('logout', '/logout/', '\galleryapp\control\GalleryAdminController', 'logout', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
 /* STYLE */
 galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');
@@ -72,5 +75,7 @@ $router->run();
 
 // $login->loginUser('BM8', 'eee');
 
-echo $_SESSION['user_login'];
-echo $_SESSION['access_level'];
+if (isset($_SESSION['user_login'], $_SESSION['access_level'])) {
+    echo $_SESSION['user_login'];
+    echo $_SESSION['access_level'];
+}
