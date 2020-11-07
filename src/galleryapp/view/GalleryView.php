@@ -24,16 +24,24 @@ class GalleryView extends \mf\view\AbstractView
     {
         $chaine = "";
 
+        $router = new \mf\router\Router();
+
         foreach ($this->data as $key => $value) {
 
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <img src='$key' alt='Image introuvable'> </div>";
+            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
+
         }
 
         $chaine;
 
+        $router = new \mf\router\Router();
+
+        $urlForCon = $router->urlFor('viewAuth');
+
         $result = <<< EOT
 
          <section class='main'>
+
 
             ${chaine}
 
@@ -46,6 +54,38 @@ EOT;
 
     private function renderGallery()
     {
+
+        $chaine = "";
+
+        foreach ($this->data as $key => $value) {
+
+            $chaine = $chaine . "<div class='img'><div class='Info-gal'><p></p> <p>$value->title</p> </div> <img src='../../$value->path' alt='Image introuvable'> </div>";
+
+        }
+
+        $chaine;
+
+        $router = new \mf\router\Router();
+
+        $urlForCon = $router->urlFor('viewAuth');
+        $urlForHome = $router->urlFor('test');
+
+        $result = <<< EOT
+
+        <h1 class='ingoUti'>Nom de la galerie</h1>
+        <h1 class='ingoUti'>Nom de l'auteur</h1>
+
+         <section class='main'>
+
+
+            ${chaine}
+
+         </section>
+
+EOT;
+
+        return $result;
+
     }
 
     private function renderNewGal()
