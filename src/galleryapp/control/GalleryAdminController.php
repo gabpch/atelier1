@@ -18,10 +18,18 @@ class GalleryAdminController extends \mf\control\AbstractController
         $vue->render('auth');
     }
 
+    public function logout()
+    {
+        $auth = new \mf\auth\Authentification;
+        $auth->logout();
+        \mf\router\Router::executeRoute('home');
+    }
+
     public function checkLogin()
     {
         $auth = new GalleryAuthentification();
         $auth->loginUser($this->request->post['user_name'], $this->request->post['password']);
+        \mf\router\Router::executeRoute('home');
     }
 
     public function checkSignup()
