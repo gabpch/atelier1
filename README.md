@@ -15,7 +15,7 @@ Download **composer** if not already installed: [here](https://getcomposer.org/d
 
 ### Database config
 
-Download $$database** [here](https://test)
+Download **database** [here](https://test)
 
 driver = 'mysql'
 host = 'localhost'
