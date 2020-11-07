@@ -29,7 +29,8 @@ class GalleryView extends \mf\view\AbstractView
                     <nav>
                         <ul>
                             <li><a class='active' href="${urlForHome}">MEDIA PHOTO</a></li>
-                             <li><a class='active' href="${urlForLogout}">Déconnexion</a></li>
+                            <li><a  href="">MES GALLERIES</a></li>
+                            <li><a href="${urlForLogout}">Déconnexion</a></li>
                         </ul>
                     </nav>
                     
@@ -59,9 +60,11 @@ EOT;
     {
         $chaine = "";
 
+        $router = new Router;
+
         foreach ($this->data as $key => $value) {
 
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <img src='$key' alt='Image introuvable'></div>";
+            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
         }
 
         $chaine;
@@ -69,7 +72,8 @@ EOT;
         $result = <<< EOT
 
          <section class='main'>
-         
+
+
             ${chaine}
 
          </section>

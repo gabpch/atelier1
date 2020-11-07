@@ -7,8 +7,21 @@ Download **composer** if not already installed: [here](https://getcomposer.org/d
 |--|--|
 | `composer install`| Install project dependencies|
 
-### Equipe
+### Team
 1. MATHIEU Benjamin
 2. PICHLY Gabriel
 3. GIRARDIN Bastien
 4. KREMER Thomas
+
+### Database config
+
+Download **database** [here](https://test)
+
+driver = 'mysql'
+host = 'localhost'
+database = ''
+username = ''
+password = ''
+charset = 'utf8'
+collation = 'utf8_unicode_ci'
+prefix = ''
