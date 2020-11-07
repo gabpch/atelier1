@@ -38,7 +38,6 @@ $router->addRoute('viewGallery', '/viewGallery/', '\galleryapp\control\GalleryCo
 $router->addRoute('viewNewGal', '/viewNewGal/', '\galleryapp\control\GalleryController', 'viewNewGal', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 $router->addRoute('sendNewGal', '/sendNewGal/', '\galleryapp\control\GalleryController', 'sendNewGal',  \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 $router->addRoute('viewNewImg', '/viewNewImg/', '\galleryapp\control\GalleryController', 'viewNewImg',  \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
-$router->addRoute('sendNewImg', '/sendNewImg/', '\galleryapp\control\GalleryController', 'sendNewImg',  \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 $router->addRoute('viewAuth', '/viewAuth/', '\galleryapp\control\GalleryController', 'viewAuth', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 
 /* STYLE */
@@ -47,14 +46,3 @@ galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');
 $router->run();
 
 /* ========== MAIN ========== */
-
-$newUser = new GalleryAuthentification();
-
-$newUser->createUser('DE SOUZA', 'Alex', 'alexdu88rpz@gmail.com', 'coucou', 'Spaaace');
-$newUser->createUser('BEN', 'M', 'BEN@gmail.com', 'PWD', 'BM8');
-
-//$login = new GalleryAuthentification();
-
-//$login->loginUser('BM8', 'eee');
-
-//print_r($router::$routes);

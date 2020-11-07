@@ -17,13 +17,12 @@ class Router extends AbstractRouter
             if ($auth->checkAccessRight(self::$routes[$path][2])) {
                 $cname = self::$routes[$path][0];
                 $cmth = self::$routes[$path][1];
-            }
-            else
-            {
+            } else {
                 $cname = self::$routes[self::$aliases['default']][0];
                 $cmth = self::$routes[self::$aliases['default']][1];
             }
-        } else {
+        } else
+        {
             $cname = self::$routes[self::$aliases['default']][0];
             $cmth = self::$routes[self::$aliases['default']][1];
         }

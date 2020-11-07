@@ -2,41 +2,45 @@
 
 namespace mf\auth;
 
-abstract class AbstractAuthentification {
+abstract class AbstractAuthentification
+{
 
     /* une constante pour le niveau le plus bas */
-    const ACCESS_LEVEL_NONE = 0; 
-  
-    /* l'identifiant de l'utilisateur connecté */ 
+    const ACCESS_LEVEL_NONE = 0;
+
+    /* l'identifiant de l'utilisateur connecté */
     protected $user_login   = null;
 
     /* son niveau d'accès */
-    protected $access_level = self::ACCESS_LEVEL_NONE; 
+    protected $access_level = self::ACCESS_LEVEL_NONE;
 
     /* vrai s'il est connecté */
     protected $logged_in    = false;
 
 
     /* un getter et un setter + toString */
-    public function __get($attr_name) {
-        if (property_exists( __CLASS__, $attr_name))
+    public function __get($attr_name)
+    {
+        if (property_exists(__CLASS__, $attr_name))
             return $this->$attr_name;
         $emess = __CLASS__ . ": unknown member $attr_name (__get)";
         throw new \Exception($emess);
     }
-    
-    public function __set($attr_name, $attr_val) {
-        if (property_exists( __CLASS__, $attr_name)) 
-            $this->$attr_name=$attr_val; 
-        else{
+
+    public function __set($attr_name, $attr_val)
+    {
+        if (property_exists(__CLASS__, $attr_name))
+            $this->$attr_name = $attr_val;
+        else {
             $emess = __CLASS__ . ": unknown member $attr_name (__set)";
             throw new \Exception($emess);
         }
     }
 
-    public function __toString(){
+    public function __toString()
+    {
         return json_encode(get_object_vars($this));
-    } 
+    }
 
 
     /* 
@@ -64,7 +68,7 @@ abstract class AbstractAuthentification {
      */
 
 
-    
+
     /* 
      * La méthode updateSession : 
      *
@@ -86,10 +90,10 @@ abstract class AbstractAuthentification {
      *    - mettre l'attribut $this->logged_in à vrai
      *
      */
-    
+
     abstract protected function updateSession($username, $level);
 
-     /* 
+    /* 
       * la méthode logout :
       * 
       * Méthode pour effectuer la déconnexion : 
@@ -102,7 +106,7 @@ abstract class AbstractAuthentification {
       *  - Mettre l'attribut $this->logged_in a faux
       * 
       */
-    
+
     abstract public function logout();
 
 
@@ -122,7 +126,7 @@ abstract class AbstractAuthentification {
      * Sinon 
      *     retourner vrai
      */
-    
+
     abstract public function checkAccessRight($requested);
 
     /* 
@@ -145,7 +149,7 @@ abstract class AbstractAuthentification {
      */
 
     abstract public function login($username, $db_pass, $given_pass, $level);
-    
+
     /* 
      * La méthode hashPassword :
      *
@@ -159,7 +163,7 @@ abstract class AbstractAuthentification {
      *   Retourner le résultat de la fonction password_hash
      *
      */
-    
+
     abstract protected function hashPassword($password);
 
     /* 
@@ -176,9 +180,6 @@ abstract class AbstractAuthentification {
      * 
      *  Retourner le résultat de la fonction password_verify
      */
-    
-    abstract protected function verifyPassword($password, $hash);
 
-    
-    
+    abstract protected function verifyPassword($password, $hash);
 }
