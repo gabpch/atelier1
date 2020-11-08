@@ -16,6 +16,6 @@ class HttpRequest extends AbstractHttpRequest
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->get = $_GET;
         $this->post = $_POST;
-        $this->root = '';
+        $this->root = dirname($this->script_name);
     }
 }
