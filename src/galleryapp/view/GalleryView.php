@@ -65,7 +65,7 @@ EOT;
 
         foreach ($this->data as $key => $value) {
 
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
+            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='/$key' alt='Image introuvable'></a> </div>";
         }
 
         $chaine;
@@ -77,10 +77,7 @@ EOT;
         $result = <<< EOT
 
          <section class='main'>
-
-
             ${chaine}
-
          </section>
 
 EOT;
@@ -91,7 +88,7 @@ EOT;
     private function renderGallery()
     {
         $chaine = "";
-        $btn ="";
+        $btn = "";
 
         $nom_gal = $this->data['gallery']['name'];
         $desc_gal = $this->data['gallery']['description'];
@@ -107,21 +104,18 @@ EOT;
         foreach ($this->data['image'] as $key => $value) {
 
             $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <img src='../../$value->path' alt='Image introuvable'> </div>";
-
         }
 
         $chaine;
 
-        if(isset($_SESSION['user_login'])){
+        if (isset($_SESSION['user_login'])) {
 
-            if($this->data['user']['user_name'] === $_SESSION['user_login']){
+            if ($this->data['user']['user_name'] === $_SESSION['user_login']) {
 
                 $btn .= "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Ajouter une nouvelle image </a></div>";
-                
             }
-
         }
-        
+
 
         $result = <<< EOT
 
