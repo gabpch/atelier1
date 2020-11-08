@@ -69,7 +69,7 @@ EOT;
             // echo $value . '<br><br>';
             $chaine .=
                 "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
-            <img src='$key' alt='Image introuvable'> 
+            <img src='/$key' alt='Image introuvable'> 
                 <div class='info-gal'>
                     <p>Nom: $value->name</p>
                 </div>
