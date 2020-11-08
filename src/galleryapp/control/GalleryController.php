@@ -92,12 +92,12 @@ class GalleryController extends \mf\control\AbstractController
 
         $vue = new \galleryapp\view\Galleryview($img);
         $vue->render('img');
-
     }
 
-    public function viewMyGallery(){
+    public function viewMyGallery()
+    {
 
-        if(isset($_SESSION['user_login'])){
+        if (isset($_SESSION['user_login'])) {
 
             $user = User::where('user_name', '=', $_SESSION['user_login'])->first();
             $gal = Gallery::where('id_user', '=', $user['id'])->get();
@@ -110,8 +110,27 @@ class GalleryController extends \mf\control\AbstractController
 
             $vue = new \galleryapp\view\GalleryView($galImg);
             $vue->render('myGallery');
-
-
         }
+    }
+
+    public function viewNewCons()
+    {
+        $id = $this->request->get;
+        $vue = new \galleryapp\view\GalleryView($id);
+        $vue->render('newCons');
+    }
+
+    public function sendNewCons()
+    {
+
+        // pb ici pour envoyez les données starf
+        $id = $this->request->get;
+        $user_name = $this->request->post['user_name'];
+        $user = User::where('user_name', '=', $user_name);
+
+        $c = new \galleryapp\model\Consult;
+        $c->id_gal = $id;
+        $c->id_user = $user->id;
+        $c->save();
     }
 }

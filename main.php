@@ -66,6 +66,12 @@ $router->addRoute('viewImg', '/Img/', '\galleryapp\control\GalleryController', '
 // afficher les galleries de la personne connectée
 $router->addRoute('viewMyGal', '/myGal/', '\galleryapp\control\GalleryController', 'viewMyGallery', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
+// afficher le formulaire qui permet d'autoriser des users de voir la galerie
+$router->addRoute('viewNewCons', '/viewNewCons/', '\galleryapp\control\GalleryController', 'viewNewCons', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// envoie les données du formulaire vers la table consult
+$router->addRoute('sendNewCons', '/sendNewCons/', '\galleryapp\control\GalleryController', 'sendNewCons', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
 /* STYLE */
 galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');
 

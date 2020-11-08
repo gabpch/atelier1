@@ -17,7 +17,7 @@ class GalleryView extends \mf\view\AbstractView
     {
         $auth = new GalleryAuthentification;
         $rooter = new Router;
-        $urlForHome = $rooter->urlFor('home', null);
+        $urlForHome = $rooter->urlFor('test', null);
         $urlForLogout = $rooter->urlFor('logout', null);
         $urlForAuth = $rooter->urlFor('viewAuth', null);
         $urlForMesGal = $rooter->urlFor('viewMyGal', null);
@@ -66,36 +66,30 @@ EOT;
 
         foreach ($this->data as $key => $value) {
 
-            if($value->access_mod != 1){
+            if ($value->access_mod != 1) {
 
                 $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-
-            }else{
-                if(isset($_SESSION['user_login'])){
+            } else {
+                if (isset($_SESSION['user_login'])) {
                     $user = \galleryapp\model\User::where('user_name', '=', $_SESSION['user_login'])->first();
 
-                    if($value->id_user == $user->id){
+                    if ($value->id_user == $user->id) {
 
                         $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-
                     }
 
                     $consult = \galleryapp\model\Consult::where('id_gal', '=', $value->id)->get();
 
                     foreach ($consult as $k => $v) {
 
-                        if($v->id_user == $user->id){
+                        if ($v->id_user == $user->id) {
 
                             $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-
                         }
                         # code...
                     }
                 }
             }
-
-
-            
         }
 
         $chaine;
@@ -121,7 +115,7 @@ EOT;
     private function renderGallery()
     {
         $chaine = "";
-        $btn ="";
+        $btn = "";
         $consult = "";
 
         $nom_gal = $this->data['gallery']['name'];
@@ -138,25 +132,22 @@ EOT;
         foreach ($this->data['image'] as $key => $value) {
 
             $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <a href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" ><img src='../../$value->path' alt='Image introuvable'></a> </div>";
-
         }
 
         $chaine;
 
-        if(isset($_SESSION['user_login'])){
+        if (isset($_SESSION['user_login'])) {
 
-            if($this->data['user']['user_name'] === $_SESSION['user_login']){
+            if ($this->data['user']['user_name'] === $_SESSION['user_login']) {
 
                 $btn .= "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Ajouter une nouvelle image </a></div>";
 
-                if($this->data['gallery']['access_mod'] === 1){
-                    $consult = "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Donner l'authorisation de voir votre galerie </a></div>";
+                if ($this->data['gallery']['access_mod'] === 1) {
+                    $consult = "<div><a href=\"" . $router->urlFor('viewNewCons', [['id', $this->data['gallery']['id']]]) . "\" >Donner l'authorisation de voir votre galerie </a></div>";
                 }
-                
             }
-
         }
-        
+
 
         $result = <<< EOT
 
@@ -205,10 +196,10 @@ EOT;
 EOT;
 
         return $result;
-
     }
 
-    private function renderMyGal(){
+    private function renderMyGal()
+    {
 
         $chaine = "";
         $router = new \mf\router\Router();
@@ -240,8 +231,6 @@ EOT;
 EOT;
 
         return $result;
-
-
     }
 
     private function renderNewGal()
@@ -258,6 +247,22 @@ EOT;
                     <option value="0">Public</option>
                     <option value="1">Privé</option>
                 </select>
+                <button class="submit-btn" type="submit" name="submitBtn">Ajouter</button>
+            </form>
+        </div>
+EOT;
+        return $result;
+    }
+
+    private function renderNewCons()
+    {
+        $rooter = new Router();
+        $urlFor = $rooter->urlFor('sendNewCons', [['id', $this->data['id']]]);
+        $result = <<<EOT
+        <div class="form">
+            <h1>Ajouter une autorisation</h1>
+            <form action="${urlFor}" method="post">
+                <input type="text" name="user_name" placeholder="Pseudo de l'utilisateur" required>
                 <button class="submit-btn" type="submit" name="submitBtn">Ajouter</button>
             </form>
         </div>
@@ -338,6 +343,9 @@ EOT;
                 break;
             case 'newImg':
                 $section = $this->renderNewImg();
+                break;
+            case 'newCons':
+                $section = $this->renderNewCons();
                 break;
             case 'auth':
                 $section = $this->renderAuth();
