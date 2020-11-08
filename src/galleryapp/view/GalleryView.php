@@ -56,7 +56,7 @@ EOT;
         return '<h1>Media Photo 2020</h1>';
     }
 
-    private function renderHome()
+    private function renderHome() // affiche les galeries avec une photo random
     {
 
         //echo $_SESSION['user_login'];
@@ -64,25 +64,25 @@ EOT;
 
         $router = new \mf\router\Router();
 
-        foreach ($this->data as $key => $value) {
+        foreach ($this->data as $key => $value) { // key = le chemin de l'image 'path' et la value la galerie correspondante
 
-            if ($value->access_mod != 1) {
+            if ($value->access_mod != 1) { //vérifie si la galerie est en publique ou privée (affiche toute les galeries publique)
 
                 $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
             } else {
-                if (isset($_SESSION['user_login'])) {
+                if (isset($_SESSION['user_login'])) { //vérifie si un utilisateur est connecté
                     $user = \galleryapp\model\User::where('user_name', '=', $_SESSION['user_login'])->first();
 
-                    if ($value->id_user == $user->id) {
+                    if ($value->id_user == $user->id) { // si id de la personne co est = à l'idée de la galerie ça veut dire que c'est sa galerie et qu'il faut l'afficher (meme si elle est privée)
 
                         $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
                     }
 
                     $consult = \galleryapp\model\Consult::where('id_gal', '=', $value->id)->get();
 
-                    foreach ($consult as $k => $v) {
+                    foreach ($consult as $k => $v) { // parcour dans la table consult les autorisations qui corespond à la galerie
 
-                        if ($v->id_user == $user->id) {
+                        if ($v->id_user == $user->id) { // si l'utilisateur connecté à l'autorisation de voir une galerie privée, affiche cette galereie
 
                             $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
                         }
@@ -96,12 +96,9 @@ EOT;
 
         $router = new \mf\router\Router();
 
-        $urlForCon = $router->urlFor('viewAuth');
-
         $result = <<< EOT
 
          <section class='main'>
-
 
             ${chaine}
 
@@ -112,7 +109,7 @@ EOT;
         return $result;
     }
 
-    private function renderGallery()
+    private function renderGallery() // affiche une galerie quand on click sur sa photo
     {
         $chaine = "";
         $btn = "";
@@ -125,24 +122,24 @@ EOT;
 
         //penser à ajouter la date de création de la galerie
 
-        $nb_img = count($this->data['image']);
+        $nb_img = count($this->data['image']); // récupère le nombre d'image de la galerie
 
         $router = new Router;
 
-        foreach ($this->data['image'] as $key => $value) {
+        foreach ($this->data['image'] as $key => $value) { // affiche les images de la galerie
 
             $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <a href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" ><img src='../../$value->path' alt='Image introuvable'></a> </div>";
         }
 
         $chaine;
 
-        if (isset($_SESSION['user_login'])) {
+        if (isset($_SESSION['user_login'])) { // vérifie si une personne est connecté
 
-            if ($this->data['user']['user_name'] === $_SESSION['user_login']) {
+            if ($this->data['user']['user_name'] === $_SESSION['user_login']) { // si le nom du créateur de la galerie est = à celui de la personne connecté, la galerie affiché lui appartient. donc rajouter 2 btn
 
                 $btn .= "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Ajouter une nouvelle image </a></div>";
 
-                if ($this->data['gallery']['access_mod'] === 1) {
+                if ($this->data['gallery']['access_mod'] === 1) { // si la galerie est privé alors rajouter un btn pour pouvoir donner des autorisations à d'autre user 
                     $consult = "<div><a href=\"" . $router->urlFor('viewNewCons', [['id', $this->data['gallery']['id']]]) . "\" >Donner l'authorisation de voir votre galerie </a></div>";
                 }
             }
@@ -198,7 +195,7 @@ EOT;
         return $result;
     }
 
-    private function renderMyGal()
+    private function renderMyGal() // affiche les galeries de la personne connecté quand il click sur le btn 'mes galeries'
     {
 
         $chaine = "";
@@ -215,7 +212,6 @@ EOT;
 
         $router = new \mf\router\Router();
 
-        $urlForCon = $router->urlFor('viewAuth');
 
         $result = <<< EOT
 
@@ -254,7 +250,7 @@ EOT;
         return $result;
     }
 
-    private function renderNewCons()
+    private function renderNewCons() //affiche le formulaire qui permet de donner l'autorisation à un user de voir notre galerie privée
     {
         $rooter = new Router();
         $urlFor = $rooter->urlFor('sendNewCons', [['id', $this->data['id']]]);

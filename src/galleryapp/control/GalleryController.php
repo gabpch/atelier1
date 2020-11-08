@@ -26,7 +26,7 @@ class GalleryController extends \mf\control\AbstractController
         $vue->render('home');
     }
 
-    public function viewGallery()
+    public function viewGallery() //récupère les données pour la vue renderGallery
     {
         $id = $this->request->get;
         $gal = Gallery::where('id', '=', $id)->first();
