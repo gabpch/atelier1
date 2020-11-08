@@ -20,6 +20,7 @@ class GalleryView extends \mf\view\AbstractView
         $urlForHome = $rooter->urlFor('home', null);
         $urlForLogout = $rooter->urlFor('logout', null);
         $urlForAuth = $rooter->urlFor('viewAuth', null);
+        $urlForMesGal = $rooter->urlFor('viewMyGal', null);
         $header = "";
 
         // Header utilisateur connecté;
@@ -28,7 +29,7 @@ class GalleryView extends \mf\view\AbstractView
                     <nav>
                         <ul>
                             <li><a class='active' href="${urlForHome}">MEDIA PHOTO</a></li>
-                            <li><a  href="">MES GALLERIES</a></li>
+                            <li><a  href="${urlForMesGal}">MES GALLERIES</a></li>
                             <li><a href="${urlForLogout}">Déconnexion</a></li>
                         </ul>
                     </nav>
@@ -65,7 +66,36 @@ EOT;
 
         foreach ($this->data as $key => $value) {
 
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
+            if($value->access_mod != 1){
+
+                $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
+
+            }else{
+                if(isset($_SESSION['user_login'])){
+                    $user = \galleryapp\model\User::where('user_name', '=', $_SESSION['user_login'])->first();
+
+                    if($value->id_user == $user->id){
+
+                        $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
+
+                    }
+
+                    $consult = \galleryapp\model\Consult::where('id_gal', '=', $value->id)->get();
+
+                    foreach ($consult as $k => $v) {
+
+                        if($v->id_user == $user->id){
+
+                            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
+
+                        }
+                        # code...
+                    }
+                }
+            }
+
+
+            
         }
 
         $chaine;
@@ -92,6 +122,7 @@ EOT;
     {
         $chaine = "";
         $btn ="";
+        $consult = "";
 
         $nom_gal = $this->data['gallery']['name'];
         $desc_gal = $this->data['gallery']['description'];
@@ -106,7 +137,7 @@ EOT;
 
         foreach ($this->data['image'] as $key => $value) {
 
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <img src='../../$value->path' alt='Image introuvable'> </div>";
+            $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <a href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" ><img src='../../$value->path' alt='Image introuvable'></a> </div>";
 
         }
 
@@ -117,6 +148,10 @@ EOT;
             if($this->data['user']['user_name'] === $_SESSION['user_login']){
 
                 $btn .= "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Ajouter une nouvelle image </a></div>";
+
+                if($this->data['gallery']['access_mod'] === 1){
+                    $consult = "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Donner l'authorisation de voir votre galerie </a></div>";
+                }
                 
             }
 
@@ -135,6 +170,7 @@ EOT;
          </section>
 
          ${btn}
+         ${consult}
 
          <p>Mots clés : ${keyword_gal}</p>
          <p>nombre d'image dans la galerie : ${nb_img} images</p>
@@ -142,6 +178,70 @@ EOT;
 EOT;
 
         return $result;
+    }
+
+    private function renderImg()
+    {
+        $path = $this->data['path'];
+        $titre = $this->data['title'];
+        $create_at = $this->data['created_at'];
+        $key = $this->data['keyword'];
+
+
+        $chaine = "<img src='../../$path' alt='Image introuvable'>";
+
+        $result = <<< EOT
+
+        <h1 class='ingoUti'>titre de l'image : ${titre}</h1>
+        <h1 class='ingoUti'>l'image a été ajouté le : ${create_at}</h1>
+
+         <section class='main'>
+            ${chaine}
+         </section>
+
+         <p>Mots clés : ${key}</p>
+         
+
+EOT;
+
+        return $result;
+
+    }
+
+    private function renderMyGal(){
+
+        $chaine = "";
+        $router = new \mf\router\Router();
+        $username = $_SESSION['user_login'];
+        $btn = "<div><a href=\"" . $router->urlFor('viewNewGal') . "\" >Ajouter une Galerie </a></div>";
+
+        foreach ($this->data as $key => $value) {
+
+            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur : $username </p> <p>Nom de la galerie : $value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='../../$key' alt='Image introuvable'></a> </div>";
+        }
+
+        $chaine;
+
+        $router = new \mf\router\Router();
+
+        $urlForCon = $router->urlFor('viewAuth');
+
+        $result = <<< EOT
+
+         <section class='main'>
+
+
+            ${chaine}
+
+         </section>
+
+         ${btn}
+
+EOT;
+
+        return $result;
+
+
     }
 
     private function renderNewGal()
@@ -241,6 +341,12 @@ EOT;
                 break;
             case 'auth':
                 $section = $this->renderAuth();
+                break;
+            case 'img':
+                $section = $this->renderImg();
+                break;
+            case 'myGallery':
+                $section = $this->renderMyGal();
                 break;
         }
 

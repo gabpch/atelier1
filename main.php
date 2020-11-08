@@ -45,7 +45,7 @@ $router->addRoute('viewNewGal', '/viewNewGal/', '\galleryapp\control\GalleryCont
 // ENVOIE LES DONNEES DU FORMULAIRE POUR LA CREATION D'UNE GALLERIE
 $router->addRoute('sendNewGal', '/sendNewGal/', '\galleryapp\control\GalleryController', 'sendNewGal',  \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
-// AFFICHE UNE IMAGE
+// AFFICHE le formulaire pour ajouter UNE IMAGE
 $router->addRoute('viewNewImg', '/viewNewImg/', '\galleryapp\control\GalleryController', 'viewNewImg',  \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 
 // AFFICHE LE FORMULAIRE POUR L'AUTHENTIFICATION (LOG OR CREATE ACCOUNT)
@@ -59,6 +59,12 @@ $router->addRoute('addUser', '/check_signup/', '\galleryapp\control\GalleryAdmin
 
 // DECONNEXION DE L'UTILISATEUR
 $router->addRoute('logout', '/logout/', '\galleryapp\control\GalleryAdminController', 'logout', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// affiche une image
+$router->addRoute('viewImg', '/Img/', '\galleryapp\control\GalleryController', 'viewImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+
+// afficher les galleries de la personne connectée
+$router->addRoute('viewMyGal', '/myGal/', '\galleryapp\control\GalleryController', 'viewMyGallery', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
 /* STYLE */
 galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');

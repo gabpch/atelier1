@@ -83,4 +83,35 @@ class GalleryController extends \mf\control\AbstractController
         $i->id_gal = '1'; // AJOUTER L'ID DE LA GALLERIE A L'IMAGE
         $i->save();
     }
+
+    public function viewImg()
+    {
+
+        $id = $this->request->get;
+        $img = Image::where('id', '=', $id)->first();
+
+        $vue = new \galleryapp\view\Galleryview($img);
+        $vue->render('img');
+
+    }
+
+    public function viewMyGallery(){
+
+        if(isset($_SESSION['user_login'])){
+
+            $user = User::where('user_name', '=', $_SESSION['user_login'])->first();
+            $gal = Gallery::where('id_user', '=', $user['id'])->get();
+
+            $galImg = array();
+            foreach ($gal as $v) {
+                $Img = $v->Images()->inRandomOrder()->first();
+                $galImg[$Img->path] = $v;
+            }
+
+            $vue = new \galleryapp\view\GalleryView($galImg);
+            $vue->render('myGallery');
+
+
+        }
+    }
 }
