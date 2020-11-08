@@ -1,127 +1,92 @@
-
-
-h1.ingoUti{
-    text-align: center;
+h1.ingoUti {
+  text-align: center;
 }
 
+section.row {
+  margin-top: 1%;
+  @include row();
 
-  
-section.row{
-    margin-top: 1%;
-    @include row();
+  .img {
+    width: 100%;
 
-    .img{
+    .Info-gal {
+      position: absolute;
+      width: 100%;
+      height: auto;
+      opacity: 0;
+      padding-left: 0%;
+      margin-left: 0;
 
-        width: 100%;
-    
-       
-    
-        .Info-gal{
-            position: absolute;
-    
-            width: 100%;
-    
-            height: auto;
-            
-        
-            opacity: 0;
-    
-            padding-left: 0%;
-    
-            margin-left: 0;
-        
-            p{
-                text-align: center;
-                color: white;
-                text-shadow: 0 0 2px #000000;
-                font-size: 50PX;
-                position: relative;
-    
-                height: 100%;
-        
-            }
-          }
-    
-          img{
-            width: 100%;
-            margin-bottom: 1%;
-          }
-    
-        .Info-gal:hover{
-            opacity: 1; 
-        
-        }
-    
+      p {
+        text-align: center;
+        color: white;
+        text-shadow: 0 0 2px #000000;
+        font-size: 50px;
+        position: relative;
+
+        height: 100%;
+      }
     }
 
-
-
-    div:nth-child(1){
-
-        @include grid(12, 0.5%, 3, 0);
-
-        .img{
-        @include grid(3, 0.5%, 3, 0);
-        }
-
+    img {
+      width: 100%;
+      margin-bottom: 1%;
     }
 
-    div:nth-child(2){
-        @include grid(12, 0.5%, 3, 0);
-
-        .img{
-        @include grid(3, 0.5%, 3, 0);
-        }
-        
+    .Info-gal:hover {
+      opacity: 1;
     }
+  }
 
-    div:nth-child(3){
-        @include grid(12, 0.5%, 3, 0);
+  div:nth-child(1) {
+    @include grid(12, 0.5%, 3, 0);
 
-        .img{
-        @include grid(3, 0.5%, 3, 0);
-        }
-
+    .img {
+      @include grid(3, 0.5%, 3, 0);
     }
+  }
 
-    div:nth-child(4){
-        @include grid(12, 0.5%, 3, 0);
+  div:nth-child(2) {
+    @include grid(12, 0.5%, 3, 0);
 
-        .img{
-        @include grid(3, 0.5%, 3, 0);
-        }
-
-        
+    .img {
+      @include grid(3, 0.5%, 3, 0);
     }
+  }
 
-    div:nth-child(5){
+  div:nth-child(3) {
+    @include grid(12, 0.5%, 3, 0);
 
-        @include grid(12, 0.5%, 12, 0);
-
-        input{
-
-            
-
-            border-radius: 7px;
-            background-color: #0CA3A5;
-            color: white;
-            border: none;
-            padding: 1em 2em;
-            width: 20%;
-            margin-bottom: 1%;
-            margin-left: 40%;
-            
-
-            &:hover{
-
-                background-color: #0b8b8d;
-                cursor: pointer;
-
-            }
-
-        }
-
+    .img {
+      @include grid(3, 0.5%, 3, 0);
     }
+  }
 
+  div:nth-child(4) {
+    @include grid(12, 0.5%, 3, 0);
 
+    .img {
+      @include grid(3, 0.5%, 3, 0);
+    }
+  }
+
+  div:nth-child(5) {
+    @include grid(12, 0.5%, 12, 0);
+
+    input {
+      border-radius: 7px;
+      background-color: #0ca3a5;
+      color: white;
+      border: none;
+      padding: 1em 2em;
+      width: 20%;
+      margin-bottom: 1%;
+      margin-left: 40%;
+
+      &:hover {
+        background-color: #0b8b8d;
+        cursor: pointer;
+      }
+    }
+  }
 }

@@ -4,6 +4,7 @@ namespace galleryapp\control;
 
 use galleryapp\auth\GalleryAuthentification;
 use galleryapp\view\GalleryView;
+use mf\router\Router;
 
 class GalleryAdminController extends \mf\control\AbstractController
 {
@@ -29,7 +30,9 @@ class GalleryAdminController extends \mf\control\AbstractController
     {
         $auth = new GalleryAuthentification();
         $auth->loginUser($this->request->post['user_name'], $this->request->post['password']);
-        \mf\router\Router::executeRoute('home');
+        $rooter = new Router();
+        $urlForHome = $rooter->urlFor('home', null);
+        header("Location: $urlForHome", true, 302);
     }
 
     public function checkSignup()
