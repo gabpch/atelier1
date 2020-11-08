@@ -21,32 +21,36 @@ class GalleryView extends \mf\view\AbstractView
         $urlForLogout = $rooter->urlFor('logout', null);
         $urlForAuth = $rooter->urlFor('viewAuth', null);
         $header = "";
-        echo $auth->logged_in;
 
         // Header utilisateur connecté;
         if ($auth->logged_in) {
             $header .=  <<<EOT
-                    <nav>
+                    <nav>    
                         <ul>
-                            <li><a class='active' href="${urlForHome}">MEDIA PHOTO</a></li>
-                            <li><a  href="">MES GALLERIES</a></li>
-                            <li><a href="${urlForLogout}">Déconnexion</a></li>
+                            <li><a class='active' href="${urlForHome}">Media Photo</a></li>
+                            <li><a  href="">Mes galleries</a></li>
+                            <li><a href="${urlForLogout}">Déconnexion</a></li>     
                         </ul>
-                    </nav>
-                    
+                        <form class="search" action="">
+                            <input type="text" placeholder="Search images..." name="search">
+                            <button type="submit"><i>OK</i></button>
+                        </form>   
+                    </nav>              
 EOT;
         } else {
             $header .= <<<EOT
             <nav>
-            <ul>
-                <li><a class='active' href="${urlForHome}">MEDIA PHOTO</a></li>
-                <li><a href="${urlForAuth}">Connexion</a></li>
-            </ul>
-        
-        </nav>
+                <ul>
+                    <li><a class='active' href="${urlForHome}">Media Photo</a></li>
+                    <li><a href="${urlForAuth}">Connexion</a></li>
+                </ul>
+                <form class="search" action="">
+                    <input type="text" placeholder="Search images..." name="search2">
+                    <button type="submit"><i>OK</i></button>
+            </form>
+            </nav>        
 EOT;
         }
-
 
         return $header;
     }
@@ -59,27 +63,27 @@ EOT;
     private function renderHome()
     {
         $chaine = "";
-
         $router = new Router;
 
         foreach ($this->data as $key => $value) {
-
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
+            // echo $value . '<br><br>';
+            $chaine .=
+                "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
+            <img src='$key' alt='Image introuvable'> 
+                <div class='info-gal'>
+                    <p>Nom: $value->name</p>
+                </div>
+            </a>";
         }
 
         $chaine;
 
         $result = <<< EOT
-
          <section class='main'>
-
-
             ${chaine}
-
          </section>
 
 EOT;
-
         return $result;
     }
 
@@ -89,19 +93,16 @@ EOT;
 
         foreach ($this->data as $key => $value) {
 
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <img src='../../$value->path' alt='Image introuvable'> </div>";
+            $chaine .= "<div class='img'> <div class='info-gal'><p></p> <p>$value->title</p> </div> <img src='../../$value->path' alt='Image introuvable'> </div>";
         }
-
         $chaine;
 
         $result = <<< EOT
         <h1 class='ingoUti'>Nom de la galerie</h1>
         <h1 class='ingoUti'>Nom de l'auteur</h1>
-
          <section class='main'>
             ${chaine}
          </section>
-
 EOT;
 
         return $result;
