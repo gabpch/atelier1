@@ -52,13 +52,27 @@ class GalleryController extends \mf\control\AbstractController
 
     public function sendNewGal()
     {
-        print_r($this->request->post);
+        $lastGal = Gallery::select()->orderBy('id', 'DESC')->first();
+        $user = User::Where('user_name', '=', $_SESSION['user_login'])->first();
         $g = new Gallery;
         $g->name = $this->request->post['name'];
         $g->description = $this->request->post['desc'];
         $g->keyword = $this->request->post['keyword'];
         $g->access_mod = $this->request->post['access'];
+        $g->id_user = $user->id;
         $g->save();
+        $img_Path = "src/img/";
+        $i = new Image;
+        $lastImg = Image::select()->latest()->first();
+        $lastImg->id += 1;
+        $rename = rename($_FILES['img']['tmp_name'], $img_Path . $lastImg->id . '.jpg');
+        //var_dump($rename); //retourne vrai ou faux
+        $i->path = str_replace("\\", "", $img_Path . $lastImg->id . '.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
+        $i->title = $this->request->post['nameImg'];
+        $i->keyword = $this->request->post['keywordImg'];
+        $i->id_gal = $lastGal->id + 1;
+        $i->save();
+        \mf\router\router::executeRoute('viewMyGal');
     }
 
     public function viewAuth()
@@ -69,20 +83,48 @@ class GalleryController extends \mf\control\AbstractController
 
     public function viewNewImg()
     {
-        $data = '';
-        $vue = new \galleryapp\view\GalleryView($data);
+        $user = User::where('user_name', '=', $_SESSION['user_login'])->first();
+        $gal = Gallery::where('id_user', '=', $user['id'])->get();
+        $vue = new \galleryapp\view\GalleryView($gal);
         $vue->render('newImg');
     }
 
-    public function sendNewImg()
+    public function viewModifImg()
     {
-        print_r($this->request->post);
-        $i = new Image;
-        $i->title = $this->request->post['title'];
-        $i->keyword = $this->request->post['keyword'];
-        $i->path = 'un_path'; // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
-        $i->id_gal = '1'; // AJOUTER L'ID DE LA GALLERIE A L'IMAGE
-        $i->save();
+        $id = $this->request->get;
+        $img = Image::where('id_gal', $id['id'])->get();;
+        $user = User::where('user_name', '=', $_SESSION['user_login'])->first();
+        $gal = Gallery::where('id_user', '=', $user['id'])->get();
+        $data = array(
+            'gallery' => $gal,
+            'image' => $img
+        );
+
+        $vue = new \galleryapp\view\GalleryView($data);
+        $vue->render('modifImg');
+    }
+
+    public function sendModifImg()
+    {
+
+        $img = Image::where('id', '=',  $this->request->post['img'])
+            ->update(
+
+                array(
+                    'title' => $this->request->post['title'],
+                    'keyword' => $this->request->post['keyword'],
+                    'id_gal' => $this->request->post['gallery']
+
+                )
+
+            );
+
+        //$img->save();
+
+        $rooter = new \mf\router\Router();
+
+        $urlForHome = $rooter->urlFor('home', null);
+        header("Location: $urlForHome", true, 302);
     }
 
     public function viewImg()
@@ -137,5 +179,24 @@ class GalleryController extends \mf\control\AbstractController
         // Redirection sur la page Mes galeries
         $urlForMyGal = $rooter->urlFor('viewMyGal', null);
         header("Location: $urlForMyGal", true, 302);
+<<<<<<< HEAD
+=======
+    }
+
+    public function sendNewImg()
+    {
+        $img_Path = "src/img/";
+        $i = new Image;
+        $lastImg = Image::select()->orderBy('id', 'DESC')->first();
+        $lastImg->id += 1;
+        $rename = rename($_FILES['img']['tmp_name'], $img_Path . $lastImg->id . '.jpg');
+        //var_dump($rename); //retourne vrai ou faux
+        $i->path = str_replace("\\", "", $img_Path . $lastImg->id . '.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
+        $i->title = $this->request->post['title'];
+        $i->keyword = $this->request->post['keyword'];
+        $i->id_gal = $this->request->post['gallery'];
+        $i->save();
+        \mf\router\Router::executeRoute('viewGallery');
+>>>>>>> a72e9da1629c1d149fcb6189166d54360fd99283
     }
 }

@@ -47,6 +47,8 @@ $router->addRoute('sendNewGal', '/sendNewGal/', '\galleryapp\control\GalleryCont
 // AFFICHE le formulaire pour ajouter UNE IMAGE
 $router->addRoute('viewNewImg', '/viewNewImg/', '\galleryapp\control\GalleryController', 'viewNewImg',  \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 
+$router->addRoute('sendNewImg', '/sendNewImg/', '\galleryapp\control\GalleryController', 'sendNewImg',  \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+
 // AFFICHE LE FORMULAIRE POUR L'AUTHENTIFICATION (LOG OR CREATE ACCOUNT)
 $router->addRoute('viewAuth', '/viewAuth/', '\galleryapp\control\GalleryController', 'viewAuth', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 
@@ -70,6 +72,12 @@ $router->addRoute('viewNewCons', '/viewNewCons/', '\galleryapp\control\GalleryCo
 
 // envoie les données du formulaire vers la table consult
 $router->addRoute('sendNewCons', '/sendNewCons/', '\galleryapp\control\GalleryController', 'sendNewCons', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// Affiche le formulaire pour modifier une image
+$router->addRoute('viewModifImg', '/viewModifImg/', '\galleryapp\control\GalleryController', 'viewModifImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// envoie dans la bdd les modifications sur l'image
+$router->addRoute('sendModifImg', '/sendModifImg/', '\galleryapp\control\GalleryController', 'sendModifImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
 /* STYLE */
 galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');
