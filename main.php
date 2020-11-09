@@ -32,9 +32,8 @@ $db->bootEloquent();             /* établir la connexion */
 
 /* ROUTER */
 $router = new \mf\router\Router();
-$router->setDefaultRoute('test');
-$router->addRoute('test', '', '\galleryapp\control\GalleryController', 'viewHome', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
-$router->addRoute('home', '/home/', '\galleryapp\control\GalleryController', 'viewHome', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+$router->setDefaultRoute('home');
+$router->addRoute('home', '', '\galleryapp\control\GalleryController', 'viewHome', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
 
 // AFFICHE LA GALLERIE
 $router->addRoute('viewGallery', '/viewGallery/', '\galleryapp\control\GalleryController', 'viewGallery', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
@@ -73,8 +72,10 @@ $router->addRoute('viewNewCons', '/viewNewCons/', '\galleryapp\control\GalleryCo
 // envoie les données du formulaire vers la table consult
 $router->addRoute('sendNewCons', '/sendNewCons/', '\galleryapp\control\GalleryController', 'sendNewCons', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
+// Affiche le formulaire pour modifier une image
 $router->addRoute('viewModifImg', '/viewModifImg/', '\galleryapp\control\GalleryController', 'viewModifImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
+// envoie dans la bdd les modifications sur l'image
 $router->addRoute('sendModifImg', '/sendModifImg/', '\galleryapp\control\GalleryController', 'sendModifImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
 /* STYLE */
