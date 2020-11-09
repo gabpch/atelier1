@@ -88,24 +88,24 @@ EOT;
                 if (isset($_SESSION['user_login'])) { //vérifie si un utilisateur est connecté
                     $user = \galleryapp\model\User::where('user_name', '=', $_SESSION['user_login'])->first();
 
-                    if ($value->id_user == $user->id) { // si id de la personne co est = à l'idée de la galerie ça veut dire que c'est sa galerie et qu'il faut l'afficher (meme si elle est privée)
+                    if ($value->id_user == $user->id) { // si id de la personne co = id de la galerie ça veut dire que c'est sa galerie et qu'il faut l'afficher (meme si elle est privée)
 
                         //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
 
                         $chaine .=
                             "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
-                                            <img src='$app_root/$key' alt='Image introuvable'> 
-                                                <div class='info-gal'>
-                                                    <p>Nom: $value->name</p>
-                                                </div>
-                                            </a>";
+                                <img src='$app_root/$key' alt='Image introuvable'> 
+                                    <div class='info-gal'>
+                                        <p>Nom: $value->name</p>
+                                    </div>
+                            </a>";
                     }
 
                     $consult = \galleryapp\model\Consult::where('id_gal', '=', $value->id)->get();
 
                     foreach ($consult as $k => $v) { // parcour dans la table consult les autorisations qui corespond à la galerie
 
-                        if ($v->id_user == $user->id) { // si l'utilisateur connecté à l'autorisation de voir une galerie privée, affiche cette galereie
+                        if ($v->id_user == $user->id) { // si l'utilisateur connecté à l'autorisation de voir une galerie privée, affiche cette galerie
 
                             //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
 

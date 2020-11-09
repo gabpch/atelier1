@@ -15,9 +15,10 @@ section.main {
     margin: 4px;
     font-size: 0;
 
+
     img {
       width: 100%;
-      height: 300px;
+      height: auto;
     }
 
     .info-gal {
@@ -34,6 +35,7 @@ section.main {
       opacity: 0;
       transition: 200ms opacity ease;
       font-size: initial;
+      text-align: center;
 
       p {
         color: whitesmoke;
