@@ -68,11 +68,58 @@ class GalleryController extends \mf\control\AbstractController
 
     public function viewNewImg()
     {
-        $data = '';
-        $vue = new \galleryapp\view\GalleryView($data);
-        $vue->render('newImg');
+        if (isset($_SESSION['user_login'])) {
+            $user = User::where('user_name', '=', $_SESSION['user_login'])->first();
+            $gal = Gallery::where('id_user', '=', $user['id'])->get();
+
+            $vue = new \galleryapp\view\GalleryView($gal);
+            $vue->render('newImg');
+        }
     }
-    
+
+    public function viewModifImg()
+    {
+        if (isset($_SESSION['user_login'])) {
+
+
+            $id = $this->request->get;
+            $img = Image::where('id_gal', $id['id'])->get();;
+            $user = User::where('user_name', '=', $_SESSION['user_login'])->first();
+            $gal = Gallery::where('id_user', '=', $user['id'])->get();
+
+            $data = array(
+                'gallery' => $gal,
+                'image' => $img
+            );
+
+            $vue = new \galleryapp\view\GalleryView($data);
+            $vue->render('modifImg');
+        }
+    }
+
+    public function sendModifImg()
+    {
+
+        $img = Image::where('id', '=',  $this->request->post['img'])
+            ->update(
+
+                array(
+                    'title' => $this->request->post['title'],
+                    'keyword' => $this->request->post['keyword'],
+                    'id_gal' => $this->request->post['gallery']
+
+                )
+
+            );
+
+        //$img->save();
+
+        $rooter = new \mf\router\Router();
+
+        $urlForHome = $rooter->urlFor('home', null);
+        header("Location: $urlForHome", true, 302);
+    }
+
     public function viewImg()
     {
 
@@ -130,10 +177,10 @@ class GalleryController extends \mf\control\AbstractController
         print_r($this->request->post);*/
         $i = new Image;
         $lastImg = Image::select()->latest()->first();
-        $lastImg->id +=1;
-        $rename = rename($_FILES['img']['tmp_name'],$img_Path.$lastImg->id.'.jpg');
+        $lastImg->id += 1;
+        $rename = rename($_FILES['img']['tmp_name'], $img_Path . $lastImg->id . '.jpg');
         //var_dump($rename); //retourne vrai ou faux
-        $i->path = str_replace("\\","",$img_Path.$lastImg->id.'.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
+        $i->path = str_replace("\\", "", $img_Path . $lastImg->id . '.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
         $i->title = $this->request->post['title'];
         $i->keyword = $this->request->post['keyword'];
         $i->id_gal = '5'; // AJOUTER L'ID DE LA GALLERIE A L'IMAGE

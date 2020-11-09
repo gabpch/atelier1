@@ -71,6 +71,12 @@ $router->addRoute('viewNewCons', '/viewNewCons/', '\galleryapp\control\GalleryCo
 // envoie les données du formulaire vers la table consult
 $router->addRoute('sendNewCons', '/sendNewCons/', '\galleryapp\control\GalleryController', 'sendNewCons', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
+// Affiche le formulaire pour modifier une image
+$router->addRoute('viewModifImg', '/viewModifImg/', '\galleryapp\control\GalleryController', 'viewModifImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// envoie dans la bdd les modifications sur l'image
+$router->addRoute('sendModifImg', '/sendModifImg/', '\galleryapp\control\GalleryController', 'sendModifImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
 /* STYLE */
 galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');
 
