@@ -258,7 +258,7 @@ EOT;
         $result = <<<EOT
         <div class="form">
             <h1>Ajouter une galerie</h1>
-            <form action="../sendNewGal/" method="post">
+            <form action="../sendNewGal/" method="post" form enctype="multipart/form-data">
                 <input type="text" name="name" placeholder="Nom de la galerie" required>
                 <textarea name="desc" placeholder="Description de la galerie" required></textarea>
                 <input class="keyword" type="text" name="keyword" placeholder="Mot clé" required>
@@ -266,6 +266,9 @@ EOT;
                     <option value="0">Public</option>
                     <option value="1">Privé</option>
                 </select>
+                <input type="file" name="img">
+                <input type="text" name="nameImg" placeholder="Titre de l'image" required>
+                <input class="keyword" type="text" name="keywordImg" placeholder="Mot clé de l'image" required>
                 <button class="submit-btn" type="submit">Ajouter</button>
             </form>
         </div>
@@ -291,10 +294,20 @@ EOT;
 
     private function renderNewImg()
     {
+        $cbxGal = "";
+        foreach ($this->data as $key => $value) {
+
+            $cbxGal .= "<option value ='$value->id'>$value->name</option>";
+            # code...
+        }
         $result = <<<EOT
         <div class="form">
             <h1>Ajouter une photo</h1>
-            <form action="../sendNewImg/" method="post">
+            ajouter la photo à la galerie :
+            <form action="../sendNewImg/" method="post" form enctype="multipart/form-data">
+                <select name="gallery">
+                    ${cbxGal}
+                </select>
                 <input type="text" name="title" placeholder="Titre de la photo" required>
                 <input class="keyword" type="text" name="keyword" placeholder="Mot clé" required>
                 <input type="file" name="img">
