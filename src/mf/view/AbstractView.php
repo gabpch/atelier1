@@ -2,13 +2,14 @@
 
 namespace mf\view;
 
-abstract class AbstractView {
+abstract class AbstractView
+{
 
     static protected $style_sheets = []; /* un tableau de fichiers style */
     static protected $app_title    = "Media Photo"; /* un titre de document */
-    
+
     protected $data        = null; /* les données nécessaires */
-    
+
     /* Constructeur 
      * 
      * Paramètres :  
@@ -22,10 +23,11 @@ abstract class AbstractView {
      *
      */
 
-    public function __construct( $data ){
+    public function __construct($data)
+    {
         $this->data = $data;
     }
-    
+
     /* Méthode addStyleSheet
      * 
      * Permet d'ajouter une feuille de style à la liste:
@@ -38,7 +40,8 @@ abstract class AbstractView {
      *
      */
 
-    static public function addStyleSheet($path_to_css_files){
+    static public function addStyleSheet($path_to_css_files)
+    {
         self::$style_sheets[] = $path_to_css_files;
     }
 
@@ -52,8 +55,9 @@ abstract class AbstractView {
      * - $title (String) : le titre du document HTML
      * 
      */
-    
-    static public function setAppTitle($title){
+
+    static public function setAppTitle($title)
+    {
         self::$app_title = $title;
     }
 
@@ -77,9 +81,9 @@ abstract class AbstractView {
      * - (String) : le contenu HTML complet entre les balises <body> </body> 
      *
      */
-    
+
     abstract protected function renderBody($selector);
-    
+
     /* Méthodes render
      * 
      * cette méthode génère le code HTML d'une page complète depuis le <doctype 
@@ -96,27 +100,29 @@ abstract class AbstractView {
      * http://php.net/manual/fr/language.types.string.php#language.types.string.syntax.heredoc
      *
      */
-    
-    public function render($selector){
+
+    public function render($selector)
+    {
         /* le titre du document */
         $title = self::$app_title;
 
         /* les feuilles de style */
         $app_root = (new \mf\utils\HttpRequest())->root;
         $styles = '';
-        foreach ( self::$style_sheets as $file )
-            $styles .= '<link rel="stylesheet" href="'.$app_root.'/'.$file.'"> ';
+        foreach (self::$style_sheets as $file)
+             $styles .= '<link rel="stylesheet" href="'.$app_root.'/'.$file.'"> ';
+
 
         /* on appele la methode renderBody de la sous classe */
         $body = $this->renderBody($selector);
-        
+
 
         /* construire la structure de la page 
          * 
          *  Noter l'utilisation des variables ${title} ${style} et ${body}
          * 
          */
-                
+
         $html = <<<EOT
 <!DOCTYPE html>
 <html lang="fr">
@@ -138,8 +144,7 @@ EOT;
          *
          * C'est la seule instruction echo dans toute l'application 
          */
-        
+
         echo $html;
     }
-    
 }
