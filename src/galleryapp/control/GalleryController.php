@@ -72,18 +72,7 @@ class GalleryController extends \mf\control\AbstractController
         $vue = new \galleryapp\view\GalleryView($data);
         $vue->render('newImg');
     }
-
-    public function sendNewImg()
-    {
-        print_r($this->request->post);
-        $i = new Image;
-        $i->title = $this->request->post['title'];
-        $i->keyword = $this->request->post['keyword'];
-        $i->path = 'un_path'; // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
-        $i->id_gal = '1'; // AJOUTER L'ID DE LA GALLERIE A L'IMAGE
-        $i->save();
-    }
-
+    
     public function viewImg()
     {
 
@@ -132,5 +121,28 @@ class GalleryController extends \mf\control\AbstractController
         $c->id_gal = $id;
         $c->id_user = $user->id;
         $c->save();
+    }
+
+    public function sendNewImg()
+    {
+        $img_Path = "src/img/";
+        /*print_r($_FILES); //tableau de tableau du fichier
+        print_r($this->request->post);*/
+        $i = new Image;
+        $lastImg = Image::select()->latest()->first();
+        $lastImg->id +=1;
+        $rename = rename($_FILES['img']['tmp_name'],$img_Path.$lastImg->id.'.jpg');
+        //var_dump($rename); //retourne vrai ou faux
+        $i->path = str_replace("\\","",$img_Path.$lastImg->id.'.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
+        $i->title = $this->request->post['title'];
+        $i->keyword = $this->request->post['keyword'];
+        $i->id_gal = '5'; // AJOUTER L'ID DE LA GALLERIE A L'IMAGE
+        $i->save();
+    }
+
+    public function modifImg()
+    {
+        $vue = new \galleryapp\view\GalleryView(null);
+        $vue->render('modifImg');
     }
 }
