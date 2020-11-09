@@ -273,11 +273,12 @@ EOT;
     private function renderNewCons() //affiche le formulaire qui permet de donner l'autorisation à un user de voir notre galerie privée
     {
         $rooter = new Router();
-        $urlFor = $rooter->urlFor('sendNewCons', [['id', $this->data['id']]]);
+        $urlForAuthorizeUser = $rooter->urlFor('sendNewCons', [['id', $this->data]]);
+
         $result = <<<EOT
         <div class="form">
             <h1>Ajouter une autorisation</h1>
-            <form action="${urlFor}" method="post">
+            <form action="${urlForAuthorizeUser}" method="post">
                 <input type="text" name="user_name" placeholder="Pseudo de l'utilisateur" required>
                 <button class="submit-btn" type="submit" name="submitBtn">Ajouter</button>
             </form>

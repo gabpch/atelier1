@@ -5,6 +5,8 @@ namespace galleryapp\control;
 use galleryapp\model\Gallery;
 use galleryapp\model\Image;
 use galleryapp\model\User;
+use galleryapp\model\Consult;
+use mf\router\Router;
 
 class GalleryController extends \mf\control\AbstractController
 {
@@ -56,7 +58,6 @@ class GalleryController extends \mf\control\AbstractController
         $g->description = $this->request->post['desc'];
         $g->keyword = $this->request->post['keyword'];
         $g->access_mod = $this->request->post['access'];
-        // $g->path = $this->request->post['img'];
         $g->save();
     }
 
@@ -115,22 +116,26 @@ class GalleryController extends \mf\control\AbstractController
 
     public function viewNewCons()
     {
-        $id = $this->request->get;
-        $vue = new \galleryapp\view\GalleryView($id);
+        $gallery =  Gallery::where('id', '=', $this->request->get['id'])->first();
+        $vue = new \galleryapp\view\GalleryView($gallery->id); //envoi l'id de l'utilisateur dans $this->data
         $vue->render('newCons');
     }
 
     public function sendNewCons()
     {
+        $rooter = new Router();
 
-        // pb ici pour envoyez les données starf
-        $id = $this->request->get;
-        $user_name = $this->request->post['user_name'];
-        $user = User::where('user_name', '=', $user_name);
+        $user_name = $this->request->post['user_name']; // récupère le pseudo entré dans le formulaire
+        $user = User::where('user_name', '=', $user_name)->first(); // requête qui récupère l'utilisateur correspondant au user_name dans la bdd
+        $id_gal =  Gallery::where('id', '=', $this->request->get['id'])->first(); // requête qui récupère la galerie correspondant à l'id du GET dans la bdd
 
-        $c = new \galleryapp\model\Consult;
-        $c->id_gal = $id;
-        $c->id_user = $user->id;
-        $c->save();
+        $consult = new Consult;
+        $consult->id_gal = $id_gal->id;
+        $consult->id_user = $user->id;
+        $consult->save(); // enregistre dans la bdd l'id de la galerie et de l'user
+
+        // Redirection sur la page Mes galeries
+        $urlForMyGal = $rooter->urlFor('viewMyGal', null);
+        header("Location: $urlForMyGal", true, 302);
     }
 }
