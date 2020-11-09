@@ -26,27 +26,32 @@ class GalleryView extends \mf\view\AbstractView
         // Header utilisateur connecté;
         if ($auth->logged_in) {
             $header .=  <<<EOT
-                    <nav>
+                    <nav>    
                         <ul>
                             <li><a class='active' href="${urlForHome}">MEDIA PHOTO</a></li>
                             <li><a  href="${urlForMesGal}">MES GALLERIES</a></li>
                             <li><a href="${urlForLogout}">Déconnexion</a></li>
                         </ul>
-                    </nav>
-                    
+                        <form class="search" action="">
+                            <input type="text" placeholder="Search images..." name="search">
+                            <button type="submit"><i>OK</i></button>
+                        </form>   
+                    </nav>              
 EOT;
         } else {
             $header .= <<<EOT
             <nav>
-            <ul>
-                <li><a class='active' href="${urlForHome}">MEDIA PHOTO</a></li>
-                <li><a href="${urlForAuth}">Connexion</a></li>
-            </ul>
-        
-        </nav>
+                <ul>
+                    <li><a class='active' href="${urlForHome}">Media Photo</a></li>
+                    <li><a href="${urlForAuth}">Connexion</a></li>
+                </ul>
+                <form class="search" action="">
+                    <input type="text" placeholder="Search images..." name="search2">
+                    <button type="submit"><i>OK</i></button>
+            </form>
+            </nav>        
 EOT;
         }
-
 
         return $header;
     }
@@ -61,8 +66,7 @@ EOT;
 
         //echo $_SESSION['user_login'];
         $chaine = "";
-
-        $router = new \mf\router\Router();
+        $router = new Router;
 
         foreach ($this->data as $key => $value) { // key = le chemin de l'image 'path' et la value la galerie correspondante
 
@@ -90,21 +94,27 @@ EOT;
                     }
                 }
             }
-        }
+            foreach ($this->data as $key => $value) {
+                // echo $value . '<br><br>';
+                $chaine .=
+                    "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
+            <img src='$key' alt='Image introuvable'> 
+                <div class='info-gal'>
+                    <p>Nom: $value->name</p>
+                </div>
+            </a>";
+            }
 
-        $chaine;
+            $chaine;
 
-        $router = new \mf\router\Router();
-
-        $result = <<< EOT
-
+            $result = <<< EOT
          <section class='main'>
             ${chaine}
          </section>
 
 EOT;
-
-        return $result;
+            return $result;
+        }
     }
 
     private function renderGallery() // affiche une galerie quand on click sur sa photo
@@ -128,7 +138,6 @@ EOT;
 
             $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <a href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" ><img src='../../$value->path' alt='Image introuvable'></a> </div>";
         }
-
         $chaine;
 
         if (isset($_SESSION['user_login'])) { // vérifie si une personne est connecté
