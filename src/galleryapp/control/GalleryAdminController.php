@@ -23,7 +23,10 @@ class GalleryAdminController extends \mf\control\AbstractController
     {
         $auth = new \mf\auth\Authentification;
         $auth->logout();
-        \mf\router\Router::executeRoute('home');
+
+        $rooter = new Router();
+        $urlForHome = $rooter->urlFor('test', null);
+        header("Location: $urlForHome", true, 302);
     }
 
     public function checkLogin()
@@ -31,7 +34,7 @@ class GalleryAdminController extends \mf\control\AbstractController
         $auth = new GalleryAuthentification();
         $auth->loginUser($this->request->post['user_name'], $this->request->post['password']);
         $rooter = new Router();
-        $urlForHome = $rooter->urlFor('home', null);
+        $urlForHome = $rooter->urlFor('test', null);
         header("Location: $urlForHome", true, 302);
     }
 

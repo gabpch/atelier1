@@ -26,12 +26,19 @@ class GalleryController extends \mf\control\AbstractController
         $vue->render('home');
     }
 
-    public function viewGallery()
+    public function viewGallery() //récupère les données pour la vue renderGallery
     {
         $id = $this->request->get;
         $gal = Gallery::where('id', '=', $id)->first();
+        $user = User::Where('id', '=', $gal->id_user)->first();
         $imgs = $gal->Images()->get();
-        $vue = new \galleryapp\view\GalleryView($imgs);
+
+        $data = array(
+            'gallery' => $gal,
+            'user' => $user,
+            'image' => $imgs
+        );
+        $vue = new \galleryapp\view\GalleryView($data);
         $vue->render('gallery');
     }
 
@@ -75,5 +82,55 @@ class GalleryController extends \mf\control\AbstractController
         $i->path = 'un_path'; // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
         $i->id_gal = '1'; // AJOUTER L'ID DE LA GALLERIE A L'IMAGE
         $i->save();
+    }
+
+    public function viewImg()
+    {
+
+        $id = $this->request->get;
+        $img = Image::where('id', '=', $id)->first();
+
+        $vue = new \galleryapp\view\Galleryview($img);
+        $vue->render('img');
+    }
+
+    public function viewMyGallery()
+    {
+
+        if (isset($_SESSION['user_login'])) {
+
+            $user = User::where('user_name', '=', $_SESSION['user_login'])->first();
+            $gal = Gallery::where('id_user', '=', $user['id'])->get();
+
+            $galImg = array();
+            foreach ($gal as $v) {
+                $Img = $v->Images()->inRandomOrder()->first();
+                $galImg[$Img->path] = $v;
+            }
+
+            $vue = new \galleryapp\view\GalleryView($galImg);
+            $vue->render('myGallery');
+        }
+    }
+
+    public function viewNewCons()
+    {
+        $id = $this->request->get;
+        $vue = new \galleryapp\view\GalleryView($id);
+        $vue->render('newCons');
+    }
+
+    public function sendNewCons()
+    {
+
+        // pb ici pour envoyez les données starf
+        $id = $this->request->get;
+        $user_name = $this->request->post['user_name'];
+        $user = User::where('user_name', '=', $user_name);
+
+        $c = new \galleryapp\model\Consult;
+        $c->id_gal = $id;
+        $c->id_user = $user->id;
+        $c->save();
     }
 }
