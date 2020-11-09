@@ -179,8 +179,6 @@ class GalleryController extends \mf\control\AbstractController
         // Redirection sur la page Mes galeries
         $urlForMyGal = $rooter->urlFor('viewMyGal', null);
         header("Location: $urlForMyGal", true, 302);
-<<<<<<< HEAD
-=======
     }
 
     public function sendNewImg()
@@ -197,6 +195,5 @@ class GalleryController extends \mf\control\AbstractController
         $i->id_gal = $this->request->post['gallery'];
         $i->save();
         \mf\router\Router::executeRoute('viewGallery');
->>>>>>> a72e9da1629c1d149fcb6189166d54360fd99283
     }
 }
