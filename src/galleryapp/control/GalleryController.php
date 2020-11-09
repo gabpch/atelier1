@@ -51,11 +51,13 @@ class GalleryController extends \mf\control\AbstractController
     public function sendNewGal()
     {
         print_r($this->request->post);
+        print_r($_FILES);
         $g = new Gallery;
         $g->name = $this->request->post['name'];
         $g->description = $this->request->post['desc'];
         $g->keyword = $this->request->post['keyword'];
         $g->access_mod = $this->request->post['access'];
+        $this->sendNewImg();
         // $g->path = $this->request->post['img'];
         $g->save();
     }
@@ -72,7 +74,7 @@ class GalleryController extends \mf\control\AbstractController
         $vue = new \galleryapp\view\GalleryView($data);
         $vue->render('newImg');
     }
-    
+
     public function viewImg()
     {
 
@@ -140,7 +142,7 @@ class GalleryController extends \mf\control\AbstractController
         $i->save();
     }
 
-    public function modifImg()
+    public function viewModifImg()
     {
         $vue = new \galleryapp\view\GalleryView(null);
         $vue->render('modifImg');

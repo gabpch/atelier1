@@ -17,7 +17,7 @@ class GalleryView extends \mf\view\AbstractView
     {
         $auth = new GalleryAuthentification;
         $rooter = new Router;
-        $urlForHome = $rooter->urlFor('test', null);
+        $urlForHome = $rooter->urlFor('home', null);
         $urlForLogout = $rooter->urlFor('logout', null);
         $urlForAuth = $rooter->urlFor('viewAuth', null);
         $urlForMesGal = $rooter->urlFor('viewMyGal', null);
@@ -69,71 +69,15 @@ EOT;
 
     private function renderHome() // affiche les galeries avec une photo random
     {
-
-        //echo $_SESSION['user_login'];
         $chaine = "";
         $router = new Router;
-
-
-
-        // foreach ($this->data as $key => $value) { // key = le chemin de l'image 'path' et la value la galerie correspondante
-
-        //     if ($value->access_mod != 1) { //vérifie si la galerie est en publique ou privée (affiche toute les galeries publique)
-
-        //         //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-        //         $chaine .=
-        //             "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
-        //             <img src='$key' alt='Image introuvable'> 
-        //                 <div class='info-gal'>
-        //                     <p>Nom: $value->name</p>
-        //                 </div>
-        //             </a>";
-        //     } else {
-        //         if (isset($_SESSION['user_login'])) { //vérifie si un utilisateur est connecté
-        //             $user = \galleryapp\model\User::where('user_name', '=', $_SESSION['user_login'])->first();
-
-        //             if ($value->id_user == $user->id) { // si id de la personne co est = à l'idée de la galerie ça veut dire que c'est sa galerie et qu'il faut l'afficher (meme si elle est privée)
-
-        //                 //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-
-        //                 $chaine .=
-        //                     "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
-        //                             <img src='$key' alt='Image introuvable'> 
-        //                                 <div class='info-gal'>
-        //                                     <p>Nom: $value->name</p>
-        //                                 </div>
-        //                             </a>";
-        //             }
-
-        //             $consult = \galleryapp\model\Consult::where('id_gal', '=', $value->id)->get();
-
-        //             foreach ($consult as $k => $v) { // parcour dans la table consult les autorisations qui corespond à la galerie
-
-        //                 if ($v->id_user == $user->id) { // si l'utilisateur connecté à l'autorisation de voir une galerie privée, affiche cette galereie
-
-        //                     //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-
-        //                     $chaine .=
-        //                         "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
-        //                     <img src='$key' alt='Image introuvable'> 
-        //                         <div class='info-gal'>
-        //                             <p>Nom: $value->name</p>
-        //                         </div>
-        //                     </a>";
-        //                 }
-        //                 # code...
-        //             }
-        //         }
-        //     }
-        // }
-
+        $app_root = (new \mf\utils\HttpRequest())->root;
         foreach ($this->data as $key => $value) {
 
             if ($value->access_mod != 1) {
-
                 $chaine .=
                     "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
-            <img src='$key' alt='Image introuvable'> 
+            <img src='$app_root/$key' alt='Image introuvable'> 
                 <div class='info-gal'>
                     <p>Nom: $value->name</p>
                 </div>
@@ -144,7 +88,6 @@ EOT;
 
                     if ($value->id_user == $user->id) { // si id de la personne co est = à l'idée de la galerie ça veut dire que c'est sa galerie et qu'il faut l'afficher (meme si elle est privée)
 
-                        //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
 
                         $chaine .=
                             "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
@@ -171,9 +114,7 @@ EOT;
                                         </div>
                                     </a>";
                         }
-                        # code...
                     }
-                    // echo $value . '<br><br>';
 
                 }
             }
@@ -321,12 +262,11 @@ EOT;
                 <input type="text" name="name" placeholder="Nom de la galerie" required>
                 <textarea name="desc" placeholder="Description de la galerie" required></textarea>
                 <input class="keyword" type="text" name="keyword" placeholder="Mot clé" required>
-                <input type="file" name="img">
                 <select name="access">
                     <option value="0">Public</option>
                     <option value="1">Privé</option>
                 </select>
-                <button class="submit-btn" type="submit" name="submitBtn">Ajouter</button>
+                <button class="submit-btn" type="submit">Ajouter</button>
             </form>
         </div>
 EOT;
@@ -397,6 +337,21 @@ EOT;
                 </form>
             </div>
 
+        </div>
+EOT;
+        return $result;
+    }
+
+    private function renderModifImg()
+    {
+        $result = <<<EOT
+        <div class="form">
+            <h1>Ajouter une photo</h1>
+            <form action="../sendNewImg/" method="post">
+                <input type="text" name="title" required>$this->data['title']
+                <input class="keyword" type="text" name="keyword" required>$this->data['keyword']
+                <button class="submit-btn" type="submit">Ajouter</button>
+            </form>
         </div>
 EOT;
         return $result;
