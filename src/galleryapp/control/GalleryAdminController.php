@@ -46,7 +46,6 @@ class GalleryAdminController extends \mf\control\AbstractController
         $rooter = new Router();
         $urlForHome = $rooter->urlFor('home', null);
 
-
         if (isset($this->request->post['name'], $this->request->post['first_name'], $this->request->post['email'], $this->request->post['password'])) {
             $auth->createUser($this->request->post['name'], $this->request->post['first_name'], $this->request->post['email'], $this->request->post['password'], $this->request->post['user_name']);
             header("Location: $urlForHome", true, 302);
