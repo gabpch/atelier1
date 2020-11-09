@@ -74,59 +74,6 @@ EOT;
         $chaine = "";
         $router = new Router;
 
-
-
-        // foreach ($this->data as $key => $value) { // key = le chemin de l'image 'path' et la value la galerie correspondante
-
-        //     if ($value->access_mod != 1) { //vérifie si la galerie est en publique ou privée (affiche toute les galeries publique)
-
-        //         //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-        //         $chaine .=
-        //             "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
-        //             <img src='$key' alt='Image introuvable'> 
-        //                 <div class='info-gal'>
-        //                     <p>Nom: $value->name</p>
-        //                 </div>
-        //             </a>";
-        //     } else {
-        //         if (isset($_SESSION['user_login'])) { //vérifie si un utilisateur est connecté
-        //             $user = \galleryapp\model\User::where('user_name', '=', $_SESSION['user_login'])->first();
-
-        //             if ($value->id_user == $user->id) { // si id de la personne co est = à l'idée de la galerie ça veut dire que c'est sa galerie et qu'il faut l'afficher (meme si elle est privée)
-
-        //                 //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-
-        //                 $chaine .=
-        //                     "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
-        //                             <img src='$key' alt='Image introuvable'> 
-        //                                 <div class='info-gal'>
-        //                                     <p>Nom: $value->name</p>
-        //                                 </div>
-        //                             </a>";
-        //             }
-
-        //             $consult = \galleryapp\model\Consult::where('id_gal', '=', $value->id)->get();
-
-        //             foreach ($consult as $k => $v) { // parcour dans la table consult les autorisations qui corespond à la galerie
-
-        //                 if ($v->id_user == $user->id) { // si l'utilisateur connecté à l'autorisation de voir une galerie privée, affiche cette galereie
-
-        //                     //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-
-        //                     $chaine .=
-        //                         "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
-        //                     <img src='$key' alt='Image introuvable'> 
-        //                         <div class='info-gal'>
-        //                             <p>Nom: $value->name</p>
-        //                         </div>
-        //                     </a>";
-        //                 }
-        //                 # code...
-        //             }
-        //         }
-        //     }
-        // }
-
         foreach ($this->data as $key => $value) {
 
             if ($value->access_mod != 1) {
@@ -144,7 +91,7 @@ EOT;
 
                     if ($value->id_user == $user->id) { // si id de la personne co est = à l'idée de la galerie ça veut dire que c'est sa galerie et qu'il faut l'afficher (meme si elle est privée)
 
-                        //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
+
 
                         $chaine .=
                             "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
@@ -161,8 +108,6 @@ EOT;
 
                         if ($v->id_user == $user->id) { // si l'utilisateur connecté à l'autorisation de voir une galerie privée, affiche cette galereie
 
-                            //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-
                             $chaine .=
                                 "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
                                     <img src='$key' alt='Image introuvable'> 
@@ -173,8 +118,6 @@ EOT;
                         }
                         # code...
                     }
-                    // echo $value . '<br><br>';
-
                 }
             }
         }
