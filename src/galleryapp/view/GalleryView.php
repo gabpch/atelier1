@@ -134,6 +134,7 @@ EOT;
         $chaine = "";
         $btn = "";
         $consult = "";
+        $router = new Router;
 
         $nom_gal = $this->data['gallery']['name'];
         $desc_gal = $this->data['gallery']['description'];
@@ -144,13 +145,14 @@ EOT;
 
         $nb_img = count($this->data['image']); // récupère le nombre d'image de la galerie
 
-        $router = new Router;
-
         foreach ($this->data['image'] as $key => $value) { // affiche les images de la galerie
-
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <a href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" ><img src='../../$value->path' alt='Image introuvable'></a> </div>";
+            $chaine .= "<a class='img' href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" >
+                                    <img src='../../$value->path' alt='Image introuvable'> 
+                                        <div class='info-gal'>
+                                            <p>Nom: $value->title</p>
+                                        </div>
+                                    </a>";
         }
-        $chaine;
 
         if (isset($_SESSION['user_login'])) { // vérifie si une personne est connecté
 
@@ -231,26 +233,24 @@ EOT;
 
         foreach ($this->data as $key => $value) {
 
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur : $username </p> <p>Nom de la galerie : $value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='../../$key' alt='Image introuvable'></a> </div>";
+            // $chaine = $chaine . "<div class='img'> 
+            // <div class='Info-gal'> <p>Nom de l'auteur : $username </p> <p>Nom de la galerie : $value->name</p> </div> 
+            // <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='../../$key' alt='Image introuvable'></a> </div>";
+
+            $chaine .= "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
+                                    <img src='../../$key' alt='Image introuvable'> 
+                                        <div class='info-gal'>
+                                            <p>Nom: $value->name</p>
+                                        </div>
+                                    </a>";
         }
 
-        $chaine;
-
-        $router = new \mf\router\Router();
-
-
         $result = <<< EOT
-
          <section class='main'>
-
-
             ${chaine}
-
          </section>
-
          ${btnAddGal}
          ${btnAddImg}
-
 EOT;
 
         return $result;

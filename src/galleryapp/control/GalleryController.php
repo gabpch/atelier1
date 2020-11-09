@@ -72,7 +72,7 @@ class GalleryController extends \mf\control\AbstractController
         $i->keyword = $this->request->post['keywordImg'];
         $i->id_gal = $lastGal->id + 1;
         $i->save();
-        \mf\router\router::executeRoute('home');
+        \mf\router\router::executeRoute('viewMyGal');
     }
 
     public function viewAuth()
@@ -194,6 +194,6 @@ class GalleryController extends \mf\control\AbstractController
         $i->keyword = $this->request->post['keyword'];
         $i->id_gal = $this->request->post['gallery'];
         $i->save();
-        \mf\router\Router::executeRoute('home');
+        \mf\router\Router::executeRoute('viewGallery');
     }
 }
