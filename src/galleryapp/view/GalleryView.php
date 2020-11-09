@@ -399,21 +399,6 @@ EOT;
         return $result;
     }
 
-    private function renderModifImg()
-    {
-        $result = <<<EOT
-        <div class="form">
-            <h1>Ajouter une photo</h1>
-            <form action="../sendNewImg/" method="post">
-                <input type="text" name="title" required>$this->data['title']
-                <input class="keyword" type="text" name="keyword" required>$this->data['keyword']
-                <button class="submit-btn" type="submit">Ajouter</button>
-            </form>
-        </div>
-EOT;
-        return $result;
-    }
-
     protected function renderBody($selector)
     {
 

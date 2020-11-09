@@ -181,8 +181,8 @@ class GalleryController extends \mf\control\AbstractController
         //print_r($_FILES); //tableau de tableau du fichier
         //print_r($this->request->post);
         $i = new Image;
-        $lastImg = Image::select()->latest()->first();
-        $lastImg->id += 1;
+        $lastImg = Image::select()->orderBy('id','DESC')->first();
+        $lastImg->id+=1;
         $rename = rename($_FILES['img']['tmp_name'], $img_Path . $lastImg->id . '.jpg');
         //var_dump($rename); //retourne vrai ou faux
         $i->path = str_replace("\\", "", $img_Path . $lastImg->id . '.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
