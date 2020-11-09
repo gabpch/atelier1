@@ -8,7 +8,6 @@ use galleryapp\model\User;
 
 class GalleryController extends \mf\control\AbstractController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -29,7 +28,7 @@ class GalleryController extends \mf\control\AbstractController
     public function viewGallery()
     {
         $id = $this->request->get;
-        echo $gal = Gallery::where('id', '=', $id)->first();
+        $gal = Gallery::where('id', '=', $id)->first();
         $imgs = $gal->Images()->get();
         echo "<br>" . $imgs;
         $vue = new \galleryapp\view\GalleryView($imgs);
@@ -69,12 +68,18 @@ class GalleryController extends \mf\control\AbstractController
 
     public function sendNewImg()
     {
-        print_r($this->request->post);
+        $img_Path = "src/img/";
+        /*print_r($_FILES); //tableau de tableau du fichier
+        print_r($this->request->post);*/
         $i = new Image;
+        $lastImg = Image::select()->latest()->first();
+        $lastImg->id +=1;
+        $rename = rename($_FILES['img']['tmp_name'],$img_Path.$lastImg->id.'.jpg');
+        //var_dump($rename); //retourne vrai ou faux
+        $i->path = str_replace("\\","",$img_Path.$lastImg->id.'.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
         $i->title = $this->request->post['title'];
         $i->keyword = $this->request->post['keyword'];
-        $i->path = 'un_path'; // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
-        $i->id_gal = '1'; // AJOUTER L'ID DE LA GALLERIE A L'IMAGE
+        $i->id_gal = '5'; // AJOUTER L'ID DE LA GALLERIE A L'IMAGE
         $i->save();
     }
 }

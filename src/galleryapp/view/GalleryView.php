@@ -74,7 +74,7 @@ EOT;
         $result = <<<EOT
         <div class="form">
             <h1>Ajouter une photo</h1>
-            <form action="../sendNewImg/" method="post">
+            <form action="../sendNewImg/" method="post" enctype="multipart/form-data">
                 <input type="text" name="title" placeholder="Titre de la photo" required>
                 <input class="keyword" type="text" name="keyword" placeholder="Mot clé" required>
                 <input type="file" name="img">
