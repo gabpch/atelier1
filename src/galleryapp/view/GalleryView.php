@@ -17,7 +17,7 @@ class GalleryView extends \mf\view\AbstractView
     {
         $auth = new GalleryAuthentification;
         $rooter = new Router;
-        $urlForHome = $rooter->urlFor('test', null);
+        $urlForHome = $rooter->urlFor('home', null);
         $urlForLogout = $rooter->urlFor('logout', null);
         $urlForAuth = $rooter->urlFor('viewAuth', null);
         $urlForMesGal = $rooter->urlFor('viewMyGal', null);
@@ -69,10 +69,9 @@ EOT;
 
     private function renderHome() // affiche les galeries avec une photo random
     {
-
-        //echo $_SESSION['user_login'];
         $chaine = "";
         $router = new Router;
+        $app_root = (new \mf\utils\HttpRequest())->root;
 
         foreach ($this->data as $key => $value) {
 
@@ -95,7 +94,7 @@ EOT;
 
                         $chaine .=
                             "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
-                                            <img src='$key' alt='Image introuvable'> 
+                                            <img src='$app_root/$key' alt='Image introuvable'> 
                                                 <div class='info-gal'>
                                                     <p>Nom: $value->name</p>
                                                 </div>
@@ -118,10 +117,7 @@ EOT;
                                         </div>
                                     </a>";
                         }
-                        # code...
                     }
-                    // echo $value . '<br><br>';
-
                 }
             }
         }
