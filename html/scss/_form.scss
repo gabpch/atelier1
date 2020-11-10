@@ -6,6 +6,10 @@
   border-radius: 7px;
   background-color: #0ca3a5;
 
+  .log-in {
+    margin-bottom: 1.5em;
+  }
+
   h1 {
     margin-bottom: 1em;
     font-size: 2em;
@@ -13,8 +17,10 @@
   }
 
   form {
+    margin: 0 auto;
+    width: 100%;
+
     input {
-      display: block;
       border: solid black 1px;
       border-radius: 7px;
       margin-bottom: 1em;
@@ -58,4 +64,9 @@
       }
     }
   }
+}
+
+.bar {
+  border: solid white 1px;
+  margin-bottom: 1em;
 }

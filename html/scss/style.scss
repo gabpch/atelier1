@@ -1,9 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap%27");
 @import url("https://meyerweb.com/eric/tools/css/reset/reset200802.css%27");
-@import "_home";
 @import "_index";
-@import "_form_connection";
-@import "_forms_user";
+@import "_form";
 
 * {
   box-sizing: border-box;
@@ -123,4 +121,5 @@ footer {
   height: 96px;
   text-align: center;
   flex-shrink: 0;
+  margin-top: 3em;
 }

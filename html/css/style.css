@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap%27");
 @import url("https://meyerweb.com/eric/tools/css/reset/reset200802.css%27");
+.description {
+  padding: 2em;
+}
+
 section.main {
   padding: 2em;
   display: grid;
@@ -7,45 +11,44 @@ section.main {
   grid-template-rows: auto;
 }
 section.main a:nth-child(1) {
-  height: 200px;
+  height: auto;
 }
 section.main a:nth-child(2) {
-  height: 200px;
+  height: auto;
 }
 section.main a:nth-child(3) {
-  height: 200px;
+  height: auto;
 }
 section.main a:nth-child(4) {
-  height: 200px;
+  height: auto;
 }
 section.main a:nth-child(5) {
-  height: 200px;
+  height: auto;
 }
 section.main a:nth-child(6) {
-  height: 200px;
+  height: auto;
 }
 section.main a:nth-child(7) {
-  height: 200px;
+  height: auto;
 }
 section.main a:nth-child(8) {
-  height: 200px;
+  height: auto;
 }
 section.main a:nth-child(9) {
-  height: 200px;
+  height: auto;
 }
 section.main a:nth-child(10) {
-  height: 200px;
+  height: auto;
 }
 section.main a:nth-child(11) {
-  height: 200px;
+  height: auto;
 }
 section.main a:nth-child(12) {
-  height: 200px;
+  height: auto;
 }
 section.main a:first-child {
   grid-column: 1/2;
   grid-row: 1/3;
-  height: 420px;
 }
 section.main .img {
   position: relative;
@@ -97,7 +100,6 @@ input.user-btn {
   color: white;
   cursor: pointer;
   display: inline;
-  width: 20%;
   margin: auto;
   border-radius: 7px;
   margin-top: 1em;
@@ -106,6 +108,8 @@ input.user-btn {
 
 input.user-btn:hover {
   background-color: #296c6d;
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in;
 }
 
 @media only screen and (max-width: 768px) {
@@ -204,54 +208,16 @@ input.user-btn:hover {
 .form .log-in {
   margin-bottom: 1.5em;
 }
-.form div h1 {
-  margin-bottom: 1em;
-  font-size: 2em;
-  color: white;
-}
-.form div form {
-  margin: 0 auto;
-  width: 100%;
-}
-.form div form input {
-  border: solid black 1px;
-  border-radius: 7px;
-  margin-bottom: 1em;
-  padding: 1em 2em;
-  width: 100%;
-  box-sizing: border-box;
-}
-.form div form .submit-btn {
-  border-radius: 7px;
-  background-color: #64c564;
-  color: white;
-  border: none;
-  padding: 1em 2em;
-  width: 100%;
-}
-.form div form .submit-btn:hover {
-  background-color: #359c35;
-  cursor: pointer;
-}
-.form .bar {
-  border: solid white 1px;
-  margin-bottom: 1em;
-}
-
-.form {
-  margin: 3em 10% auto;
-  padding: 1.5em;
-  border: solid black 1px;
-  border-radius: 7px;
-  background-color: #0ca3a5;
-}
 .form h1 {
   margin-bottom: 1em;
   font-size: 2em;
   color: white;
 }
+.form form {
+  margin: 0 auto;
+  width: 100%;
+}
 .form form input {
-  display: block;
   border: solid black 1px;
   border-radius: 7px;
   margin-bottom: 1em;
@@ -288,6 +254,11 @@ input.user-btn:hover {
 .form form .submit-btn:hover {
   background-color: #359c35;
   cursor: pointer;
+}
+
+.bar {
+  border: solid white 1px;
+  margin-bottom: 1em;
 }
 
 * {
@@ -397,6 +368,7 @@ footer {
   height: 96px;
   text-align: center;
   flex-shrink: 0;
+  margin-top: 3em;
 }
 
 /*# sourceMappingURL=style.css.map */

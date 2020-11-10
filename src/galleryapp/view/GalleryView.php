@@ -236,12 +236,14 @@ EOT;
 
 
         $result = <<< EOT
+
+        <div class='description'>
         <h1 class='ingoUti'>Nom de la galerie : ${nom_gal}</h1>
         <h2 class='ingoUti'>Nom de l'auteur : ${creator}</h2>
         <p>Mots clés : ${keyword_gal}</p>
         <p>nombre d'image dans la galerie : ${nb_img} images</p>
-
         <p>Description : ${desc_gal}</p>
+        </div>
 
          <section class='main'>
             ${chaine}
@@ -249,10 +251,6 @@ EOT;
 
          ${btn}
          ${consult}
-
-         <p>Mots clés : ${keyword_gal}</p>
-         <p>nombre d'image dans la galerie : ${nb_img} images</p>
-
          ${pagination}
 
 EOT;
@@ -272,15 +270,15 @@ EOT;
 
         $result = <<< EOT
 
+        <div class='description'>
         <h1 class='ingoUti'>titre de l'image : ${titre}</h1>
         <h1 class='ingoUti'>l'image a été ajouté le : ${create_at}</h1>
+        <p>Mots clés : ${key}</p>
+        </div>
 
          <section class='main'>
             ${chaine}
-         </section>
-
-         <p>Mots clés : ${key}</p>
-         
+         </section>         
 
 EOT;
 
