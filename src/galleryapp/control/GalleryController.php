@@ -182,12 +182,13 @@ class GalleryController extends \mf\control\AbstractController
     public function sendNewImg()
     {
         $img_Path = "src/img/";
+        $extension = ".".explode("/",$_FILES['img']['type'])[1];
         $i = new Image;
         $lastImg = Image::select()->orderBy('id', 'DESC')->first();
         $lastImg->id += 1;
-        $rename = rename($_FILES['img']['tmp_name'], $img_Path . $lastImg->id . '.jpg');
+        $rename = rename($_FILES['img']['tmp_name'], $img_Path . $lastImg->id . $extension);
         //var_dump($rename); //retourne vrai ou faux
-        $i->path = str_replace("\\", "", $img_Path . $lastImg->id . '.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
+        $i->path = str_replace("\\", "", $img_Path . $lastImg->id . $extension); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
         $i->title = $this->request->post['title'];
         $i->keyword = $this->request->post['keyword'];
         $i->id_gal = $this->request->post['gallery'];
