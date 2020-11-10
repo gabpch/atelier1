@@ -61,18 +61,20 @@ class GalleryController extends \mf\control\AbstractController
         $g->access_mod = $this->request->post['access'];
         $g->id_user = $user->id;
         $g->save();
-        $img_Path = "src/img/";
+        $rooter = new \mf\router\Router();
+        $urlForNewImg = $rooter->urlFor('viewNewImg', null);
+        header("Location: $urlForNewImg", true, 302);
+        /*$img_Path = "src/img/";
         $i = new Image;
         $lastImg = Image::select()->orderBy('id','DESC')->first();
         $lastImg->id += 1;
-        $rename = rename($_FILES['img']['tmp_name'], $img_Path . $lastImg->id . '.jpg');
-        //var_dump($rename); //retourne vrai ou faux
-        $i->path = str_replace("\\", "", $img_Path . $lastImg->id . '.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
+        $i->path = str_replace("\\", "", $img_Path . $i->id . '.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
         $i->title = $this->request->post['nameImg'];
         $i->keyword = $this->request->post['keywordImg'];
         $i->id_gal = $g->id;
         $i->save();
-        \mf\router\router::executeRoute('viewMyGal');
+        $rename = rename($_FILES['img']['tmp_name'], $img_Path . $i->id . '.jpg');
+        //var_dump($rename); //retourne vrai ou faux*/
     }
 
     public function viewAuth()

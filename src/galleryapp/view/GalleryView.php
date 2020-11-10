@@ -269,7 +269,7 @@ EOT;
         $result = <<<EOT
         <div class="form">
             <h1>Ajouter une galerie</h1>
-            <form action="../sendNewGal/" method="post" form enctype="multipart/form-data">
+            <form action="../sendNewGal/" method="post">
                 <input type="text" name="name" placeholder="Nom de la galerie" required>
                 <textarea name="desc" placeholder="Description de la galerie" required></textarea>
                 <input class="keyword" type="text" name="keyword" placeholder="Mot clé" required>
@@ -277,9 +277,6 @@ EOT;
                     <option value="0">Public</option>
                     <option value="1">Privé</option>
                 </select>
-                <input type="file" name="img">
-                <input type="text" name="nameImg" placeholder="Titre de l'image" required>
-                <input class="keyword" type="text" name="keywordImg" placeholder="Mot clé de l'image" required>
                 <button class="submit-btn" type="submit">Ajouter</button>
             </form>
         </div>
@@ -406,7 +403,7 @@ EOT;
                 </select>
                 <input type="text" name="title" placeholder="Titre de la photo" required>
                 <input class="keyword" type="text" name="keyword" placeholder="Mot clé" required>
-                <input type="file" name="img">
+                <input type="file" name="img" required>
                 <button class="submit-btn" type="submit">Ajouter</button>
             </form>
         </div>
