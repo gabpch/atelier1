@@ -193,7 +193,7 @@ EOT;
 
         //penser à ajouter la date de création de la galerie
 
-        $nb_img = count($this->data['image']); // récupère le nombre d'image de la galerie
+        $nb_img = $this->data['nbImg']; // récupère le nombre d'image de la galerie
 
         foreach ($this->data['image'] as $key => $value) { // affiche les images de la galerie
 
