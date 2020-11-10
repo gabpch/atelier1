@@ -7,6 +7,7 @@ use galleryapp\model\Image;
 use galleryapp\model\User;
 use galleryapp\model\Consult;
 use mf\router\Router;
+use DB;
 
 class GalleryController extends \mf\control\AbstractController
 {
@@ -52,7 +53,6 @@ class GalleryController extends \mf\control\AbstractController
 
     public function sendNewGal()
     {
-        $lastGal = Gallery::select()->orderBy('id', 'DESC')->first();
         $user = User::Where('user_name', '=', $_SESSION['user_login'])->first();
         $g = new Gallery;
         $g->name = $this->request->post['name'];
@@ -63,14 +63,14 @@ class GalleryController extends \mf\control\AbstractController
         $g->save();
         $img_Path = "src/img/";
         $i = new Image;
-        $lastImg = Image::select()->latest()->first();
+        $lastImg = Image::select()->orderBy('id','DESC')->first();
         $lastImg->id += 1;
         $rename = rename($_FILES['img']['tmp_name'], $img_Path . $lastImg->id . '.jpg');
         //var_dump($rename); //retourne vrai ou faux
         $i->path = str_replace("\\", "", $img_Path . $lastImg->id . '.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
         $i->title = $this->request->post['nameImg'];
         $i->keyword = $this->request->post['keywordImg'];
-        $i->id_gal = $lastGal->id + 1;
+        $i->id_gal = $g->id;
         $i->save();
         \mf\router\router::executeRoute('viewMyGal');
     }
@@ -191,6 +191,7 @@ class GalleryController extends \mf\control\AbstractController
         $i->keyword = $this->request->post['keyword'];
         $i->id_gal = $this->request->post['gallery'];
         $i->save();
+        Router::executeRoute('home');
     }
 
     public function viewModifGal()
