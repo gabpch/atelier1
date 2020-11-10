@@ -144,21 +144,27 @@ EOT;
 
         foreach ($this->data['image'] as $key => $value) { // affiche les images de la galerie
 
-            $btn_deleteimg = '<button type="submit" class="delete">Supprimer img</button';
+            $btn_deleteimg = '<button type="submit" class="delete">X</button';
             $urlForDeleteimg  = $router->urlFor('viewDelImg', [['id', $value->id]]);
+            $form = "<form action='$urlForDeleteimg' method='post'> $btn_deleteimg </form>";
+            $creator_gal = -1;
+
+            // si le nom du créateur de la galerie est = à celui de la personne connecté, la galerie affiché lui appartient
+            if (isset($_SESSION['user_login'])) {
+                if ($this->data['user']['user_name'] === $_SESSION['user_login']) {
+                    $creator_gal = 1;
+                } else {
+                    $creator_gal = 0;
+                }
+            }
 
             $chaine .= "<a class='img' href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" >
             <img src='../../$value->path' alt='Image introuvable'> 
                 <div class='info-gal'>
-                    <p>Nom: $value->title</p>
-                </div>
+                    <p>Nom: $value->title</p>"
+                . ($creator_gal > 0 ? "$form" : "") . // opérateur ternaire qui affiche le bouton supprimé image si la galerie appartient à la personne connecté
+                "</div>
             </a>";
-
-            if (isset($_SESSION['user_login'])) {
-                if ($this->data['user']['user_name'] === $_SESSION['user_login']) {
-                    $chaine .= "<div><a href=\"" . $router->urlFor('viewDelImg', [['id', $value->id]]) . "\" >Supprimé image</a></div>";
-                }
-            }
         }
 
         if (isset($_SESSION['user_login'])) { // vérifie si une personne est connecté
