@@ -64,7 +64,9 @@ EOT;
 
     private function renderFooter()
     {
-        return '<h1>Media Photo 2020</h1>';
+        return '<h1>Media Photo 2020</h1> 
+        <a href="https://github.com/Kilaire/atelier1" target="_blank"><img class="logo" src="html/logos/github.svg" alt="Image introuvable"></a>
+        <a href="https://trello.com/atelier608" target="_blank"><img class="logo" src="html/logos/trello-mark-blue.svg" alt="Image introuvable"></a>';
     }
 
     private function renderHome() // affiche les galeries avec une photo random
