@@ -16,8 +16,6 @@ body {
   font-family: "Lobster Two", cursive;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
 }
 
 header {
@@ -94,13 +92,26 @@ header {
   }
 }
 
-section {
-  height: 100vh;
+.pagination {
+  display: inline-block;
 }
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
 
 footer {
   background-color: #0ca3a5;
   height: 96px;
   text-align: center;
-  margin-top: auto;
 }

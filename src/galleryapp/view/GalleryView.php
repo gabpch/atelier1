@@ -69,11 +69,37 @@ EOT;
 
     private function renderHome() // affiche les galeries avec une photo random
     {
+        // ========== PAGINATION START ===============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $pages = ceil($this->data['nbGal'] / $this->data['parPage']);
+
+        $nbPage = '';
+
+        for ($i=1; $i < $pages + 1; $i++) { 
+                $nbPage .= "<a href='?page=$i'>$i</a>";
+        }
+
+        $pagination = "
+            <div class='pagination'>
+                <a href=?page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                $nbPage
+                ."<a href=?page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+            </div>
+        ";
+
+        // ========== PAGINATION END ===============
+
         $chaine = "";
         $router = new Router;
         $app_root = (new \mf\utils\HttpRequest())->root;
 
-        foreach ($this->data as $key => $value) {
+        foreach ($this->data['path'] as $key => $value) {
 
             if ($value->access_mod != 1) {
                 $chaine .=
@@ -118,16 +144,42 @@ EOT;
             }
         }
         $result = <<< EOT
-         <section class='main'>
+        <section class='main'>
             ${chaine}
-         </section>
-
+        </section>
+        ${pagination}
 EOT;
         return $result;
     }
 
     private function renderGallery() // affiche une galerie quand on click sur sa photo
     {
+        // ========== PAGINATION START ===============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $pages = ceil($this->data['nbImg'] / $this->data['parPage']);
+
+        $nbPage = '';
+
+        for ($i=1; $i < $pages + 1; $i++) { 
+                $nbPage .= "<a href='?id=".$_GET['id']."&page=$i'>$i</a>";
+        }
+
+        $pagination = "
+            <div class='pagination'>
+                <a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                $nbPage
+                ."<a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+            </div>
+        ";
+
+        // ========== PAGINATION END ===============
+
         $chaine = "";
         $btn = "";
         $consult = "";
@@ -144,19 +196,27 @@ EOT;
 
         foreach ($this->data['image'] as $key => $value) { // affiche les images de la galerie
 
+            $btn_deleteimg = '<button type="submit" class="delete">X</button';
+            $urlForDeleteimg  = $router->urlFor('viewDelImg', [['id', $value->id]]);
+            $form = "<form action='$urlForDeleteimg' method='post'> $btn_deleteimg </form>";
+            $creator_gal = -1;
+
+            // si le nom du créateur de la galerie est = à celui de la personne connecté, la galerie affiché lui appartient
+            if (isset($_SESSION['user_login'])) {
+                if ($this->data['user']['user_name'] === $_SESSION['user_login']) {
+                    $creator_gal = 1;
+                } else {
+                    $creator_gal = 0;
+                }
+            }
+
             $chaine .= "<a class='img' href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" >
             <img src='../../$value->path' alt='Image introuvable'> 
                 <div class='info-gal'>
-                    <p>Nom: $value->title</p>
-                </div>
+                    <p>Nom: $value->title</p>"
+                . ($creator_gal > 0 ? "$form" : "") . // opérateur ternaire qui affiche le bouton supprimé image si la galerie appartient à la personne connecté
+                "</div>
             </a>";
-
-            if (isset($_SESSION['user_login'])) {
-
-                if ($this->data['user']['user_name'] === $_SESSION['user_login']) {
-                    $chaine .= "<div><a href=\"" . $router->urlFor('viewDelImg', [['id', $value->id]]) . "\" >X</a></div>";
-                }
-            }
         }
 
         if (isset($_SESSION['user_login'])) { // vérifie si une personne est connecté
@@ -188,6 +248,12 @@ EOT;
 
          ${btn}
          ${consult}
+
+         <p>Mots clés : ${keyword_gal}</p>
+         <p>nombre d'image dans la galerie : ${nb_img} images</p>
+
+         ${pagination}
+
 EOT;
 
         return $result;
@@ -222,6 +288,31 @@ EOT;
 
     private function renderMyGal() // affiche les galeries de la personne connecté quand il click sur le btn 'mes galeries'
     {
+        // ========== PAGINATION START ===============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $pages = ceil($this->data['nbGal'] / $this->data['parPage']);
+
+        $nbPage = '';
+
+        for ($i=1; $i < $pages + 1; $i++) { 
+                $nbPage .= "<a href='?page=$i'>$i</a>";
+        }
+
+        $pagination = "
+            <div class='pagination'>
+                <a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                $nbPage
+                ."<a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+            </div>
+        ";
+
+        // ========== PAGINATION END ===============
 
         $chaine = "";
         $router = new \mf\router\Router();
@@ -230,6 +321,7 @@ EOT;
         $btnAddImg = "";
         $btnModifGal = "";
 
+        foreach ($this->data['galImg'] as $key => $value) {
 
         if (count($this->data) != 0) {
 
@@ -239,16 +331,16 @@ EOT;
 
         foreach ($this->data as $key => $value) {
 
-            $btndel = '<input type="submit" value="x" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewDelGal', [['id', $value->id]]) . '\'">';
+            $btndel = '<button type="submit" class="delete">X</button';
+            $urlForDelete = $router->urlFor('viewDelGal', [['id', $value->id]]);
 
             $chaine .= "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
             <img src='../../$key' alt='Image introuvable'> 
                 <div class='info-gal'>
                     <p>Nom: $value->name, auteur : $username</p>
-                    
-                    
+                    <form action='$urlForDelete' method='post'> $btndel </form>
                 </div>
-            </a>$btndel";
+            </a>";
         }
 
         $result = <<< EOT
@@ -259,11 +351,14 @@ EOT;
          ${btnAddImg}
          ${btnModifGal}
 
+         ${pagination}
+
 EOT;
 
         return $result;
+        }
     }
-
+    
     private function renderNewGal() // affiche le formulaire pour ajouter une galerie
     {
         $result = <<<EOT

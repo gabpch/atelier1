@@ -110,7 +110,7 @@ abstract class AbstractView
         $app_root = (new \mf\utils\HttpRequest())->root;
         $styles = '';
         foreach (self::$style_sheets as $file)
-             $styles .= '<link rel="stylesheet" href="'.$app_root.'/'.$file.'"> ';
+            $styles .= '<link rel="stylesheet" href="' . $app_root . '/' . $file . '"> ';
 
 
         /* on appele la methode renderBody de la sous classe */
@@ -128,6 +128,7 @@ abstract class AbstractView
 <html lang="fr">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>${title}</title>
 	    ${styles}
     </head>
