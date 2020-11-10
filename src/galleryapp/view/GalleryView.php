@@ -69,11 +69,37 @@ EOT;
 
     private function renderHome() // affiche les galeries avec une photo random
     {
+        // ========== PAGINATION START ===============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $pages = ceil($this->data['nbGal'] / $this->data['parPage']);
+
+        $nbPage = '';
+
+        for ($i=1; $i < $pages + 1; $i++) { 
+                $nbPage .= "<a href='?page=$i'>$i</a>";
+        }
+
+        $pagination = "
+            <div class='pagination'>
+                <a href=?page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                $nbPage
+                ."<a href=?page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+            </div>
+        ";
+
+        // ========== PAGINATION END ===============
+
         $chaine = "";
         $router = new Router;
         $app_root = (new \mf\utils\HttpRequest())->root;
 
-        foreach ($this->data as $key => $value) {
+        foreach ($this->data['path'] as $key => $value) {
 
             if ($value->access_mod != 1) {
                 $chaine .=
@@ -118,16 +144,42 @@ EOT;
             }
         }
         $result = <<< EOT
-         <section class='main'>
+        <section class='main'>
             ${chaine}
-         </section>
-
+        </section>
+        ${pagination}
 EOT;
         return $result;
     }
 
     private function renderGallery() // affiche une galerie quand on click sur sa photo
     {
+        // ========== PAGINATION START ===============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $pages = ceil($this->data['nbImg'] / $this->data['parPage']);
+
+        $nbPage = '';
+
+        for ($i=1; $i < $pages + 1; $i++) { 
+                $nbPage .= "<a href='?id=".$_GET['id']."&page=$i'>$i</a>";
+        }
+
+        $pagination = "
+            <div class='pagination'>
+                <a href=&page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                $nbPage
+                ."<a href=&page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+            </div>
+        ";
+
+        // ========== PAGINATION END ===============
+
         $chaine = "";
         $btn = "";
         $consult = "";
@@ -196,6 +248,12 @@ EOT;
 
          ${btn}
          ${consult}
+
+         <p>Mots clés : ${keyword_gal}</p>
+         <p>nombre d'image dans la galerie : ${nb_img} images</p>
+
+         ${pagination}
+
 EOT;
 
         return $result;
@@ -230,6 +288,31 @@ EOT;
 
     private function renderMyGal() // affiche les galeries de la personne connecté quand il click sur le btn 'mes galeries'
     {
+        // ========== PAGINATION START ===============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $pages = ceil($this->data['nbGal'] / $this->data['parPage']);
+
+        $nbPage = '';
+
+        for ($i=1; $i < $pages + 1; $i++) { 
+                $nbPage .= "<a href='?page=$i'>$i</a>";
+        }
+
+        $pagination = "
+            <div class='pagination'>
+                <a href=?page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                $nbPage
+                ."<a href=?page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+            </div>
+        ";
+
+        // ========== PAGINATION END ===============
 
         $chaine = "";
         $router = new \mf\router\Router();
@@ -238,6 +321,7 @@ EOT;
         $btnAddImg = "";
         $btnModifGal = "";
 
+        foreach ($this->data['galImg'] as $key => $value) {
 
         if (count($this->data) != 0) {
 
@@ -266,6 +350,8 @@ EOT;
          ${btnAddGal}
          ${btnAddImg}
          ${btnModifGal}
+
+         ${pagination}
 
 EOT;
 

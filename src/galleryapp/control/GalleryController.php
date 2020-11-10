@@ -17,28 +17,70 @@ class GalleryController extends \mf\control\AbstractController
 
     public function viewHome()
     {
-        $gal = Gallery::select()->get();
+        // ========== PAGINATION START =============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $nbGal = Gallery::select()->count();
+
+        $parPage = 1;
+
+        $premier = ($currentPage * $parPage) - $parPage;
+
+        $gal = Gallery::select()->skip($premier)->take($parPage)->get();
+
+        // ========== PAGINATION END =============
+
         $galImg = array();
         foreach ($gal as $v) {
             $Img = $v->Images()->inRandomOrder()->first();
             $galImg[$Img->path] = $v;
         }
-        $vue = new \galleryapp\view\Galleryview($galImg);
+
+        $data = array(
+            'path' => $galImg,
+            'parPage' => $parPage,
+            'nbGal' => $nbGal
+        );
+
+        $vue = new \galleryapp\view\Galleryview($data);
         $vue->render('home');
     }
 
     public function viewGallery() //récupère les données pour la vue renderGallery
     {
+        // ========== PAGINATION START =============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $parPage = 2;
+
+        $premier = ($currentPage * $parPage) - $parPage;
+
+        // ========== PAGINATION END =============
+
         $id = $this->request->get;
         $gal = Gallery::where('id', '=', $id)->first();
         $user = User::Where('id', '=', $gal->id_user)->first();
-        $imgs = $gal->Images()->get();
+        $imgs = $gal->Images()->skip($premier)->take($parPage)->get();
+        $nbImg = $gal->Images()->count();
 
         $data = array(
             'gallery' => $gal,
             'user' => $user,
-            'image' => $imgs
+            'image' => $imgs,
+            'parPage' => $parPage,
+            'nbImg' => $nbImg
         );
+
         $vue = new \galleryapp\view\GalleryView($data);
         $vue->render('gallery');
     }
@@ -135,11 +177,27 @@ class GalleryController extends \mf\control\AbstractController
 
     public function viewMyGallery()
     {
+        // ========== PAGINATION START =============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $parPage = 1;
+
+        $premier = ($currentPage * $parPage) - $parPage;
+
+        // ========== PAGINATION END =============
 
         if (isset($_SESSION['user_login'])) {
 
             $user = User::where('user_name', '=', $_SESSION['user_login'])->first();
             $gal = Gallery::where('id_user', '=', $user['id'])->get();
+
+            $nbGal = Gallery::where('id_user', '=', $user['id'])->count();
+            $gal = Gallery::where('id_user', '=', $user['id'])->skip($premier)->take($parPage)->get();
 
             $galImg = array();
             foreach ($gal as $v) {
@@ -147,7 +205,13 @@ class GalleryController extends \mf\control\AbstractController
                 $galImg[$Img->path] = $v;
             }
 
-            $vue = new \galleryapp\view\GalleryView($galImg);
+            $data = array(
+                'galImg' => $galImg,
+                'nbGal' => $nbGal,
+                'parPage' => $parPage
+            );
+
+            $vue = new \galleryapp\view\GalleryView($data);
             $vue->render('myGallery');
         }
     }
