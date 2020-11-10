@@ -303,17 +303,15 @@ EOT;
         for ($i=1; $i < $pages + 1; $i++) { 
                 $nbPage .= "<a href='?page=$i'>$i</a>";
         }
-
         $pagination = "
             <div class='pagination'>
-                <a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                <a href=?page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
                 $nbPage
-                ."<a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+                ."<a href=?page=". $currentPage = $currentPage + 1 .">&raquo;</a>
             </div>
         ";
 
         // ========== PAGINATION END ===============
-
         $chaine = "";
         $router = new \mf\router\Router();
         $username = $_SESSION['user_login'];
@@ -328,8 +326,7 @@ EOT;
             $btnAddImg = '<input type="submit" value="Ajouter une nouvelle image" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewNewImg') . '\'">';
             $btnModifGal = '<input type="submit" value="Modifier une galerie" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewModifGal') . '\'">';
         }
-
-        foreach ($this->data as $key => $value) {
+        foreach ($this->data['galImg'] as $key => $value) {
 
             $btndel = '<button type="submit" class="delete">X</button';
             $urlForDelete = $router->urlFor('viewDelGal', [['id', $value->id]]);
