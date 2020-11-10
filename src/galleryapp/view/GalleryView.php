@@ -64,9 +64,10 @@ EOT;
 
     private function renderFooter()
     {
+        $app_root = (new \mf\utils\HttpRequest())->root;
         return '<h1>Media Photo 2020</h1> 
-        <a href="https://github.com/Kilaire/atelier1" target="_blank"><img class="logo" src="html/logos/github.svg" alt="Image introuvable"></a>
-        <a href="https://trello.com/atelier608" target="_blank"><img class="logo" src="html/logos/trello-mark-blue.svg" alt="Image introuvable"></a>';
+        <a href="https://github.com/Kilaire/atelier1" target="_blank"><img class="logo" src="' . $app_root . '/html/logos/github.svg" alt="lien github"></a>
+        <a href="https://trello.com/atelier608" target="_blank"><img class="logo" src="' . $app_root . '/html/logos/trello-mark-blue.svg" alt="lien trello"></a>';
     }
 
     private function renderHome() // affiche les galeries avec une photo random

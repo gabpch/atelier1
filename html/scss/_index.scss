@@ -10,13 +10,14 @@ section.main {
 
   @for $i from 1 through 12 {
     a:nth-child(#{$i}) {
-      height: auto;
+      height: 200px;
     }
   }
 
   a:first-child {
     grid-column: 1 / 2;
     grid-row: 1 / 3;
+    height: auto;
   }
 
   .img {
