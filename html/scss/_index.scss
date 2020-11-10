@@ -48,6 +48,9 @@ section.main {
 
     .info-gal {
       position: absolute;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background: linear-gradient(
         0deg,
         rgba(0, 0, 0, 1) 0%,
@@ -70,6 +73,17 @@ section.main {
     &:hover > .info-gal {
       opacity: 1;
     }
+  }
+
+  button.delete {
+    background-color: red;
+    opacity: 0.7;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in;
+  }
+  button.delete:hover {
+    opacity: 1;
   }
 }
 
