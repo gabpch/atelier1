@@ -1,39 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap%27");
 @import url("https://meyerweb.com/eric/tools/css/reset/reset200802.css%27");
-h1.ingoUti {
-  text-align: center;
-}
-
-section.row {
-  margin-top: 1%;
-}
-section.row .img {
-  width: 100%;
-}
-section.row .img .Info-gal {
-  position: absolute;
-  width: 100%;
-  height: auto;
-  opacity: 0;
-  padding-left: 0%;
-  margin-left: 0;
-}
-section.row .img .Info-gal p {
-  text-align: center;
-  color: white;
-  text-shadow: 0 0 2px #000000;
-  font-size: 50px;
-  position: relative;
-  height: 100%;
-}
-section.row .img img {
-  width: 100%;
-  margin-bottom: 1%;
-}
-section.row .img .Info-gal:hover {
-  opacity: 1;
-}
-
 section.main {
   padding: 2em;
   display: grid;
@@ -228,27 +194,26 @@ input.user-btn:hover {
     height: 300px;
   }
 }
-.forms {
-  margin: 0 30%;
-  margin-top: 1em;
+.form {
+  margin: 3em 10% auto;
   padding: 1.5em;
   border: solid black 1px;
   border-radius: 7px;
   background-color: #0ca3a5;
 }
-.forms .log-in {
+.form .log-in {
   margin-bottom: 1.5em;
 }
-.forms div h1 {
+.form div h1 {
   margin-bottom: 1em;
   font-size: 2em;
   color: white;
 }
-.forms div form {
+.form div form {
   margin: 0 auto;
   width: 100%;
 }
-.forms div form input {
+.form div form input {
   border: solid black 1px;
   border-radius: 7px;
   margin-bottom: 1em;
@@ -256,7 +221,7 @@ input.user-btn:hover {
   width: 100%;
   box-sizing: border-box;
 }
-.forms div form .submit-btn {
+.form div form .submit-btn {
   border-radius: 7px;
   background-color: #64c564;
   color: white;
@@ -264,57 +229,17 @@ input.user-btn:hover {
   padding: 1em 2em;
   width: 100%;
 }
-.forms div form .submit-btn:hover {
+.form div form .submit-btn:hover {
   background-color: #359c35;
   cursor: pointer;
 }
-.forms .bar {
+.form .bar {
   border: solid white 1px;
   margin-bottom: 1em;
 }
 
 .form {
-  margin: 0 10%;
-  margin-top: 1em;
-  padding: 1.5em;
-  border: solid black 1px;
-  border-radius: 7px;
-  background-color: #0ca3a5;
-}
-.form h1 {
-  margin-bottom: 1em;
-  font-size: 2em;
-  color: white;
-}
-.form form input {
-  display: block;
-  border: solid black 1px;
-  border-radius: 7px;
-  margin-bottom: 1em;
-  padding: 1em 2em;
-  width: 100%;
-  box-sizing: border-box;
-  background-color: white;
-}
-.form form .keyword {
-  width: 90%;
-  float: right;
-}
-.form form .submit-btn {
-  border-radius: 7px;
-  background-color: #64c564;
-  color: white;
-  border: none;
-  padding: 1em 2em;
-  width: 100%;
-}
-.form form .submit-btn:hover {
-  background-color: #359c35;
-  cursor: pointer;
-}
-
-.form {
-  margin: 3em 10%;
+  margin: 3em 10% auto;
   padding: 1.5em;
   border: solid black 1px;
   border-radius: 7px;

@@ -555,7 +555,7 @@ EOT;
         $urlForCreate = $rooter->urlFor('addUser', null);
 
         $result = <<<EOT
-        <div class="forms">
+        <div class="form">
 
             <div class="log-in">
                 <h1>Se connecter</h1>
