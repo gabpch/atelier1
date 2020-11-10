@@ -407,7 +407,7 @@ EOT;
                 </select>
                 <input type="text" name="title" placeholder="Titre de la photo" required>
                 <input class="keyword" type="text" name="keyword" placeholder="Mot clé" required>
-                <input type="file" name="img">
+                <input type="file" name="img" required>
                 <button class="submit-btn" type="submit">Ajouter</button>
             </form>
         </div>

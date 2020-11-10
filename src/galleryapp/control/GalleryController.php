@@ -22,7 +22,10 @@ class GalleryController extends \mf\control\AbstractController
         $galImg = array();
         foreach ($gal as $v) {
             $Img = $v->Images()->inRandomOrder()->first();
-            $galImg[$Img->path] = $v;
+            if ($Img['path'] != null) {
+
+                $galImg[$Img->path] = $v;
+            }
         }
         $vue = new \galleryapp\view\Galleryview($galImg);
         $vue->render('home');
@@ -145,7 +148,12 @@ class GalleryController extends \mf\control\AbstractController
             $galImg = array();
             foreach ($gal as $v) {
                 $Img = $v->Images()->inRandomOrder()->first();
-                $galImg[$Img->path] = $v;
+                if ($Img['path'] != null) {
+                    $galImg[$Img->path] = $v;
+                } else {
+
+                    $galImg["src/img/blanc.jpg"] = $v;
+                }
             }
 
             $vue = new \galleryapp\view\GalleryView($galImg);
@@ -191,6 +199,9 @@ class GalleryController extends \mf\control\AbstractController
         $i->keyword = $this->request->post['keyword'];
         $i->id_gal = $this->request->post['gallery'];
         $i->save();
+        $rooter = new \mf\router\Router();
+        $urlForHome = $rooter->urlFor('home', null);
+        header("Location: $urlForHome", true, 302);
     }
 
     public function viewModifGal()
