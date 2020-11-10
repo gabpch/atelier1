@@ -144,6 +144,9 @@ EOT;
 
         foreach ($this->data['image'] as $key => $value) { // affiche les images de la galerie
 
+            $btn_deleteimg = '<button type="submit" class="delete">Supprimer img</button';
+            $urlForDeleteimg  = $router->urlFor('viewDelImg', [['id', $value->id]]);
+
             $chaine .= "<a class='img' href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" >
             <img src='../../$value->path' alt='Image introuvable'> 
                 <div class='info-gal'>
@@ -152,9 +155,8 @@ EOT;
             </a>";
 
             if (isset($_SESSION['user_login'])) {
-
                 if ($this->data['user']['user_name'] === $_SESSION['user_login']) {
-                    $chaine .= "<div><a href=\"" . $router->urlFor('viewDelImg', [['id', $value->id]]) . "\" >X</a></div>";
+                    $chaine .= "<div><a href=\"" . $router->urlFor('viewDelImg', [['id', $value->id]]) . "\" >Supprimé image</a></div>";
                 }
             }
         }
@@ -239,16 +241,16 @@ EOT;
 
         foreach ($this->data as $key => $value) {
 
-            $btndel = '<input type="submit" value="x" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewDelGal', [['id', $value->id]]) . '\'">';
+            $btndel = '<button type="submit" class="delete">X</button';
+            $urlForDelete = $router->urlFor('viewDelGal', [['id', $value->id]]);
 
             $chaine .= "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
             <img src='../../$key' alt='Image introuvable'> 
                 <div class='info-gal'>
                     <p>Nom: $value->name, auteur : $username</p>
-                    
-                    
+                    <form action='$urlForDelete' method='post'> $btndel </form>
                 </div>
-            </a>$btndel";
+            </a>";
         }
 
         $result = <<< EOT

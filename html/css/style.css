@@ -76,6 +76,9 @@ section.main .img img {
 }
 section.main .img .info-gal {
   position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: linear-gradient(0deg, black 0%, rgba(0, 0, 0, 0.8) 60%, rgba(0, 0, 0, 0) 100%);
   width: 100%;
   bottom: 0;
@@ -88,6 +91,16 @@ section.main .img .info-gal p {
   color: whitesmoke;
 }
 section.main .img:hover > .info-gal {
+  opacity: 1;
+}
+section.main button.delete {
+  background-color: red;
+  opacity: 0.7;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in;
+}
+section.main button.delete:hover {
   opacity: 1;
 }
 
