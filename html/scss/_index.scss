@@ -1,120 +1,170 @@
-@import '_grid';
+section.main {
+  padding: 2em;
+  display: grid;
+  grid-template-columns: repeat(4, calc(100% / 4));
+  grid-template-rows: auto;
 
+  @for $i from 1 through 12 {
+    a:nth-child(#{$i}) {
+      height: 200px;
+    }
+  }
 
-section.main{
-    margin-top: 1%;
-    @include row();
+  a:first-child {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    height: 420px;
+  }
 
-    .img{
+  .img {
+    position: relative;
+    overflow: hidden;
+    margin: 4px;
+    font-size: 0;
 
-        width: 100%;
-    
-    
-          img{
-            width: 100%;
-            margin-bottom: 1%;
-          }
-    
-        .Info-gal:hover{
-            opacity: 1; 
-        
-        }
-    
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    div:nth-child(1){
+    .info-gal {
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.8) 60%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      opacity: 0;
+      transition: 200ms opacity ease;
+      font-size: initial;
 
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-        
+      p {
+        color: whitesmoke;
+      }
     }
 
-    div:nth-child(2){
-
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-
+    &:hover > .info-gal {
+      opacity: 1;
     }
+  }
 
-    div:nth-child(3){
-
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-
-    }
-
-    div:nth-child(4){
-
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-
-    }
-
-    div:nth-child(5){
-
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-
-    }
-
-    div:nth-child(6){
-
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-
-    }
-
-    div:nth-child(7){
-
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-
-    }
-
-    div:nth-child(8){
-
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-
-    }
-
-    div:nth-child(9){
-
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-
-    }
-
-    div:nth-child(10){
-
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-
-    }
-
-    div:nth-child(11){
-
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-
-    }
-
-    div:nth-child(12){
-
-        $wi : 100%/4;
-
-        flex-basis: $wi;
-
-    }
+  button.delete {
+    background-color: red;
+    opacity: 0.7;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in;
+  }
+  button.delete:hover {
+    opacity: 1;
+  }
 }
+
+input.user-btn {
+  background-color: #0b8b8d;
+  padding: 1em;
+  color: white;
+  cursor: pointer;
+  display: inline;
+  width: 20%;
+  margin: auto;
+  border-radius: 7px;
+  margin-top: 1em;
+  transition: background-color 0.3s ease-in;
+}
+
+input.user-btn:hover {
+  background-color: #296c6d;
+}
+
+// Tablette view
+@media only screen and (max-width: 768px) {
+  section.main {
+    display: grid;
+    // Grid vue phone
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: auto;
+
+    @for $i from 1 through 12 {
+      a:nth-child(#{$i}) {
+        height: 300px;
+      }
+    }
+  }
+}
+
+// Phone view
+@media only screen and (max-width: 480px) {
+  section.main {
+    display: grid;
+    // Grid vue phone
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+
+    @for $i from 1 through 12 {
+      a:nth-child(#{$i}) {
+        height: 300px;
+      }
+    }
+  }
+}
+
+// ANCIEN AFFICHAGE AVEC FLEX
+// @import "_grid";
+
+// section.main {
+//   padding: 2em;
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: center;
+//   @include row();
+
+//   .img {
+//     position: relative;
+//     overflow: hidden;
+//     width: calc((100% / 4) - 16px);
+//     min-width: 300px;
+//     margin: 4px;
+//     font-size: 0;
+
+//     img {
+//       width: 100%;
+//       height: 300px;
+//     }
+
+//     .info-gal {
+//       position: absolute;
+//       background: linear-gradient(
+//         0deg,
+//         rgba(0, 0, 0, 1) 0%,
+//         rgba(0, 0, 0, 0.8) 60%,
+//         rgba(0, 0, 0, 0) 100%
+//       );
+//       width: 100%;
+//       bottom: 0;
+//       left: 0;
+//       opacity: 0;
+//       transition: 200ms opacity ease;
+//       font-size: initial;
+
+//       p {
+//         color: whitesmoke;
+//       }
+//     }
+
+//     &:hover > .info-gal {
+//       opacity: 1;
+//     }
+//   }
+// }

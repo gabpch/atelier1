@@ -26,6 +26,8 @@ class GalleryAuthentification extends \mf\auth\Authentification
             $addUser->user_name = $username;
             $addUser->level = self::ACCESS_LEVEL_USER;
             $addUser->save();
+        } else {
+            echo 'Username déjà utilisé';
         }
     }
 
@@ -35,7 +37,7 @@ class GalleryAuthentification extends \mf\auth\Authentification
         $loggedUser = User::select()->where('user_name', '=', $username)->first();
 
         if ($loggedUser->user_name !== $username) {
-            echo ('Erreur');
+            echo ('Utilisateur inexistant');
         } else {
             $this->login($username, $loggedUser->password, $password, $level = self::ACCESS_LEVEL_USER);
         }
