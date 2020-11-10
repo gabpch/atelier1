@@ -69,11 +69,37 @@ EOT;
 
     private function renderHome() // affiche les galeries avec une photo random
     {
+        // ========== PAGINATION START ===============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $pages = ceil($this->data['nbGal'] / $this->data['parPage']);
+
+        $nbPage = '';
+
+        for ($i=1; $i < $pages + 1; $i++) { 
+                $nbPage .= "<a href='?page=$i'>$i</a>";
+        }
+
+        $pagination = "
+            <div class='pagination'>
+                <a href=?page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                $nbPage
+                ."<a href=?page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+            </div>
+        ";
+
+        // ========== PAGINATION END ===============
+
         $chaine = "";
         $router = new Router;
         $app_root = (new \mf\utils\HttpRequest())->root;
 
-        foreach ($this->data as $key => $value) {
+        foreach ($this->data['path'] as $key => $value) {
 
             if ($value->access_mod != 1) {
 
@@ -90,8 +116,6 @@ EOT;
 
                     if ($value->id_user == $user->id) { // si id de la personne co est = à l'idée de la galerie ça veut dire que c'est sa galerie et qu'il faut l'afficher (meme si elle est privée)
 
-                        //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-
                         $chaine .=
                             "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
                                             <img src='$app_root/$key' alt='Image introuvable'> 
@@ -107,8 +131,6 @@ EOT;
 
                         if ($v->id_user == $user->id) { // si l'utilisateur connecté à l'autorisation de voir une galerie privée, affiche cette galereie
 
-                            //$chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur </p> <p>$value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='$key' alt='Image introuvable'></a> </div>";
-
                             $chaine .=
                                 "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
                                     <img src='$key' alt='Image introuvable'> 
@@ -122,16 +144,42 @@ EOT;
             }
         }
         $result = <<< EOT
-         <section class='main'>
+        <section class='main'>
             ${chaine}
-         </section>
-
+        </section>
+        ${pagination}
 EOT;
         return $result;
     }
 
     private function renderGallery() // affiche une galerie quand on click sur sa photo
     {
+        // ========== PAGINATION START ===============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $pages = ceil($this->data['nbImg'] / $this->data['parPage']);
+
+        $nbPage = '';
+
+        for ($i=1; $i < $pages + 1; $i++) { 
+                $nbPage .= "<a href='?id=".$_GET['id']."&page=$i'>$i</a>";
+        }
+
+        $pagination = "
+            <div class='pagination'>
+                <a href=&page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                $nbPage
+                ."<a href=&page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+            </div>
+        ";
+
+        // ========== PAGINATION END ===============
+
         $chaine = "";
         $btn = "";
         $consult = "";
@@ -159,8 +207,10 @@ EOT;
 
                 $btn .= "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Ajouter une nouvelle image </a></div>";
 
-                if ($this->data['gallery']['access_mod'] === 1) { // si la galerie est privé alors rajouter un btn pour pouvoir donner des autorisations à d'autre user 
-                    $consult = "<div><a href=\"" . $router->urlFor('viewNewCons', [['id', $this->data['gallery']['id']]]) . "\" >Donner l'authorisation de voir votre galerie </a></div>";
+                if ($this->data['gallery']['access_mod'] === 1) { // si la galerie est privé alors rajouter un btn pour pouvoir donner des autorisations à d'autre user
+                    for ($i=0; $i < $pages; $i++) { 
+                        $consult = "<div><a href=\"" . $router->urlFor('viewNewCons', [['id', $this->data['gallery']['id']]]) . "\" >Donner l'authorisation de voir votre galerie </a></div>";
+                    } 
                 }
             }
         }
@@ -182,6 +232,8 @@ EOT;
 
          <p>Mots clés : ${keyword_gal}</p>
          <p>nombre d'image dans la galerie : ${nb_img} images</p>
+
+         ${pagination}
 
 EOT;
 
@@ -217,13 +269,38 @@ EOT;
 
     private function renderMyGal() // affiche les galeries de la personne connecté quand il click sur le btn 'mes galeries'
     {
+        // ========== PAGINATION START ===============
+
+        if(isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+
+        $pages = ceil($this->data['nbGal'] / $this->data['parPage']);
+
+        $nbPage = '';
+
+        for ($i=1; $i < $pages + 1; $i++) { 
+                $nbPage .= "<a href='?page=$i'>$i</a>";
+        }
+
+        $pagination = "
+            <div class='pagination'>
+                <a href=?page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                $nbPage
+                ."<a href=?page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+            </div>
+        ";
+
+        // ========== PAGINATION END ===============
 
         $chaine = "";
         $router = new \mf\router\Router();
         $username = $_SESSION['user_login'];
         $btn = "<div><a href=\"" . $router->urlFor('viewNewGal') . "\" >Ajouter une Galerie </a></div>";
 
-        foreach ($this->data as $key => $value) {
+        foreach ($this->data['galImg'] as $key => $value) {
 
             $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur : $username </p> <p>Nom de la galerie : $value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='../../$key' alt='Image introuvable'></a> </div>";
         }
@@ -231,7 +308,6 @@ EOT;
         $chaine;
 
         $router = new \mf\router\Router();
-
 
         $result = <<< EOT
 
@@ -243,6 +319,7 @@ EOT;
          </section>
 
          ${btn}
+         ${pagination}
 
 EOT;
 
