@@ -71,7 +71,7 @@ EOT;
     {
         // ========== PAGINATION START ===============
 
-        if(isset($_GET['page']) && !empty($_GET['page'])) {
+        if (isset($_GET['page']) && !empty($_GET['page'])) {
             $currentPage = strip_tags($_GET['page']);
         } else {
             $currentPage = 1;
@@ -81,15 +81,15 @@ EOT;
 
         $nbPage = '';
 
-        for ($i=1; $i < $pages + 1; $i++) { 
-                $nbPage .= "<a href='?page=$i'>$i</a>";
+        for ($i = 1; $i < $pages + 1; $i++) {
+            $nbPage .= "<a href='?page=$i'>$i</a>";
         }
 
         $pagination = "
             <div class='pagination'>
-                <a href=?page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
-                $nbPage
-                ."<a href=?page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+                <a href=?page=" . $currentPage = $currentPage - 1 . ">&laquo;</a>" .
+            $nbPage
+            . "<a href=?page=" . $currentPage = $currentPage + 1 . ">&raquo;</a>
             </div>
         ";
 
@@ -113,6 +113,7 @@ EOT;
                 if (isset($_SESSION['user_login'])) { //vérifie si un utilisateur est connecté
 
                     $user = \galleryapp\model\User::where('user_name', '=', $_SESSION['user_login'])->first();
+
 
                     if ($value->id_user == $user->id) { // si id de la personne connecté est = à l'id de la galerie, c'est sa galerie et il faut l'afficher (meme si elle est privée)
 
@@ -156,7 +157,7 @@ EOT;
     {
         // ========== PAGINATION START ===============
 
-        if(isset($_GET['page']) && !empty($_GET['page'])) {
+        if (isset($_GET['page']) && !empty($_GET['page'])) {
             $currentPage = strip_tags($_GET['page']);
         } else {
             $currentPage = 1;
@@ -166,15 +167,15 @@ EOT;
 
         $nbPage = '';
 
-        for ($i=1; $i < $pages + 1; $i++) { 
-                $nbPage .= "<a href='?id=".$_GET['id']."&page=$i'>$i</a>";
+        for ($i = 1; $i < $pages + 1; $i++) {
+            $nbPage .= "<a href='?id=" . $_GET['id'] . "&page=$i'>$i</a>";
         }
 
         $pagination = "
             <div class='pagination'>
-                <a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
-                $nbPage
-                ."<a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+                <a href=?id=" . $_GET['id'] . "&page=" . $currentPage = $currentPage - 1 . ">&laquo;</a>" .
+            $nbPage
+            . "<a href=?id=" . $_GET['id'] . "&page=" . $currentPage = $currentPage + 1 . ">&raquo;</a>
             </div>
         ";
 
@@ -196,7 +197,7 @@ EOT;
 
         foreach ($this->data['image'] as $key => $value) { // affiche les images de la galerie
 
-            $btn_deleteimg = '<button type="submit" class="delete">X</button';
+            $btn_deleteimg = '<button type="submit" class="delete">X</button>';
             $urlForDeleteimg  = $router->urlFor('viewDelImg', [['id', $value->id]]);
             $form = "<form action='$urlForDeleteimg' method='post'> $btn_deleteimg </form>";
             $creator_gal = -1;
@@ -290,7 +291,7 @@ EOT;
     {
         // ========== PAGINATION START ===============
 
-        if(isset($_GET['page']) && !empty($_GET['page'])) {
+        if (isset($_GET['page']) && !empty($_GET['page'])) {
             $currentPage = strip_tags($_GET['page']);
         } else {
             $currentPage = 1;
@@ -300,14 +301,14 @@ EOT;
 
         $nbPage = '';
 
-        for ($i=1; $i < $pages + 1; $i++) { 
-                $nbPage .= "<a href='?page=$i'>$i</a>";
+        for ($i = 1; $i < $pages + 1; $i++) {
+            $nbPage .= "<a href='?page=$i'>$i</a>";
         }
         $pagination = "
             <div class='pagination'>
-                <a href=?page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
-                $nbPage
-                ."<a href=?page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+                <a href=?page=" . $currentPage = $currentPage - 1 . ">&laquo;</a>" .
+            $nbPage
+            . "<a href=?page=" . $currentPage = $currentPage + 1 . ">&raquo;</a>
             </div>
         ";
 
@@ -319,7 +320,6 @@ EOT;
         $btnAddImg = "";
         $btnModifGal = "";
 
-        foreach ($this->data['galImg'] as $key => $value) {
 
         if (count($this->data) != 0) {
 
@@ -328,7 +328,7 @@ EOT;
         }
         foreach ($this->data['galImg'] as $key => $value) {
 
-            $btndel = '<button type="submit" class="delete">X</button';
+            $btndel = '<button type="submit" class="delete">X</button>';
             $urlForDelete = $router->urlFor('viewDelGal', [['id', $value->id]]);
 
             $chaine .= "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
@@ -339,6 +339,9 @@ EOT;
                 </div>
             </a>";
         }
+
+
+
 
         $result = <<< EOT
          <section class='main'>
@@ -353,9 +356,8 @@ EOT;
 EOT;
 
         return $result;
-        }
     }
-    
+
     private function renderNewGal() // affiche le formulaire pour ajouter une galerie
     {
         $result = <<<EOT
