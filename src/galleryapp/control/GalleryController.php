@@ -27,7 +27,7 @@ class GalleryController extends \mf\control\AbstractController
 
         $nbGal = Gallery::select()->count();
 
-        $parPage = 1;
+        $parPage = 12;
 
         $premier = ($currentPage * $parPage) - $parPage;
 
@@ -61,7 +61,7 @@ class GalleryController extends \mf\control\AbstractController
             $currentPage = 1;
         }
 
-        $parPage = 2;
+        $parPage = 12;
 
         $premier = ($currentPage * $parPage) - $parPage;
 
@@ -185,7 +185,7 @@ class GalleryController extends \mf\control\AbstractController
             $currentPage = 1;
         }
 
-        $parPage = 1;
+        $parPage = 12;
 
         $premier = ($currentPage * $parPage) - $parPage;
 

@@ -172,9 +172,9 @@ EOT;
 
         $pagination = "
             <div class='pagination'>
-                <a href=&page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                <a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
                 $nbPage
-                ."<a href=&page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+                ."<a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage + 1 .">&raquo;</a>
             </div>
         ";
 
@@ -306,9 +306,9 @@ EOT;
 
         $pagination = "
             <div class='pagination'>
-                <a href=?page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
+                <a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage - 1 .">&laquo;</a>".
                 $nbPage
-                ."<a href=?page=". $currentPage = $currentPage + 1 .">&raquo;</a>
+                ."<a href=?id=".$_GET['id']."&page=". $currentPage = $currentPage + 1 .">&raquo;</a>
             </div>
         ";
 
@@ -356,8 +356,9 @@ EOT;
 EOT;
 
         return $result;
+        }
     }
-
+    
     private function renderNewGal() // affiche le formulaire pour ajouter une galerie
     {
         $result = <<<EOT
