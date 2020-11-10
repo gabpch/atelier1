@@ -345,15 +345,15 @@ header nav form.search button:hover {
   background: #0b7dda;
 }
 
-section.main {
-  flex: 1;
+section {
+  height: 100vh;
 }
 
 footer {
   background-color: #0ca3a5;
   height: 96px;
   text-align: center;
-  margin-top: 4em;
+  margin-top: auto;
 }
 
 /*# sourceMappingURL=style.css.map */
