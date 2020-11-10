@@ -77,6 +77,24 @@ $router->addRoute('viewModifImg', '/viewModifImg/', '\galleryapp\control\Gallery
 // envoie dans la bdd les modifications sur l'image
 $router->addRoute('sendModifImg', '/sendModifImg/', '\galleryapp\control\GalleryController', 'sendModifImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
+// affiche le formulaire qui permet de modifier une galerie
+$router->addRoute('viewModifGal', '/viewModifGal/', '\galleryapp\control\GalleryController', 'viewModifGal', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// envoie de la modification de la galerie dans la bdd
+$router->addRoute('sendModifGal', '/sendModifGal/', '\galleryapp\control\GalleryController', 'sendModifGal', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// Affiche la demande de confirmation pour supprimer une galerie
+$router->addRoute('viewDelGal', '/viewDelGal/', '\galleryapp\control\GalleryController', 'viewDelGal', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// supprime la galerie ou non choisit
+$router->addRoute('deleteGal', '/deleteGal/', '\galleryapp\control\GalleryController', 'deleteGal', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// Affiche la demande de confirmation pour supprimer une image
+$router->addRoute('viewDelImg', '/viewDelImg/', '\galleryapp\control\GalleryController', 'viewDelImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
+// supprime l'image ou non choisit
+$router->addRoute('deleteImg', '/deleteImg/', '\galleryapp\control\GalleryController', 'deleteImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
+
 /* STYLE */
 galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');
 

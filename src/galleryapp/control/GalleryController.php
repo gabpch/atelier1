@@ -112,10 +112,7 @@ class GalleryController extends \mf\control\AbstractController
 
             );
 
-        //$img->save();
-
         $rooter = new \mf\router\Router();
-
         $urlForHome = $rooter->urlFor('home', null);
         header("Location: $urlForHome", true, 302);
     }
@@ -187,9 +184,75 @@ class GalleryController extends \mf\control\AbstractController
         $i->save();
     }
 
-    public function modifImg()
+    public function viewModifGal()
     {
-        $vue = new \galleryapp\view\GalleryView(null);
-        $vue->render('modifImg');
+
+        $user = User::where('user_name', '=', $_SESSION['user_login'])->first();
+        $gal = Gallery::where('id_user', '=', $user['id'])->get();
+
+        $vue = new \galleryapp\view\GalleryView($gal);
+        $vue->render('modifGal');
+    }
+
+    public function sendModifGal()
+    {
+        $gal = Gallery::where('id', '=',  $this->request->post['gallery'])
+            ->update(
+
+                array(
+                    'name' => $this->request->post['name'],
+                    'description' => $this->request->post['desc'],
+                    'keyword' => $this->request->post['keyword'],
+                    'access_mod' => $this->request->post['access']
+
+                )
+
+            );
+
+        $rooter = new \mf\router\Router();
+        $urlForHome = $rooter->urlFor('home', null);
+        header("Location: $urlForHome", true, 302);
+    }
+
+    public function viewDelGal()
+    {
+
+        $id = $this->request->get;
+        $gal = Gallery::where('id', '=', $id)->first();
+        $vue = new \galleryapp\view\GalleryView($gal);
+        $vue->render('delGal');
+    }
+
+    public function deleteGal()
+    {
+
+        $id = $this->request->get;
+        $delImg = Image::where('id_gal', '=', $id)->delete();
+        $delCons = \galleryapp\model\Consult::where('id_gal', '=', $id)->delete();
+        $delGal = Gallery::where('id', '=', $id)->delete();
+
+        $rooter = new \mf\router\Router();
+        $urlForHome = $rooter->urlFor('home', null);
+        header("Location: $urlForHome", true, 302);
+    }
+
+    public function viewDelImg()
+    {
+
+        $id = $this->request->get;
+        $img = Image::where('id', '=', $id)->first();
+        $vue = new \galleryapp\view\GalleryView($img);
+        $vue->render('delImg');
+    }
+
+    public function deleteImg()
+    {
+
+        $id = $this->request->get;
+        $delImg = Image::where('id', '=', $id)->delete();
+
+        $rooter = new \mf\router\Router();
+        $urlForHome = $rooter->urlFor('home', null);
+        header("Location: $urlForHome", true, 302);
     }
 }
