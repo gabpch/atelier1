@@ -7,7 +7,6 @@ use galleryapp\model\Image;
 use galleryapp\model\User;
 use galleryapp\model\Consult;
 use mf\router\Router;
-use DB;
 
 class GalleryController extends \mf\control\AbstractController
 {
