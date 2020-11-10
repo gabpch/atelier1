@@ -2,6 +2,8 @@
 
 namespace mf\auth;
 
+use Exception;
+
 class Authentification extends AbstractAuthentification
 {
     public function __construct()
@@ -42,7 +44,7 @@ class Authentification extends AbstractAuthentification
     public function login($username, $db_pass, $given_pass, $level)
     {
         if (!password_verify($given_pass, $db_pass)) {
-            echo "Mot de passe invalide";
+            throw new Exception('Mot de passe incorrect');
         } else {
             $this->updateSession($username, $level);
         }
