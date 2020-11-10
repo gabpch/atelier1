@@ -128,6 +128,23 @@ section.main .img:hover > .info-gal {
   opacity: 1;
 }
 
+input.user-btn {
+  background-color: #0b8b8d;
+  padding: 1em;
+  color: white;
+  cursor: pointer;
+  display: inline;
+  width: 20%;
+  margin: auto;
+  border-radius: 7px;
+  margin-top: 1em;
+  transition: background-color 0.3s ease-in;
+}
+
+input.user-btn:hover {
+  background-color: #296c6d;
+}
+
 .forms {
   margin: 0 30%;
   margin-top: 1em;
@@ -275,6 +292,8 @@ body {
   font-family: "Lobster Two", cursive;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 header nav {
@@ -342,7 +361,9 @@ header nav form.search button:hover {
 
 footer {
   background-color: #0ca3a5;
-  font-size: 30px;
+  height: 96px;
+  text-align: center;
+  margin-top: 4em;
 }
 
 /*# sourceMappingURL=style.css.map */

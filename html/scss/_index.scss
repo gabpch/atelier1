@@ -50,6 +50,23 @@ section.main {
   }
 }
 
+input.user-btn {
+  background-color: #0b8b8d;
+  padding: 1em;
+  color: white;
+  cursor: pointer;
+  display: inline;
+  width: 20%;
+  margin: auto;
+  border-radius: 7px;
+  margin-top: 1em;
+  transition: background-color 0.3s ease-in;
+}
+
+input.user-btn:hover {
+  background-color: #296c6d;
+}
+
 // ANCIEN AFFICHAGE AVEC FLEX
 // @import "_grid";
 
