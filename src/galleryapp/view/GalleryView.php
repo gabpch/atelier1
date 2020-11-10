@@ -34,8 +34,8 @@ class GalleryView extends \mf\view\AbstractView
             $header .=  <<<EOT
                     <nav>    
                         <ul>
-                            <li><a class='active' href="${urlForHome}">MEDIA PHOTO</a></li>
-                            <li><a  href="${urlForMesGal}">MES GALERIES</a></li>
+                            <li><a class='active' href="${urlForHome}">Media Photo</a></li>
+                            <li><a  href="${urlForMesGal}">Mes galeries</a></li>
                             <li><a href="${urlForLogout}">${user_login}  Déconnexion</a></li>
                         </ul>
                         <form class="search" action="">
@@ -89,7 +89,9 @@ EOT;
 
                     if ($value->id_user == $user->id) { // si id de la personne co = id de la galerie ça veut dire que c'est sa galerie et qu'il faut l'afficher (meme si elle est privée)
 
+                    $user = \galleryapp\model\User::where('user_name', '=', $_SESSION['user_login'])->first();
 
+                    if ($value->id_user == $user->id) { // si id de la personne connecté est = à l'id de la galerie, c'est sa galerie et il faut l'afficher (meme si elle est privée)
 
                         $chaine .=
                             "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
@@ -102,11 +104,9 @@ EOT;
 
                     $consult = \galleryapp\model\Consult::where('id_gal', '=', $value->id)->get();
 
-                    foreach ($consult as $k => $v) { // parcour dans la table consult les autorisations qui corespond à la galerie
+                    foreach ($consult as $k => $v) { // parcoure dans la table consult les autorisations qui correspond à la galerie
 
                         if ($v->id_user == $user->id) { // si l'utilisateur connecté à l'autorisation de voir une galerie privée, affiche cette galerie
-
-
 
                             $chaine .=
                                 "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
@@ -117,7 +117,6 @@ EOT;
                                     </a>";
                         }
                     }
-
                 }
             }
         }
@@ -135,6 +134,7 @@ EOT;
         $chaine = "";
         $btn = "";
         $consult = "";
+        $router = new Router;
 
         $nom_gal = $this->data['gallery']['name'];
         $desc_gal = $this->data['gallery']['description'];
@@ -145,31 +145,43 @@ EOT;
 
         $nb_img = count($this->data['image']); // récupère le nombre d'image de la galerie
 
-        $router = new Router;
-
         foreach ($this->data['image'] as $key => $value) { // affiche les images de la galerie
 
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'><p></p> <p>$value->title</p> </div> <a href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" ><img src='../../$value->path' alt='Image introuvable'></a> </div>";
+            $chaine .= "<a class='img' href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" >
+            <img src='../../$value->path' alt='Image introuvable'> 
+                <div class='info-gal'>
+                    <p>Nom: $value->title</p>
+                </div>
+            </a>";
+
+            if (isset($_SESSION['user_login'])) {
+
+                if ($this->data['user']['user_name'] === $_SESSION['user_login']) {
+                    $chaine .= "<div><a href=\"" . $router->urlFor('viewDelImg', [['id', $value->id]]) . "\" >X</a></div>";
+                }
+            }
         }
-        $chaine;
 
         if (isset($_SESSION['user_login'])) { // vérifie si une personne est connecté
 
             if ($this->data['user']['user_name'] === $_SESSION['user_login']) { // si le nom du créateur de la galerie est = à celui de la personne connecté, la galerie affiché lui appartient. donc rajouter 2 btn
 
-                $btn .= "<div><a href=\"" . $router->urlFor('viewModifImg', [['id', $this->data['gallery']['id']]]) . "\" >Modifier une image </a></div>";
+                $btn .= //"<div><a href=\"" . $router->urlFor('viewModifImg', [['id', $this->data['gallery']['id']]]) . "\" >Modifier une image </a></div>";
+                    '<input type="submit" value="Modifier image" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewModifImg', [['id', $this->data['gallery']['id']]]) . '\'">';
 
                 if ($this->data['gallery']['access_mod'] === 1) { // si la galerie est privé alors rajouter un btn pour pouvoir donner des autorisations à d'autre user 
-                    $consult = "<div><a href=\"" . $router->urlFor('viewNewCons', [['id', $this->data['gallery']['id']]]) . "\" >Donner l'authorisation de voir votre galerie </a></div>";
+                    $consult = //"<div><a href=\"" . $router->urlFor('viewNewCons', [['id', $this->data['gallery']['id']]]) . "\" >Donner l'authorisation de voir votre galerie </a></div>";
+                        '<input type="submit" value="Donner autorisation de voir votre galerie" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewNewCons', [['id', $this->data['gallery']['id']]]) . '\'">';
                 }
             }
         }
 
 
         $result = <<< EOT
-
         <h1 class='ingoUti'>Nom de la galerie : ${nom_gal}</h1>
-        <h1 class='ingoUti'>Nom de l'auteur : ${creator}</h1>
+        <h2 class='ingoUti'>Nom de l'auteur : ${creator}</h2>
+        <p>Mots clés : ${keyword_gal}</p>
+        <p>nombre d'image dans la galerie : ${nb_img} images</p>
 
         <p>Description : ${desc_gal}</p>
 
@@ -179,10 +191,6 @@ EOT;
 
          ${btn}
          ${consult}
-
-         <p>Mots clés : ${keyword_gal}</p>
-         <p>nombre d'image dans la galerie : ${nb_img} images</p>
-
 EOT;
 
         return $result;
@@ -221,43 +229,45 @@ EOT;
         $chaine = "";
         $router = new \mf\router\Router();
         $username = $_SESSION['user_login'];
-        $btnAddGal = "<div><a href=\"" . $router->urlFor('viewNewGal') . "\" >Ajouter une Galerie </a></div>";
+        $btnAddGal = '<input type="submit" value="Ajouter une nouvelle galerie" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewNewGal') . '\'">';
         $btnAddImg = "";
+        $btnModifGal = "";
 
 
         if (count($this->data) != 0) {
 
-            $btnAddImg = "<div><a href=\"" . $router->urlFor('viewNewImg') . "\" >Ajouter une nouvelle image </a></div>";
+            $btnAddImg = '<input type="submit" value="Ajouter une nouvelle image" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewNewImg') . '\'">';
+            $btnModifGal = '<input type="submit" value="Modifier une galerie" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewModifGal') . '\'">';
         }
 
         foreach ($this->data as $key => $value) {
 
-            $chaine = $chaine . "<div class='img'> <div class='Info-gal'> <p>Nom de l'auteur : $username </p> <p>Nom de la galerie : $value->name</p> </div> <a href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" ><img src='../../$key' alt='Image introuvable'></a> </div>";
+            $btndel = '<input type="submit" value="x" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewDelGal', [['id', $value->id]]) . '\'">';
+
+            $chaine .= "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
+            <img src='../../$key' alt='Image introuvable'> 
+                <div class='info-gal'>
+                    <p>Nom: $value->name, auteur : $username</p>
+                    
+                    
+                </div>
+            </a>$btndel";
         }
 
-        $chaine;
-
-        $router = new \mf\router\Router();
-
-
         $result = <<< EOT
-
          <section class='main'>
-
-
             ${chaine}
-
          </section>
-
          ${btnAddGal}
          ${btnAddImg}
+         ${btnModifGal}
 
 EOT;
 
         return $result;
     }
 
-    private function renderNewGal()
+    private function renderNewGal() // affiche le formulaire pour ajouter une galerie
     {
         $result = <<<EOT
         <div class="form">
@@ -280,14 +290,97 @@ EOT;
         return $result;
     }
 
+    private function renderModifGal() //affiche le formulaire pour modifier une galerie
+    {
+        $cbxGal = "";
+        $rooter = new Router();
+        $urlFor = $rooter->urlFor('sendModifGal');
+
+        foreach ($this->data as $key => $gallery) {
+
+            $cbxGal .= "<option value ='$gallery->id'>$gallery->name</option>";
+        }
+
+
+
+        $result = <<<EOT
+            <div class="form">
+                <h1>Modifier une galerie</h1>
+                <form action="${urlFor}" method="post">
+                    galerie à modifier :
+                    <select name="gallery">
+                        ${cbxGal}
+                    </select>
+                    <input type="text" name="name" placeholder="Nom de la galerie" required>
+                    <textarea name="desc" placeholder="Description de la galerie" required></textarea>
+                    <input class="keyword" type="text" name="keyword" placeholder="Mot clé" required>
+                    <select name="access">
+                        <option value="0">Public</option>
+                        <option value="1">Privé</option>
+                    </select>
+                    <button class="submit-btn" type="submit" name="submitBtn">Modifier</button>
+                </form>
+            </div>
+    EOT;
+        return $result;
+        # code...
+
+    }
+
+    private function renderDelGal()
+    {
+        $rooter = new Router();
+        $urlFor = $rooter->urlFor('home');
+        $urlForDel = $rooter->urlFor('deleteGal', [['id', $this->data['id']]]);
+        $name_gal = $this->data['name'];
+
+        $result = <<<EOT
+        <div class="form">
+            <h1>voulez-vous supprimer la galerie : ${name_gal}</h1>
+            <form action="${urlForDel}" method="post">
+                <button class="submit-btn" type="submit" name="DeleteBtn">Oui</button>
+            </form>
+            <br>
+            <form action="${urlFor}" method="post">
+                <button class="submit-btn" type="submit" name="submitBtn">Non</button>
+            </form>
+        </div>
+EOT;
+        return $result;
+    }
+
+    private function renderDelImg()
+    {
+
+        $rooter = new Router();
+        $urlFor = $rooter->urlFor('home');
+        $urlForDel = $rooter->urlFor('deleteImg', [['id', $this->data['id']]]);
+        $name_gal = $this->data['title'];
+
+        $result = <<<EOT
+        <div class="form">
+            <h1>voulez-vous supprimer l'image : ${name_gal}</h1>
+            <form action="${urlForDel}" method="post">
+                <button class="submit-btn" type="submit" name="DeleteBtn">Oui</button>
+            </form>
+            <br>
+            <form action="${urlFor}" method="post">
+                <button class="submit-btn" type="submit" name="submitBtn">Non</button>
+            </form>
+        </div>
+EOT;
+        return $result;
+    }
+
     private function renderNewCons() //affiche le formulaire qui permet de donner l'autorisation à un user de voir notre galerie privée
     {
         $rooter = new Router();
-        $urlFor = $rooter->urlFor('sendNewCons', [['id', $this->data['id']]]);
+        $urlForAuthorizeUser = $rooter->urlFor('sendNewCons', [['id', $this->data]]);
+
         $result = <<<EOT
         <div class="form">
             <h1>Ajouter une autorisation</h1>
-            <form action="${urlFor}" method="post">
+            <form action="${urlForAuthorizeUser}" method="post">
                 <input type="text" name="user_name" placeholder="Pseudo de l'utilisateur" required>
                 <button class="submit-btn" type="submit" name="submitBtn">Ajouter</button>
             </form>
@@ -296,9 +389,11 @@ EOT;
         return $result;
     }
 
-    private function renderNewImg()
+    private function renderNewImg() //affiche le formulaire pour ajouter une nouvelle image
     {
         $cbxGal = "";
+        $rooter = new Router();
+        $urlFor = $rooter->urlFor('sendNewImg');
         foreach ($this->data as $key => $value) {
 
             $cbxGal .= "<option value ='$value->id'>$value->name</option>";
@@ -307,7 +402,7 @@ EOT;
         $result = <<<EOT
         <div class="form">
             <h1>Ajouter une photo</h1>
-            <form action="../sendNewImg/" method="post" form enctype="multipart/form-data">
+            <form action="${urlFor}" method="post" form enctype="multipart/form-data">
                 ajouter la photo à la galerie :
                 <select name="gallery">
                     ${cbxGal}
@@ -322,10 +417,13 @@ EOT;
         return $result;
     }
 
-    private function renderModifImg()
+    private function renderModifImg() // affiche le formulaire pour modifier une image
     {
         $cbxGal = "";
         $cbxImg = "";
+
+        $rooter = new Router();
+        $urlFor = $rooter->urlFor('sendModifImg');
 
 
         foreach ($this->data['image'] as $key => $value) {
@@ -343,7 +441,7 @@ EOT;
         $result = <<<EOT
         <div class="form">
             <h1>Modifier une image</h1>
-            <form action="../sendModifImg/" method="post" form enctype="multipart/form-data">
+            <form action="${urlFor}" method="post" form enctype="multipart/form-data">
                 Choisir la photo à modifier :
                 <select name="img">
                     ${cbxImg}
@@ -355,7 +453,7 @@ EOT;
                 </select>
                 <input type="text" name="title" placeholder="Titre de la photo" required>
                 <input class="keyword" type="text" name="keyword" placeholder="Mot clé" required>
-                <button class="submit-btn" type="submit">Ajouter</button>
+                <button class="submit-btn" type="submit">Modifier</button>
             </form>
         </div>
 EOT;
@@ -434,6 +532,15 @@ EOT;
                 break;
             case 'myGallery':
                 $section = $this->renderMyGal();
+                break;
+            case 'modifGal':
+                $section = $this->renderModifGal();
+                break;
+            case 'delGal':
+                $section = $this->renderDelGal();
+                break;
+            case 'delImg':
+                $section = $this->renderDelImg();
                 break;
         }
 
