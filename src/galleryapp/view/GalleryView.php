@@ -239,12 +239,16 @@ EOT;
 
         foreach ($this->data as $key => $value) {
 
+            $btndel = '<input type="submit" value="x" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewDelGal', [['id', $value->id]]) . '\'">';
+
             $chaine .= "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
             <img src='../../$key' alt='Image introuvable'> 
                 <div class='info-gal'>
                     <p>Nom: $value->name, auteur : $username</p>
+                    
+                    
                 </div>
-            </a>";
+            </a>$btndel";
         }
 
         $result = <<< EOT
