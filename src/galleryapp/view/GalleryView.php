@@ -114,6 +114,7 @@ EOT;
 
                     $user = \galleryapp\model\User::where('user_name', '=', $_SESSION['user_login'])->first();
 
+
                     if ($value->id_user == $user->id) { // si id de la personne connecté est = à l'id de la galerie, c'est sa galerie et il faut l'afficher (meme si elle est privée)
 
                         $chaine .=

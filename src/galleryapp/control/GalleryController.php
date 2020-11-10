@@ -19,7 +19,7 @@ class GalleryController extends \mf\control\AbstractController
     {
         // ========== PAGINATION START =============
 
-        if(isset($_GET['page']) && !empty($_GET['page'])) {
+        if (isset($_GET['page']) && !empty($_GET['page'])) {
             $currentPage = strip_tags($_GET['page']);
         } else {
             $currentPage = 1;
@@ -38,7 +38,10 @@ class GalleryController extends \mf\control\AbstractController
         $galImg = array();
         foreach ($gal as $v) {
             $Img = $v->Images()->inRandomOrder()->first();
-            $galImg[$Img->path] = $v;
+            if ($Img['path'] != null) {
+
+                $galImg[$Img->path] = $v;
+            }
         }
 
         $data = array(
@@ -55,7 +58,7 @@ class GalleryController extends \mf\control\AbstractController
     {
         // ========== PAGINATION START =============
 
-        if(isset($_GET['page']) && !empty($_GET['page'])) {
+        if (isset($_GET['page']) && !empty($_GET['page'])) {
             $currentPage = strip_tags($_GET['page']);
         } else {
             $currentPage = 1;
@@ -180,7 +183,7 @@ class GalleryController extends \mf\control\AbstractController
     {
         // ========== PAGINATION START =============
 
-        if(isset($_GET['page']) && !empty($_GET['page'])) {
+        if (isset($_GET['page']) && !empty($_GET['page'])) {
             $currentPage = strip_tags($_GET['page']);
         } else {
             $currentPage = 1;
@@ -203,7 +206,12 @@ class GalleryController extends \mf\control\AbstractController
             $galImg = array();
             foreach ($gal as $v) {
                 $Img = $v->Images()->inRandomOrder()->first();
-                $galImg[$Img->path] = $v;
+                if ($Img['path'] != null) {
+                    $galImg[$Img->path] = $v;
+                } else {
+
+                    $galImg["src/img/blanc.jpg"] = $v;
+                }
             }
 
             $data = array(
@@ -245,7 +253,7 @@ class GalleryController extends \mf\control\AbstractController
     public function sendNewImg()
     {
         $img_Path = "src/img/";
-        $extension = ".".explode("/",$_FILES['img']['type'])[1];
+        $extension = "." . explode("/", $_FILES['img']['type'])[1];
         $i = new Image;
         $lastImg = Image::select()->orderBy('id', 'DESC')->first();
         $lastImg->id += 1;
@@ -256,7 +264,9 @@ class GalleryController extends \mf\control\AbstractController
         $i->keyword = $this->request->post['keyword'];
         $i->id_gal = $this->request->post['gallery'];
         $i->save();
-        Router::executeRoute('home');
+        $rooter = new \mf\router\Router();
+        $urlForHome = $rooter->urlFor('home', null);
+        header("Location: $urlForHome", true, 302);
     }
 
     public function viewModifGal()
