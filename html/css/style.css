@@ -36,56 +36,6 @@ section.row .img img {
 section.row .img .Info-gal:hover {
   opacity: 1;
 }
-section.row div:nth-child(1) {
-  width: 24.375%;
-  margin-left: 0.5%;
-}
-section.row div:nth-child(1) .img {
-  width: 99%;
-  margin-left: 0.5%;
-}
-section.row div:nth-child(2) {
-  width: 24.375%;
-  margin-left: 0.5%;
-}
-section.row div:nth-child(2) .img {
-  width: 99%;
-  margin-left: 0.5%;
-}
-section.row div:nth-child(3) {
-  width: 24.375%;
-  margin-left: 0.5%;
-}
-section.row div:nth-child(3) .img {
-  width: 99%;
-  margin-left: 0.5%;
-}
-section.row div:nth-child(4) {
-  width: 24.375%;
-  margin-left: 0.5%;
-}
-section.row div:nth-child(4) .img {
-  width: 99%;
-  margin-left: 0.5%;
-}
-section.row div:nth-child(5) {
-  width: 99%;
-  margin-left: 0.5%;
-}
-section.row div:nth-child(5) input {
-  border-radius: 7px;
-  background-color: #0ca3a5;
-  color: white;
-  border: none;
-  padding: 1em 2em;
-  width: 20%;
-  margin-bottom: 1%;
-  margin-left: 40%;
-}
-section.row div:nth-child(5) input:hover {
-  background-color: #0b8b8d;
-  cursor: pointer;
-}
 
 section.main {
   padding: 2em;
@@ -328,6 +278,8 @@ body {
   font-family: "Lobster Two", cursive;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 header nav {
@@ -393,14 +345,15 @@ header nav form.search button:hover {
   background: #0b7dda;
 }
 
+section.main {
+  flex: 1;
+}
+
 footer {
   background-color: #0ca3a5;
   height: 96px;
   text-align: center;
   margin-top: 4em;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */
