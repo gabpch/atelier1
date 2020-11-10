@@ -1,9 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap%27");
 @import url("https://meyerweb.com/eric/tools/css/reset/reset200802.css%27");
-@import "_grid";
 @import "_home";
 @import "_index";
-
 @import "_connection";
 @import "_add_photo";
 @import "_add_gallery";
@@ -11,6 +9,7 @@
 * {
   box-sizing: border-box;
 }
+
 html,
 body {
   background-color: #f4f2ed;
