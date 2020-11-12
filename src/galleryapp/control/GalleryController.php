@@ -254,8 +254,8 @@ class GalleryController extends \mf\control\AbstractController
         $i->id_gal = $this->request->post['gallery'];
         $i->save();
         $rooter = new \mf\router\Router();
-        $urlForHome = $rooter->urlFor('home', null);
-        header("Location: $urlForHome", true, 302);
+        $urlForMyGal = $rooter->urlFor('viewMyGal', null);
+        header("Location: $urlForMyGal", true, 302);
     }
 
     public function viewModifGal()
@@ -284,8 +284,8 @@ class GalleryController extends \mf\control\AbstractController
             );
 
         $rooter = new \mf\router\Router();
-        $urlForHome = $rooter->urlFor('home', null);
-        header("Location: $urlForHome", true, 302);
+        $urlForMyGal = $rooter->urlFor('viewMyGal', null);
+        header("Location: $urlForMyGal", true, 302);
     }
 
     public function viewDelGal()
@@ -306,8 +306,8 @@ class GalleryController extends \mf\control\AbstractController
         $delGal = Gallery::where('id', '=', $id)->delete();
 
         $rooter = new \mf\router\Router();
-        $urlForHome = $rooter->urlFor('home', null);
-        header("Location: $urlForHome", true, 302);
+        $urlForMyGal = $rooter->urlFor('viewMyGal', null);
+        header("Location: $urlForMyGal", true, 302);
     }
 
     public function viewDelImg()
