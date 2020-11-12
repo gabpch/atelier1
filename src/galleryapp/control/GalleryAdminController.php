@@ -49,8 +49,6 @@ class GalleryAdminController extends \mf\control\AbstractController
         if (isset($this->request->post['name'], $this->request->post['first_name'], $this->request->post['email'], $this->request->post['password'])) {
             $auth->createUser($this->request->post['name'], $this->request->post['first_name'], $this->request->post['email'], $this->request->post['password'], $this->request->post['user_name']);
             header("Location: $urlForHome", true, 302);
-        } else {
-            $vue->render('auth');
         }
     }
 }
