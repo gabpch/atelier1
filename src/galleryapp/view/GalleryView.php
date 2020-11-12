@@ -278,10 +278,8 @@ EOT;
         <h1 class='ingoUti'>l'image a été ajouté le : ${create_at}</h1>
         <p>Mots clés : ${key}</p>
         </div>
-
-         <section class='main'>
-            ${chaine}
-         </section>         
+        <div class="photo"> ${chaine} </div>
+                
 
 EOT;
 

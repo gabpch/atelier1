@@ -135,3 +135,12 @@ footer {
     transition: transform 0.3s ease-in;
   }
 }
+
+.photo {
+  width: 80%;
+  margin: 0 auto;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}

@@ -26,7 +26,7 @@ class GalleryAdminController extends \mf\control\AbstractController
         $rooter = new Router();
 
         $urlForHome = $rooter->urlFor('home', null);
-        header("Location: $urlForHome", true, 302);
+        header("Location: $urlForHome", true, 302); // redirige l'utilisateur sur le home lors de la déconnexion
     }
 
     public function checkLogin()

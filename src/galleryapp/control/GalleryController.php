@@ -107,17 +107,6 @@ class GalleryController extends \mf\control\AbstractController
         $rooter = new \mf\router\Router();
         $urlForNewImg = $rooter->urlFor('viewNewImg', null);
         header("Location: $urlForNewImg", true, 302);
-        /*$img_Path = "src/img/";
-        $i = new Image;
-        $lastImg = Image::select()->orderBy('id','DESC')->first();
-        $lastImg->id += 1;
-        $i->path = str_replace("\\", "", $img_Path . $i->id . '.jpg'); // <=== IMAGE A PASSER DANS FOLDER IMG ET AJOUTER PATH
-        $i->title = $this->request->post['nameImg'];
-        $i->keyword = $this->request->post['keywordImg'];
-        $i->id_gal = $g->id;
-        $i->save();
-        $rename = rename($_FILES['img']['tmp_name'], $img_Path . $i->id . '.jpg');
-        //var_dump($rename); //retourne vrai ou faux*/
     }
 
     public function viewAuth()
