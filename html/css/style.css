@@ -152,6 +152,9 @@ input.user-btn:hover {
   section.main a:nth-child(12) {
     height: 300px;
   }
+  section.main a:first-child {
+    grid-row: 1/1;
+  }
 }
 @media only screen and (max-width: 480px) {
   section.main {
