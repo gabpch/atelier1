@@ -15,6 +15,7 @@ Download **composer** if not already installed: [here](https://getcomposer.org/d
 4. KREMER Thomas
 5. DE SOUZA Alex
 
-### Database config
+### Links
 
-Download **database** [here](https://test)
+Trello: [here](https://trello.com/atelier608)
+Database, images: [here](https://drive.google.com/file/d/1htfoeYhcQnZ2ev8CsBN9FgREmr7vKwAe/view?usp=sharing)
