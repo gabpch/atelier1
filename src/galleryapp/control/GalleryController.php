@@ -328,8 +328,8 @@ class GalleryController extends \mf\control\AbstractController
 
     public function searchImg()
     {
-        $imgs = Image::all();
-        $img = Image::where('keyword', '=', $this->request->post["search"])->get();
+        $regex = str_replace(" ", "|",  $this->request->post["search"]);
+        $img = Image::where('keyword', 'RLIKE', $regex)->get();
 
         $vue = new GalleryView($img);
         $vue->render('searchImg');

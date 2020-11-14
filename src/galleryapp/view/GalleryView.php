@@ -590,8 +590,6 @@ EOT;
         $router = new Router();
         $app_root = (new \mf\utils\HttpRequest())->root;
 
-        echo $this->data;
-
         foreach ($this->data as $value) {
             $chaine .=
                 "<a class='img' href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" >
