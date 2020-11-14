@@ -64,7 +64,10 @@ EOT;
 
     private function renderFooter()
     {
-        return '<h1>Media Photo 2020</h1>';
+        $app_root = (new \mf\utils\HttpRequest())->root;
+        return '<h1>Media Photo 2020</h1> 
+        <a href="https://github.com/Kilaire/atelier1" target="_blank"><img class="logo" src="' . $app_root . '/html/logos/github.svg" alt="lien github"></a>
+        <a href="https://trello.com/atelier608" target="_blank"><img class="logo" src="' . $app_root . '/html/logos/trello-mark-blue.svg" alt="lien trello"></a>';
     }
 
     private function renderHome() // affiche les galeries avec une photo random
@@ -193,7 +196,7 @@ EOT;
 
         //penser à ajouter la date de création de la galerie
 
-        $nb_img = count($this->data['image']); // récupère le nombre d'image de la galerie
+        $nb_img = $this->data['nbImg']; // récupère le nombre d'image de la galerie
 
         foreach ($this->data['image'] as $key => $value) { // affiche les images de la galerie
 
@@ -236,12 +239,14 @@ EOT;
 
 
         $result = <<< EOT
+
+        <div class='description'>
         <h1 class='ingoUti'>Nom de la galerie : ${nom_gal}</h1>
         <h2 class='ingoUti'>Nom de l'auteur : ${creator}</h2>
         <p>Mots clés : ${keyword_gal}</p>
         <p>nombre d'image dans la galerie : ${nb_img} images</p>
-
         <p>Description : ${desc_gal}</p>
+        </div>
 
          <section class='main'>
             ${chaine}
@@ -249,10 +254,6 @@ EOT;
 
          ${btn}
          ${consult}
-
-         <p>Mots clés : ${keyword_gal}</p>
-         <p>nombre d'image dans la galerie : ${nb_img} images</p>
-
          ${pagination}
 
 EOT;
@@ -272,15 +273,13 @@ EOT;
 
         $result = <<< EOT
 
+        <div class='description'>
         <h1 class='ingoUti'>titre de l'image : ${titre}</h1>
         <h1 class='ingoUti'>l'image a été ajouté le : ${create_at}</h1>
-
-         <section class='main'>
-            ${chaine}
-         </section>
-
-         <p>Mots clés : ${key}</p>
-         
+        <p>Mots clés : ${key}</p>
+        </div>
+        <div class="photo"> ${chaine} </div>
+                
 
 EOT;
 
@@ -555,7 +554,7 @@ EOT;
         $urlForCreate = $rooter->urlFor('addUser', null);
 
         $result = <<<EOT
-        <div class="forms">
+        <div class="form">
 
             <div class="log-in">
                 <h1>Se connecter</h1>

@@ -26,31 +26,24 @@ class GalleryAdminController extends \mf\control\AbstractController
         $rooter = new Router();
 
         $urlForHome = $rooter->urlFor('home', null);
-        header("Location: $urlForHome", true, 302);
+        header("Location: $urlForHome", true, 302); // redirige l'utilisateur sur le home lors de la déconnexion
     }
 
     public function checkLogin()
     {
         $auth = new GalleryAuthentification();
         $auth->loginUser($this->request->post['user_name'], $this->request->post['password']);
-        $rooter = new Router();
-
-        $urlForHome = $rooter->urlFor('home', null);
-        header("Location: $urlForHome", true, 302);
     }
 
     public function checkSignup()
     {
         $auth = new GalleryAuthentification();
-        $vue = new GalleryView(null);
         $rooter = new Router();
-        $urlForHome = $rooter->urlFor('home', null);
+        $urlForHome =  $rooter->urlFor('home', null);
 
         if (isset($this->request->post['name'], $this->request->post['first_name'], $this->request->post['email'], $this->request->post['password'])) {
             $auth->createUser($this->request->post['name'], $this->request->post['first_name'], $this->request->post['email'], $this->request->post['password'], $this->request->post['user_name']);
-            header("Location: $urlForHome", true, 302);
-        } else {
-            $vue->render('auth');
+            header("Location: $urlForHome", true, 302); // redirige l'utilisateur sur le home lors de l'inscription
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace mf\auth;
 
 use Exception;
+use mf\router\Router;
 
 class Authentification extends AbstractAuthentification
 {
@@ -43,10 +44,15 @@ class Authentification extends AbstractAuthentification
     }
     public function login($username, $db_pass, $given_pass, $level)
     {
+        $rooter = new Router();
+        $urlForAuth = $rooter->urlFor('viewAuth', null);
+        $urlForHome = $rooter->urlFor('home', null);
+
         if (!password_verify($given_pass, $db_pass)) {
-            throw new Exception('Mot de passe incorrect');
+            header("Location: $urlForAuth", true, 302);  //redirige l'utilisateur sur le formulaire si le login ne marche pas
         } else {
             $this->updateSession($username, $level);
+            header("Location: $urlForHome", true, 302); // redirige l'utilisateur sur le home lorsque la connexion s'est bien effectué
         }
     }
     protected function hashPassword($password)
