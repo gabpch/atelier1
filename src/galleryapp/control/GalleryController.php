@@ -6,6 +6,7 @@ use galleryapp\model\Gallery;
 use galleryapp\model\Image;
 use galleryapp\model\User;
 use galleryapp\model\Consult;
+use galleryapp\view\GalleryView;
 use mf\router\Router;
 
 class GalleryController extends \mf\control\AbstractController
@@ -323,5 +324,14 @@ class GalleryController extends \mf\control\AbstractController
         $rooter = new \mf\router\Router();
         $urlForHome = $rooter->urlFor('home', null);
         header("Location: $urlForHome", true, 302);
+    }
+
+    public function searchImg()
+    {
+        $imgs = Image::all();
+        $img = Image::where('keyword', '=', $this->request->post["search"])->get();
+
+        $vue = new GalleryView($img);
+        $vue->render('searchImg');
     }
 }

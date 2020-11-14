@@ -97,6 +97,9 @@ $router->addRoute('viewDelImg', '/viewDelImg/', '\galleryapp\control\GalleryCont
 // supprime l'image ou non choisit
 $router->addRoute('deleteImg', '/deleteImg/', '\galleryapp\control\GalleryController', 'deleteImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_USER);
 
+// recherche par mot clés
+$router->addRoute('search', '/search/', '\galleryapp\control\GalleryController', 'searchImg', \galleryapp\auth\GalleryAuthentification::ACCESS_LEVEL_NONE);
+
 /* STYLE */
 galleryapp\view\GalleryView::addStyleSheet('html/css/style.css');
 

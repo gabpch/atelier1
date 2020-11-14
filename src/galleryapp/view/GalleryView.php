@@ -22,6 +22,7 @@ class GalleryView extends \mf\view\AbstractView
         $urlForLogout = $rooter->urlFor('logout', null);
         $urlForAuth = $rooter->urlFor('viewAuth', null);
         $urlForMesGal = $rooter->urlFor('viewMyGal', null);
+        $urlForSearch = $rooter->urlFor('search', null);
         $user_login = "";
         if (isset($_SESSION['user_login'])) {
 
@@ -39,7 +40,7 @@ class GalleryView extends \mf\view\AbstractView
                             <li><a  href="${urlForMesGal}">Mes galeries</a></li>
                             <li><a href="${urlForLogout}">${user_login}  Déconnexion</a></li>
                         </ul>
-                        <form class="search" action="">
+                        <form class="search" method="post" action="${urlForSearch}">
                             <input type="text" placeholder="Search images..." name="search">
                             <button type="submit"><i>OK</i></button>
                         </form>   
@@ -52,8 +53,8 @@ EOT;
                     <li><a class='active' href="${urlForHome}">Media Photo</a></li>
                     <li><a href="${urlForAuth}">Connexion</a></li>
                 </ul>
-                <form class="search" action="">
-                    <input type="text" placeholder="Search images..." name="search2">
+                <form class="search" method="post" action="${urlForSearch}">
+                    <input type="text" placeholder="Search images..." name="search">
                     <button type="submit"><i>OK</i></button>
             </form>
             </nav>        
@@ -583,6 +584,33 @@ EOT;
         return $result;
     }
 
+    private function renderSearchImg()
+    {
+        $chaine = "";
+        $router = new Router();
+        $app_root = (new \mf\utils\HttpRequest())->root;
+
+        echo $this->data;
+
+        foreach ($this->data as $value) {
+            $chaine .=
+                "<a class='img' href=\"" . $router->urlFor('viewImg', [['id', $value->id]]) . "\" >
+            <img src='$app_root/$value->path' alt='Image introuvable'> 
+                <div class='info-gal'>
+                    <p>Nom: $value->title</p>
+                </div>
+            </a>";
+        }
+
+        $result = <<< EOT
+             <section class='main'>
+                ${chaine}
+             </section>
+EOT;
+
+        return $result;
+    }
+
     protected function renderBody($selector)
     {
 
@@ -627,6 +655,9 @@ EOT;
                 break;
             case 'delImg':
                 $section = $this->renderDelImg();
+                break;
+            case 'searchImg':
+                $section = $this->renderSearchImg();
                 break;
         }
 
