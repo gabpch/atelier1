@@ -297,7 +297,6 @@ EOT;
         }
 
         $pages = ceil($this->data['nbGal'] / $this->data['parPage']);
-
         $nbPage = '';
 
         for ($i = 1; $i < $pages + 1; $i++) {
@@ -319,12 +318,12 @@ EOT;
         $btnAddImg = "";
         $btnModifGal = "";
 
-
-        if (count($this->data) != 0) {
+        if ($this->data['nbGal'] > 0) {
 
             $btnAddImg = '<input type="submit" value="Ajouter une nouvelle image" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewNewImg') . '\'">';
             $btnModifGal = '<input type="submit" value="Modifier une galerie" class="user-btn" onclick="location.href=\'' . $router->urlFor('viewModifGal') . '\'">';
         }
+
         foreach ($this->data['galImg'] as $key => $value) {
 
             $btndel = '<button type="submit" class="delete">X</button>';
