@@ -4,6 +4,7 @@ namespace galleryapp\view;
 
 use mf\router\Router;
 use galleryapp\auth\GalleryAuthentification;
+use galleryapp\model\User;
 
 class GalleryView extends \mf\view\AbstractView
 {
@@ -81,7 +82,6 @@ EOT;
         }
 
         $pages = ceil($this->data['nbGal'] / $this->data['parPage']);
-
         $nbPage = '';
 
         for ($i = 1; $i < $pages + 1; $i++) {
@@ -104,19 +104,20 @@ EOT;
 
         foreach ($this->data['path'] as $key => $value) {
 
+            $author = User::where('id', '=', $value->id_user)->first(); // requête qui récupère l'autheur de la galerie
+
             if ($value->access_mod != 1) {
                 $chaine .=
                     "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
             <img src='$app_root/$key' alt='Image introuvable'> 
                 <div class='info-gal'>
-                    <p>Nom: $value->name</p>
+                    <p>Nom: $value->name Auteur: $author->user_name</p>
                 </div>
             </a>";
             } else {
                 if (isset($_SESSION['user_login'])) { //vérifie si un utilisateur est connecté
 
-                    $user = \galleryapp\model\User::where('user_name', '=', $_SESSION['user_login'])->first();
-
+                    $user = User::where('user_name', '=', $_SESSION['user_login'])->first();
 
                     if ($value->id_user == $user->id) { // si id de la personne connecté est = à l'id de la galerie, c'est sa galerie et il faut l'afficher (meme si elle est privée)
 
@@ -124,7 +125,7 @@ EOT;
                             "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
                                             <img src='$app_root/$key' alt='Image introuvable'> 
                                                 <div class='info-gal'>
-                                                    <p>Nom: $value->name</p>
+                                                    <p>Nom: $value->name Auteur: $author->user_name</p>
                                                 </div>
                                             </a>";
                     }
@@ -139,7 +140,7 @@ EOT;
                                 "<a class='img' href=\"" . $router->urlFor('viewGallery', [['id', $value->id]]) . "\" >
                                     <img src='$key' alt='Image introuvable'> 
                                         <div class='info-gal'>
-                                            <p>Nom: $value->name</p>
+                                            <p>Nom: $value->name Auteur: $author->user_name</p>
                                         </div>
                                     </a>";
                         }
@@ -167,7 +168,6 @@ EOT;
         }
 
         $pages = ceil($this->data['nbImg'] / $this->data['parPage']);
-
         $nbPage = '';
 
         for ($i = 1; $i < $pages + 1; $i++) {
